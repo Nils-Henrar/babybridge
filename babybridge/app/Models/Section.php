@@ -12,7 +12,7 @@ class Section extends Model
     protected $table = 'sections';
 
     protected $fillable = [
-        'nom',
+        'name',
         'slug',
         'type',
         'created_at',
@@ -20,8 +20,8 @@ class Section extends Model
 
     public $timestamps = true;
 
-    public function enfants()
+    public function children()
     {
-        return $this->hasMany(Enfant::class);
+        return $this->hasMany(Child::class);
     }
 }

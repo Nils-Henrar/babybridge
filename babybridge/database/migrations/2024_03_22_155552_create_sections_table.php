@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('sections', function (Blueprint $table) {
             $table->id('id_section');
-            $table->string('nom', 30);
+            $table->string('name', 30);
             $table->string('slug')->unique();
             $table->string('type', 30);
             $table->timestamp('created_at')->useCurrent();

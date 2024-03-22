@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('enfants', function (Blueprint $table) {
-            $table->id('id_enfant');
+        Schema::create('children', function (Blueprint $table) {
+            $table->id('id_child');
             $table->foreignId('section_id')->references('id_section')->on('sections')
                 ->onUpdate('cascade')
                 ->onDelete('restrict');
