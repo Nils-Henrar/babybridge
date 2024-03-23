@@ -8,20 +8,21 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('naps', function (Blueprint $table) {
-            $table->id('id_nap');
+        Schema::create('diaper_changes', function (Blueprint $table) {
+            $table->id();
             $table->foreignId('child_id')->references('id_child')->on('children')
                 ->onUpdate('cascade')
                 ->onDelete('restrict');
-            $table->dateTime('start_time');
-            $table->dateTime('end_time');
-            $table->enum('quality', ['good', 'average', 'bad']);
+            $table->enum('type', ['pee', 'poop', 'both']);
+            $table->enum('poop_consistency', ['normal', 'soft', 'watery'])->nullable();
+            $table->enum('pee_color', ['light', 'medium', 'dark'])->nullable();
+            $table->dateTime('happened_at');
             $table->text('notes')->nullable();
         });
     }
 
     public function down(): void
     {
-        Schema::dropIfExists('naps');
+        Schema::dropIfExists('diaper_changes');
     }
 };

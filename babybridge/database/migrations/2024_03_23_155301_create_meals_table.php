@@ -13,7 +13,7 @@ return new class extends Migration
             $table->foreignId('child_id')->references('id_child')->on('children')
                 ->onUpdate('cascade')
                 ->onDelete('restrict');
-            $table->datetime('meal_time');
+            $table->dateTime('meal_time');
             $table->enum('type', ['feeding bottle', 'fruit', 'dinner']);
             $table->integer('quantity');
             $table->enum('quality', ['good', 'average', 'bad']);
