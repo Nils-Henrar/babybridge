@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Section;
+
 
 class Child extends Model
 {
@@ -25,5 +27,15 @@ class Child extends Model
     public function section()
     {
         return $this->belongsTo(Section::class);
+    }
+
+    public function dailyReports()
+    {
+        return $this->hasMany(DailyReport::class);
+    }
+
+    public function childPhotos()
+    {
+        return $this->hasMany(ChildPhoto::class);
     }
 }
