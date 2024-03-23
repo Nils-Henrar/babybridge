@@ -8,13 +8,14 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('naps', function (Blueprint $table) {
-            $table->id('id_nap');
+        Schema::create('meals', function (Blueprint $table) {
+            $table->id('id_meal');
             $table->foreignId('child_id')->references('id_child')->on('children')
                 ->onUpdate('cascade')
                 ->onDelete('restrict');
-            $table->time('start_time');
-            $table->time('end_time');
+            $table->datetime('meal_time');
+            $table->enum('type', ['feeding bottle', 'fruit', 'dinner']);
+            $table->integer('quantity');
             $table->enum('quality', ['good', 'average', 'bad']);
             $table->text('notes')->nullable();
         });
@@ -22,6 +23,6 @@ return new class extends Migration
 
     public function down(): void
     {
-        Schema::dropIfExists('naps');
+        Schema::dropIfExists('meals');
     }
 };

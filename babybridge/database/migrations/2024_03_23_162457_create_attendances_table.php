@@ -8,20 +8,21 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('naps', function (Blueprint $table) {
-            $table->id('id_nap');
+        Schema::create('attendances', function (Blueprint $table) {
+            $table->id('id_attendance');
             $table->foreignId('child_id')->references('id_child')->on('children')
                 ->onUpdate('cascade')
                 ->onDelete('restrict');
-            $table->time('start_time');
-            $table->time('end_time');
-            $table->enum('quality', ['good', 'average', 'bad']);
+            $table->date('date');
+            $table->time('arrival_time')->nullable();
+            $table->time('departure_time')->nullable();
+            $table->enum('status', ['present', 'absent', 'late']);
             $table->text('notes')->nullable();
         });
     }
 
     public function down(): void
     {
-        Schema::dropIfExists('naps');
+        Schema::dropIfExists('attendances');
     }
 };
