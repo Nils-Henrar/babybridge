@@ -9,15 +9,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('diaper_changes', function (Blueprint $table) {
-            $table->id();
+            $table->id('id_diaper');
             $table->foreignId('child_id')->references('id_child')->on('children')
                 ->onUpdate('cascade')
                 ->onDelete('restrict');
-            $table->enum('type', ['pee', 'poop', 'both']);
             $table->enum('poop_consistency', ['normal', 'soft', 'watery'])->nullable();
-            $table->enum('pee_color', ['light', 'medium', 'dark'])->nullable();
             $table->dateTime('happened_at');
-            $table->text('notes')->nullable();
+            $table->string('notes')->nullable();
         });
     }
 

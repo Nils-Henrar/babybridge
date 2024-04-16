@@ -14,10 +14,8 @@ return new class extends Migration
                 ->onUpdate('cascade')
                 ->onDelete('restrict');
             $table->dateTime('meal_time');
-            $table->enum('type', ['feeding bottle', 'fruit', 'dinner']);
-            $table->integer('quantity');
-            $table->enum('quality', ['good', 'average', 'bad']);
-            $table->text('notes')->nullable();
+            $table->enum('type', ['feeding bottle', 'fruit', 'vegetable']);
+            $table->string('notes')->nullable();
         });
     }
 

@@ -12,15 +12,8 @@ class Activity extends Model
     protected $table = 'activities';
 
     protected $fillable = [
-        'child_id',
         'description',
-        'performed_at',
     ];
 
     public $timestamps = false;
-
-    public function child()
-    {
-        return $this->belongsTo(Child::class);
-    }
 }

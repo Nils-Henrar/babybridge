@@ -13,9 +13,7 @@ class DiaperChange extends Model
 
     protected $fillable = [
         'child_id',
-        'type',
         'poop_consistency',
-        'pee_color',
         'happened_at',
         'notes',
     ];

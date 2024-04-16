@@ -8,8 +8,8 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('child_photos', function (Blueprint $table) {
-            $table->id('id_child_photo');
+        Schema::create('photos', function (Blueprint $table) {
+            $table->id('id_photo');
             $table->foreignId('child_id')->references('id_child')->on('children')
                 ->onUpdate('cascade')
                 ->onDelete('restrict');

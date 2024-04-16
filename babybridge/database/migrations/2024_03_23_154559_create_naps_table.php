@@ -16,7 +16,7 @@ return new class extends Migration
             $table->dateTime('start_time');
             $table->dateTime('end_time');
             $table->enum('quality', ['good', 'average', 'bad']);
-            $table->text('notes')->nullable();
+            $table->string('notes')->nullable();
         });
     }
 

@@ -11,16 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('children', function (Blueprint $table) {
-            $table->id('id_child');
+        Schema::create('child_section', function (Blueprint $table) {
+            $table->id('id_child_section');
+            $table->foreignId('child_id')->references('id_child')->on('children')
+                ->onUpdate('cascade')
+                ->onDelete('restrict');
             $table->foreignId('section_id')->references('id_section')->on('sections')
                 ->onUpdate('cascade')
                 ->onDelete('restrict');
-            $table->string('lastname', 60);
-            $table->string('firstname', 60);
-            $table->enum('gender', ['M', 'F']);
-            $table->date('birthdate');
-            $table->text('special_infos')->nullable();
         });
     }
 
@@ -29,6 +27,11 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('enfants');
+        Schema::table('child_section', function (Blueprint $table) {
+            $table->dropForeign(['child_id']);
+            $table->dropForeign(['section_id']);
+        });
+
+        Schema::dropIfExists('child_section');
     }
 };

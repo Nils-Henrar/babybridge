@@ -13,11 +13,10 @@ return new class extends Migration
             $table->foreignId('child_id')->references('id_child')->on('children')
                 ->onUpdate('cascade')
                 ->onDelete('restrict');
-            $table->date('date');
+            $table->date('attendance_date');
             $table->time('arrival_time')->nullable();
             $table->time('departure_time')->nullable();
-            $table->enum('status', ['present', 'absent', 'late']);
-            $table->text('notes')->nullable();
+            $table->string('notes')->nullable();
         });
     }
 
