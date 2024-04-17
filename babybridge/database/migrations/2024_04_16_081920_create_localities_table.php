@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('city', 50);
             $table->string('locality', 50);
             $table->string('postal_code', 6);
+            $table->string('street', 50);
             $table->string('number', 10);
         });
     }

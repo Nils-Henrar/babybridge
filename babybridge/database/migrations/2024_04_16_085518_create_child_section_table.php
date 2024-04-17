@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('child_section', function (Blueprint $table) {
+        Schema::create('child_sections', function (Blueprint $table) {
             $table->id('id_child_section');
             $table->foreignId('child_id')->references('id_child')->on('children')
                 ->onUpdate('cascade')
@@ -19,6 +19,8 @@ return new class extends Migration
             $table->foreignId('section_id')->references('id_section')->on('sections')
                 ->onUpdate('cascade')
                 ->onDelete('restrict');
+            $table->dateTime('from');
+            $table->dateTime('to');
         });
     }
 
@@ -27,11 +29,11 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('child_section', function (Blueprint $table) {
+        Schema::table('child_sections', function (Blueprint $table) {
             $table->dropForeign(['child_id']);
             $table->dropForeign(['section_id']);
         });
 
-        Schema::dropIfExists('child_section');
+        Schema::dropIfExists('child_sections');
     }
 };

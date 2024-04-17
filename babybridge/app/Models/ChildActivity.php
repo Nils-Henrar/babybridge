@@ -5,18 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Attendance extends Model
+class ChildActivity extends Model
 {
     use HasFactory;
 
-    protected $table = 'attendances';
+    protected $table = 'child_activities';
 
     protected $fillable = [
         'child_id',
-        'atenndance_date',
-        'arrival_time',
-        'departure_time',
-        'notes',
+        'activity_id',
+        'performed_at',
     ];
 
     public $timestamps = false;
@@ -24,5 +22,10 @@ class Attendance extends Model
     public function child()
     {
         return $this->belongsTo(Child::class);
+    }
+
+    public function activity()
+    {
+        return $this->belongsTo(Activity::class);
     }
 }

@@ -11,14 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tutor_locality', function (Blueprint $table) {
-            $table->id('id_tutor_locality');
-            $table->foreignId('tutor_id')->references('id_tutor')->on('tutors')
+        Schema::create('worker_sections', function (Blueprint $table) {
+            $table->id('id_worker_section');
+            $table->foreignId('worker_id')->references('id_worker')->on('childcare_workers')
                 ->onUpdate('cascade')
                 ->onDelete('restrict');
-            $table->foreignId('locality_id')->references('id_locality')->on('localities')
+            $table->foreignId('section_id')->references('id_section')->on('sections')
                 ->onUpdate('cascade')
                 ->onDelete('restrict');
+            $table->dateTime('from');
+            $table->dateTime('to');
         });
     }
 
@@ -27,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tutor_locality');
+        Schema::dropIfExists('worker_sections');
     }
 };

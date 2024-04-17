@@ -22,6 +22,16 @@ class Section extends Model
 
     public function children()
     {
-        return $this->hasMany(Child::class);
+        return $this->belongsToMany(Child::class);
+    }
+
+    public function events()
+    {
+        return $this->belongsToMany(Event::class);
+    }
+
+    public function workers()
+    {
+        return $this->belongsToMany(Worker::class);
     }
 }

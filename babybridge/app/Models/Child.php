@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Section;
-
+use Faker\Provider\Medical;
 
 class Child extends Model
 {
@@ -14,7 +14,6 @@ class Child extends Model
     protected $table = 'children';
 
     protected $fillable = [
-        'section_id',
         'lastname',
         'firstname',
         'gender',
@@ -24,10 +23,20 @@ class Child extends Model
 
     public $timestamps = false;
 
-    public function section()
+    /**
+     * Fonctions de relation 
+     */
+
+    public function childSections()
     {
-        return $this->belongsTo(Section::class);
+        return $this->hasMany(ChildSection::class);
     }
+
+    public function tutors()
+    {
+        return $this->belongsToMany(Tutor::class);
+    }
+
 
     public function dailyReports()
     {
@@ -36,6 +45,31 @@ class Child extends Model
 
     public function childPhotos()
     {
-        return $this->hasMany(ChildPhoto::class);
+        return $this->hasMany(Photo::class);
+    }
+
+    public function diaperChanges()
+    {
+        return $this->hasMany(DiaperChange::class);
+    }
+
+    public function childActivities()
+    {
+        return $this->hasMany(ChildActivity::class);
+    }
+
+    public function childMeals()
+    {
+        return $this->hasMany(Meal::class);
+    }
+
+    public function childNaps()
+    {
+        return $this->hasMany(Nap::class);
+    }
+
+    public function childMedRecords()
+    {
+        return $this->hasMany(MedicalRecord::class);
     }
 }

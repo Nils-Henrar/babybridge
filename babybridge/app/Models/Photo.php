@@ -5,21 +5,20 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Attendance extends Model
+class Photo extends Model
 {
     use HasFactory;
 
-    protected $table = 'attendances';
+    protected $table = 'photos';
 
     protected $fillable = [
         'child_id',
-        'atenndance_date',
-        'arrival_time',
-        'departure_time',
-        'notes',
+        'description',
+        'taken_at',
+        'path',
     ];
 
-    public $timestamps = false;
+    public $timestamps = true;
 
     public function child()
     {

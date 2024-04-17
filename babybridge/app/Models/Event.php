@@ -5,20 +5,23 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Activity extends Model
+class Event extends Model
 {
     use HasFactory;
 
-    protected $table = 'activities';
+    protected $table = 'events';
 
     protected $fillable = [
+        'title',
+        'schedule',
         'description',
+
     ];
 
     public $timestamps = false;
 
-    public function childActivities()
+    public function sections()
     {
-        return $this->hasMany(ChildActivity::class);
+        return $this->belongsToMany(Section::class);
     }
 }

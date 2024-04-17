@@ -5,20 +5,22 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Activity extends Model
+class Role extends Model
 {
     use HasFactory;
 
-    protected $table = 'activities';
+    protected $table = 'roles';
 
     protected $fillable = [
-        'description',
+        'role',
     ];
 
     public $timestamps = false;
 
-    public function childActivities()
+    // relation many to many avec la table users
+
+    public function users()
     {
-        return $this->hasMany(ChildActivity::class);
+        return $this->belongsToMany(User::class);
     }
 }
