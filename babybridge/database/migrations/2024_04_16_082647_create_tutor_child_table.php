@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('tutor_child', function (Blueprint $table) {
             $table->id('id');
-            $table->foreignId('locality_id')->references('id_locality')->on('localities')
+            $table->foreignId('locality_id')->nullable()->references('id_locality')->on('localities')
                 ->onUpdate('cascade')
                 ->onDelete('restrict');
             $table->foreignId('user_id')->references('id')->on('users')

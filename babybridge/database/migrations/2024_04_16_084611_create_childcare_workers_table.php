@@ -16,9 +16,6 @@ return new class extends Migration
             $table->foreignId('user_id')->references('id')->on('users')
                 ->onUpdate('cascade')
                 ->onDelete('restrict');
-            $table->foreignId('locality_id')->references('id_locality')->on('localities')
-                ->onUpdate('cascade')
-                ->onDelete('restrict');
         });
     }
 

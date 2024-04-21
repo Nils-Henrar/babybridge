@@ -45,6 +45,9 @@ class DatabaseSeeder extends Seeder
             ChildSectionSeeder::class,
             TypeSeeder::class,
             SectionTypeSeeder::class,
+            UserSeeder::class,
+            TutorChildSeeder::class,
+            WorkerSeeder::class,
 
 
 
