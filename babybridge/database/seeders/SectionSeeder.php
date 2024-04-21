@@ -27,49 +27,102 @@ class SectionSeeder extends Seeder
             [
                 'name' => 'Les lilas',
                 'slug' => null,
-                'type' => 'petits',
                 'created_at' => '2021-08-12 15:55:52'
             ],
 
             [
                 'name' => 'Les roses',
                 'slug' => null,
-                'type' => 'moyens',
                 'created_at' => '2022-02-22 15:55:52'
             ],
 
             [
                 'name' => 'Les tournesols',
                 'slug' => null,
-                'type' => 'grands',
                 'created_at' => '2022-03-22 15:55:52'
             ],
 
             [
                 'name' => 'Les coquelicots',
                 'slug' => null,
-                'type' => 'petits',
                 'created_at' => '2022-05-22 15:55:52'
             ],
 
             [
                 'name' => 'Les bleuets',
                 'slug' => null,
-                'type' => 'moyens',
                 'created_at' => '2024-03-22 15:55:52'
             ],
 
             [
                 'name' => 'Les jonquilles',
                 'slug' => null,
-                'type' => 'petits',
                 'created_at' => '2024-03-22 15:55:52'
             ],
 
             [
                 'name' => 'Les pâquerettes',
                 'slug' => null,
-                'type' => 'grands',
+                'created_at' => '2024-03-22 15:55:52'
+            ],
+
+            [
+                'name' => 'Les pensées',
+                'slug' => null,
+                'created_at' => '2024-03-22 15:55:52'
+            ],
+
+            [
+                'name' => 'Les myosotis',
+                'slug' => null,
+                'created_at' => '2024-03-22 15:55:52'
+            ],
+
+            [
+                'name' => 'Les orchidées',
+                'slug' => null,
+                'created_at' => '2024-03-22 15:55:52'
+            ],
+
+            [
+                'name' => 'Les hortensias',
+                'slug' => null,
+                'created_at' => '2024-03-22 15:55:52'
+            ],
+
+            [
+                'name' => 'Les mimosas',
+                'slug' => null,
+                'created_at' => '2024-03-22 15:55:52'
+            ],
+
+            [
+                'name' => 'Les camélias',
+                'slug' => null,
+                'created_at' => '2024-03-22 15:55:52'
+            ],
+
+            [
+                'name' => 'Les azalées',
+                'slug' => null,
+                'created_at' => '2024-03-22 15:55:52'
+            ],
+
+            [
+                'name' => 'Les glycines',
+                'slug' => null,
+                'created_at' => '2024-03-22 15:55:52'
+            ],
+
+            [
+                'name' => 'Les hibiscus',
+                'slug' => null,
+                'created_at' => '2024-03-22 15:55:52'
+            ],
+
+            [
+                'name' => 'Les pivoines',
+                'slug' => null,
                 'created_at' => '2024-03-22 15:55:52'
             ],
         ];

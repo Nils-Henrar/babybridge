@@ -11,11 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('sections', function (Blueprint $table) {
-            $table->id('id_section');
+        Schema::create('types', function (Blueprint $table) {
+            $table->id('id_type');
             $table->string('name', 30);
-            $table->string('slug')->unique();
-            $table->timestamp('created_at')->useCurrent();
         });
     }
 
@@ -24,7 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-
-        Schema::dropIfExists('sections');
+        Schema::dropIfExists('types');
     }
 };

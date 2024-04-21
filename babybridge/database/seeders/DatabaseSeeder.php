@@ -10,6 +10,7 @@ use App\Models\DiaperChange;
 use App\Models\Meal;
 use App\Models\MedicalRecord;
 use App\Models\Role;
+use App\Models\Type;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -41,6 +42,10 @@ class DatabaseSeeder extends Seeder
             NapSeeder::class,
             PhotoSeeder::class,
             ChildMealSeeder::class,
+            ChildSectionSeeder::class,
+            TypeSeeder::class,
+            SectionTypeSeeder::class,
+
 
 
         ]);
