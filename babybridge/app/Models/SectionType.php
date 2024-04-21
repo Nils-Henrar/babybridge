@@ -17,4 +17,16 @@ class SectionType extends Model
         'from',
         'to',
     ];
+
+    public $timestamps = false;
+
+    public function section()
+    {
+        return $this->belongsTo(Section::class);
+    }
+
+    public function type()
+    {
+        return $this->belongsTo(Type::class);
+    }
 }

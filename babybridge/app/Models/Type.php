@@ -16,4 +16,9 @@ class Type extends Model
     ];
 
     public $timestamps = false;
+
+    public function sectionTypes()
+    {
+        return $this->hasMany(SectionType::class);
+    }
 }

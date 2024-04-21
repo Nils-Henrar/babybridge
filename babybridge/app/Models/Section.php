@@ -33,4 +33,9 @@ class Section extends Model
     {
         return $this->belongsToMany(Worker::class);
     }
+
+    public function sectionTypes()
+    {
+        return $this->hasMany(SectionType::class);
+    }
 }
