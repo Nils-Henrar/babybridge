@@ -11,17 +11,19 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('child_tutors', function (Blueprint $table) {
-            $table->id('id_child_tutor');
-            $table->foreignId('child_id')->references('id_child')->on('children')
+        Schema::create('payments', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('tutor_child_id')->references('id')->on('tutor_child')
                 ->onUpdate('cascade')
                 ->onDelete('restrict');
-            $table->foreignId('tutor_id')->references('id_tutor')->on('tutors')
+            $table->foreignId('event_id')->references('id_event')->on('events')
                 ->onUpdate('cascade')
                 ->onDelete('restrict');
-            $table->foreignId('user_id')->references('id')->on('users')
-                ->onUpdate('cascade')
-                ->onDelete('restrict');
+            $table->string('stripe_id')->index();
+            $table->string('status');
+            $table->string('currency');
+            $table->string('amount');
+            $table->timestamp('paid_at')->nullable();
         });
     }
 
@@ -30,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('child_tutors');
+        Schema::dropIfExists('payments');
     }
 };

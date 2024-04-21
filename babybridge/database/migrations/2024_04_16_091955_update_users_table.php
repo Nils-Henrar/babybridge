@@ -16,14 +16,16 @@ return new class extends Migration
             // Ajouter les nouvelles colonnes avant de modifier les colonnes existantes
             $table->string('login', 30)->after('id');
             $table->string('langue', 2)->after('email');
+            $table->string('firstname', 60);
+            $table->string('lastname', 60);
+            $table->string('phone', 20)->nullable();
 
             // Définir la contrainte d'unicité sur la colonne login
             $table->unique('login', 'users_login_unique');
         });
 
         Schema::table('users', function (Blueprint $table) {
-            //retirer la colonne email,name
-            $table->dropColumn('email');
+            //retirer la colonne name
             $table->dropColumn('name');
         });
     }
@@ -37,7 +39,6 @@ return new class extends Migration
             $table->dropUnique('users_login_unique');
             $table->dropColumn('langue');
             $table->dropColumn('login');
-            $table->string('email')->after('id');
             $table->string('name')->after('email');
         });
     }

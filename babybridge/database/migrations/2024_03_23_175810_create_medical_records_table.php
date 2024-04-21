@@ -13,7 +13,6 @@ return new class extends Migration
             $table->foreignId('child_id')->references('id_child')->on('children')
                 ->onUpdate('cascade')
                 ->onDelete('restrict');
-            $table->string('record_type', 80);
             $table->text('description');
             $table->timestamp('created_at')->useCurrent();
             //updatedId is nullable because it will be null when the record is created

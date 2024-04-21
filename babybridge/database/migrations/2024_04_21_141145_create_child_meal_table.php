@@ -11,16 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('child_section', function (Blueprint $table) {
-            $table->id('id_child_section');
+        Schema::create('child_meal', function (Blueprint $table) {
+            $table->id('id_child_meal');
             $table->foreignId('child_id')->references('id_child')->on('children')
                 ->onUpdate('cascade')
                 ->onDelete('restrict');
-            $table->foreignId('section_id')->references('id_section')->on('sections')
+            $table->foreignId('meal_id')->references('id_meal')->on('meals')
                 ->onUpdate('cascade')
                 ->onDelete('restrict');
-            $table->dateTime('from');
-            $table->dateTime('to');
+            $table->dateTime('meal_time');
+            $table->enum('quantity', ['full', 'half', 'quarter', 'refused']);
+            $table->string('notes')->nullable();
         });
     }
 
@@ -29,11 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('child_section', function (Blueprint $table) {
-            $table->dropForeign(['child_id']);
-            $table->dropForeign(['section_id']);
-        });
-
-        Schema::dropIfExists('child_section');
+        Schema::dropIfExists('child_meal');
     }
 };

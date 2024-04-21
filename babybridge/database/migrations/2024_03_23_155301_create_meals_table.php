@@ -10,12 +10,7 @@ return new class extends Migration
     {
         Schema::create('meals', function (Blueprint $table) {
             $table->id('id_meal');
-            $table->foreignId('child_id')->references('id_child')->on('children')
-                ->onUpdate('cascade')
-                ->onDelete('restrict');
-            $table->dateTime('meal_time');
-            $table->enum('type', ['feeding bottle', 'fruit', 'vegetable']);
-            $table->string('notes')->nullable();
+            $table->string('type', 30);
         });
     }
 

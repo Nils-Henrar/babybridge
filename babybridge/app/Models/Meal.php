@@ -12,18 +12,13 @@ class Meal extends Model
     protected $table = 'meals';
 
     protected $fillable = [
-        'child_id',
-        'meal_time',
         'type',
-        'quantity',
-        'quality',
-        'notes',
     ];
 
     public $timestamps = false;
 
-    public function child()
+    public function childMeals()
     {
-        return $this->belongsTo(Child::class);
+        return $this->hasMany(ChildMeal::class);
     }
 }

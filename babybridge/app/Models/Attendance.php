@@ -13,7 +13,7 @@ class Attendance extends Model
 
     protected $fillable = [
         'child_id',
-        'atenndance_date',
+        'attendance_date',
         'arrival_time',
         'departure_time',
         'notes',

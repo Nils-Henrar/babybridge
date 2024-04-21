@@ -16,10 +16,6 @@ return new class extends Migration
             $table->foreignId('user_id')->references('id')->on('users')
                 ->onUpdate('cascade')
                 ->onDelete('restrict');
-            $table->string('firstname', 60);
-            $table->string('lastname', 60);
-            $table->string('email')->unique();
-            $table->string('phone', 20)->nullable();
             $table->foreignId('locality_id')->references('id_locality')->on('localities')
                 ->onUpdate('cascade')
                 ->onDelete('restrict');

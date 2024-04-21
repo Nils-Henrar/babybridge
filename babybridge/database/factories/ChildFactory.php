@@ -22,6 +22,9 @@ class ChildFactory extends Factory
             'lastname' => $this->faker->lastName,
             'firstname' => $this->faker->firstName,
             'gender' => $this->faker->randomElement(['M', 'F']),
+            // birthdate entre 0 et 3 ans
+            'birthdate' => $this->faker->dateTimeBetween('-3 years', 'now'),
+
         ];
     }
 }

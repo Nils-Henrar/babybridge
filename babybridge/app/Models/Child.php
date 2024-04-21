@@ -32,11 +32,10 @@ class Child extends Model
         return $this->hasMany(ChildSection::class);
     }
 
-    public function tutors()
+    public function attendances()
     {
-        return $this->belongsToMany(Tutor::class);
+        return $this->hasMany(Attendance::class);
     }
-
 
     public function dailyReports()
     {
@@ -60,7 +59,7 @@ class Child extends Model
 
     public function childMeals()
     {
-        return $this->hasMany(Meal::class);
+        return $this->hasMany(ChildMeal::class);
     }
 
     public function childNaps()

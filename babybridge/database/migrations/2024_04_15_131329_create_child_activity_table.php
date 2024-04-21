@@ -13,7 +13,7 @@ return new class extends Migration
     {
         //
 
-        Schema::create('child_activities', function (Blueprint $table) {
+        Schema::create('child_activity', function (Blueprint $table) {
             $table->id('id_child_activity');
             $table->foreignId('child_id')->references('id_child')->on('children')
                 ->onUpdate('cascade')
@@ -32,12 +32,12 @@ return new class extends Migration
     {
         //
 
-        Schema::table('child_activities', function (Blueprint $table) {
+        Schema::table('child_activity', function (Blueprint $table) {
             $table->dropForeign(['child_id']);
             $table->dropForeign(['activity_id']);
         });
 
 
-        Schema::dropIfExists('child_activities');
+        Schema::dropIfExists('child_activity');
     }
 };
