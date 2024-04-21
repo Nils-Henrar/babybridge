@@ -11,6 +11,7 @@ use App\Models\Meal;
 use App\Models\MedicalRecord;
 use App\Models\Role;
 use App\Models\Type;
+use App\Models\WorkerSection;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -48,6 +49,9 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             TutorChildSeeder::class,
             WorkerSeeder::class,
+            RoleSeeder::class,
+            WorkerSectionSeeder::class,
+            RoleUserSeeder::class,
 
 
 

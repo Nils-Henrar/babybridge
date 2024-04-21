@@ -20,7 +20,7 @@ return new class extends Migration
                 ->onUpdate('cascade')
                 ->onDelete('restrict');
             $table->dateTime('from');
-            $table->dateTime('to');
+            $table->dateTime('to')->nullable();
         });
     }
 
