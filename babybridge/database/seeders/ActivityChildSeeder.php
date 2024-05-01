@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Child;
 use App\Models\Activity;
 
-class ChildActivitySeeder extends Seeder
+class ActivityChildSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -18,7 +18,7 @@ class ChildActivitySeeder extends Seeder
         // empty the child_activities table
 
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
-        DB::table('child_activity')->truncate();
+        DB::table('activity_child')->truncate();
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
 
         // Define the data to seed the child_activities table
@@ -153,6 +153,6 @@ class ChildActivitySeeder extends Seeder
 
         // Insert the data in the child_activities table
 
-        DB::table('child_activity')->insert($child_activities);
+        DB::table('activity_child')->insert($child_activities);
     }
 }

@@ -17,8 +17,8 @@ class Activity extends Model
 
     public $timestamps = false;
 
-    public function childActivities()
+    public function ActivityChild()
     {
-        return $this->hasMany(ChildActivity::class);
+        return $this->hasMany(ActivityChild::class);
     }
 }

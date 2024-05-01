@@ -6,7 +6,7 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class WorkerSectionSeeder extends Seeder
+class SectionWorkerSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -16,7 +16,7 @@ class WorkerSectionSeeder extends Seeder
         // empty the table
 
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
-        DB::table('worker_section')->truncate();
+        DB::table('section_worker')->truncate();
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
 
         // Define the data to seed the table
@@ -78,6 +78,6 @@ class WorkerSectionSeeder extends Seeder
 
         unset($data);
 
-        DB::table('worker_section')->insert($workerSections);
+        DB::table('section_worker')->insert($workerSections);
     }
 }

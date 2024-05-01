@@ -9,7 +9,7 @@ class SectionType extends Model
 {
     use HasFactory;
 
-    protected $table = 'section_types';
+    protected $table = 'section_type';
 
     protected $fillable = [
         'section_id',

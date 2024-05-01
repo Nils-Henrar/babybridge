@@ -12,7 +12,7 @@ class Payment extends Model
     protected $table = 'payments';
 
     protected $fillable = [
-        'tutor_child_id',
+        'child_tutor_id',
         'event_id',
         'stripe_id',
         'status',
@@ -21,9 +21,9 @@ class Payment extends Model
         'paid_at',
     ];
 
-    public function tutorChild()
+    public function childTutor()
     {
-        return $this->belongsTo(TutorChild::class);
+        return $this->belongsTo(ChildTutor::class);
     }
 
     public function event()

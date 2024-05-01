@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('tutor_child_id')->references('id')->on('tutor_child')
+            $table->foreignId('child_tutor_id')->references('id')->on('child_tutor')
                 ->onUpdate('cascade')
                 ->onDelete('restrict');
             $table->foreignId('event_id')->references('id')->on('events')

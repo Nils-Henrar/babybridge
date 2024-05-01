@@ -27,9 +27,9 @@ class Worker extends Model
         return $this->belongsTo(Locality::class);
     }
 
-    public function workerSections()
+    public function sectionWorkers()
     {
-        return $this->hasMany(WorkerSection::class);
+        return $this->hasMany(SectionWorker::class);
     }
 
     public function user()

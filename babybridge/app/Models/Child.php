@@ -52,9 +52,9 @@ class Child extends Model
         return $this->hasMany(DiaperChange::class);
     }
 
-    public function childActivities()
+    public function ActivityChildren()
     {
-        return $this->hasMany(ChildActivity::class);
+        return $this->hasMany(ActivityChild::class);
     }
 
     public function childMeals()

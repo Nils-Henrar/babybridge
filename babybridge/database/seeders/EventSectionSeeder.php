@@ -6,7 +6,7 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class SectionEventSeeder extends Seeder
+class EventSectionSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -16,7 +16,7 @@ class SectionEventSeeder extends Seeder
         // empty the table
 
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
-        DB::table('section_event')->truncate();
+        DB::table('event_section')->truncate();
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
 
         // Define the data to seed the table
@@ -116,6 +116,6 @@ class SectionEventSeeder extends Seeder
 
         unset($data);
 
-        DB::table('section_event')->insert($sectionEvents);
+        DB::table('event_section')->insert($sectionEvents);
     }
 }

@@ -6,7 +6,7 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class TutorChildSeeder extends Seeder
+class ChildTutorSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -16,7 +16,7 @@ class TutorChildSeeder extends Seeder
         // empty the table
 
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
-        DB::table('tutor_child')->truncate();
+        DB::table('child_tutor')->truncate();
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
 
         // Define the data to seed the table
@@ -85,6 +85,6 @@ class TutorChildSeeder extends Seeder
 
         unset($data);
 
-        DB::table('tutor_child')->insert($tutorChildren);
+        DB::table('child_tutor')->insert($tutorChildren);
     }
 }

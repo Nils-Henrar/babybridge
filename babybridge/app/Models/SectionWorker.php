@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class WorkerSection extends Model
+class SectionWorker extends Model
 {
     use HasFactory;
 
-    protected $table = 'worker_sections';
+    protected $table = 'section_worker';
 
     protected $fillable = [
         'worker_id',

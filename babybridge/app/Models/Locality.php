@@ -23,7 +23,7 @@ class Locality extends Model
 
     public function tutors()
     {
-        return $this->hasMany(Tutor::class);
+        return $this->hasMany(ChildTutor::class);
     }
 
     public function workers()

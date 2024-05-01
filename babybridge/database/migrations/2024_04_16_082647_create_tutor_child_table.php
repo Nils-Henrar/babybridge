@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tutor_child', function (Blueprint $table) {
+        Schema::create('child_tutor', function (Blueprint $table) {
             $table->id('id');
             $table->foreignId('locality_id')->nullable()->references('id')->on('localities')
                 ->onUpdate('cascade')
@@ -34,6 +34,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tutor_child');
+        Schema::dropIfExists('child_tutor');
     }
 };
