@@ -52,6 +52,9 @@ class DatabaseSeeder extends Seeder
             RoleSeeder::class,
             WorkerSectionSeeder::class,
             RoleUserSeeder::class,
+            EventSeeder::class,
+            SectionEventSeeder::class,
+            PaymentSeeder::class,
 
 
 

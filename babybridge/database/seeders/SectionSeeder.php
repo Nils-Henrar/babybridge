@@ -125,6 +125,12 @@ class SectionSeeder extends Seeder
                 'slug' => null,
                 'created_at' => '2024-03-22 15:55:52'
             ],
+
+            [
+                'name' => 'Les tulipes',
+                'slug' => null,
+                'created_at' => '2024-03-22 15:55:52'
+            ]
         ];
 
 

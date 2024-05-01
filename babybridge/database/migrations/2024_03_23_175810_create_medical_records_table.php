@@ -15,7 +15,7 @@ return new class extends Migration
                 ->onDelete('restrict');
             $table->text('description');
             $table->timestamp('created_at')->useCurrent();
-            //updatedId is nullable because it will be null when the record is created
+            //updatedId est null car il sera null quand l'enregistrement est créé
             $table->integer('updatedId')->nullable();
         });
     }

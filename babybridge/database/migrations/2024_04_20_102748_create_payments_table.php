@@ -19,10 +19,10 @@ return new class extends Migration
             $table->foreignId('event_id')->references('id_event')->on('events')
                 ->onUpdate('cascade')
                 ->onDelete('restrict');
-            $table->string('stripe_id')->index();
-            $table->string('status');
-            $table->string('currency');
-            $table->string('amount');
+            $table->string('stripe_id')->nullable()->index();
+            $table->string('status')->nullable();
+            $table->string('currency')->nullable();
+            $table->string('amount')->nullable();
             $table->timestamp('paid_at')->nullable();
         });
     }
