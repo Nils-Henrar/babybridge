@@ -134,8 +134,8 @@ class ChildMealSeeder extends Seeder
             $data['meal_time'] = date('Y-m-d H:i:s', strtotime($data['meal_time']));
 
 
-            $data['meal_id'] = $meal->id_meal;
-            $data['child_id'] = $child->id_child;
+            $data['meal_id'] = $meal->id;
+            $data['child_id'] = $child->id;
 
             unset($data['child_firstname']);
             unset($data['child_lastname']);

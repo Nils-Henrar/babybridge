@@ -14,11 +14,11 @@ return new class extends Migration
         //
 
         Schema::create('child_activity', function (Blueprint $table) {
-            $table->id('id_child_activity');
-            $table->foreignId('child_id')->references('id_child')->on('children')
+            $table->id('id');
+            $table->foreignId('child_id')->references('id')->on('children')
                 ->onUpdate('cascade')
                 ->onDelete('restrict');
-            $table->foreignId('activity_id')->references('id_activity')->on('activities')
+            $table->foreignId('activity_id')->references('id')->on('activities')
                 ->onUpdate('cascade')
                 ->onDelete('restrict');
             $table->dateTime('performed_at');

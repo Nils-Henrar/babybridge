@@ -106,7 +106,7 @@ class AttendanceSeeder extends Seeder
             unset($data['child_firstname']);
             unset($data['child_lastname']);
 
-            $data['child_id'] = $child->id_child;
+            $data['child_id'] = $child->id;
         }
 
         unset($data);

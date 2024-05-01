@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('section_type', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('section_id')->references('id_section')->on('sections')
+            $table->foreignId('section_id')->references('id')->on('sections')
                 ->onUpdate('cascade')
                 ->onDelete('restrict');
-            $table->foreignId('type_id')->references('id_type')->on('types')
+            $table->foreignId('type_id')->references('id')->on('types')
                 ->onUpdate('cascade')
                 ->onDelete('restrict');
             $table->timestamp('from');

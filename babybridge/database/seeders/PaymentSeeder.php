@@ -125,7 +125,7 @@ class PaymentSeeder extends Seeder
                 ->first();
 
             $tutorChild = DB::table('tutor_child')->where('user_id', $user->id)
-                ->where('child_id', $child->id_child)
+                ->where('child_id', $child->id)
                 ->first();
 
 
@@ -138,7 +138,7 @@ class PaymentSeeder extends Seeder
 
             $data['tutor_child_id'] = $tutorChild->id;
 
-            $data['event_id'] = $event->id_event;
+            $data['event_id'] = $event->id;
         }
 
         unset($data);

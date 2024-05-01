@@ -101,7 +101,7 @@ class DiaperChangeSeeder extends Seeder
             unset($data['child_firstname']);
             unset($data['child_lastname']);
 
-            $data['child_id'] = $child->id_child;
+            $data['child_id'] = $child->id;
             $data['happened_at'] = date('Y-m-d H:i:s', strtotime($data['happened_at']));
         }
 

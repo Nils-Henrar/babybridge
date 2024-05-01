@@ -10,8 +10,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('daily_reports', function (Blueprint $table) {
-            $table->id('id_report');
-            $table->foreignId('child_id')->references('id_child')->on('children')
+            $table->id('id');
+            $table->foreignId('child_id')->references('id')->on('children')
                 ->onUpdate('cascade')
                 ->onDelete('restrict');
             $table->text('description');

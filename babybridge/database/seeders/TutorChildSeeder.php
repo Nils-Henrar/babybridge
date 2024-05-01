@@ -80,7 +80,7 @@ class TutorChildSeeder extends Seeder
             unset($data['child_lastname']);
 
             $data['user_id'] = $user->id;
-            $data['child_id'] = $child->id_child;
+            $data['child_id'] = $child->id;
         }
 
         unset($data);

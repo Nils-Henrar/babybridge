@@ -89,8 +89,8 @@ class SectionTypeSeeder extends Seeder
             $type = DB::table('types')->where('name', $data['type_name'])->first();
 
 
-            $data['section_id'] = $section->id_section;
-            $data['type_id'] = $type->id_type;
+            $data['section_id'] = $section->id;
+            $data['type_id'] = $type->id;
 
             unset($data['section_slug']);
             unset($data['type_name']);

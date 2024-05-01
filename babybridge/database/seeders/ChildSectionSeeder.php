@@ -101,8 +101,8 @@ class ChildSectionSeeder extends Seeder
                 ->where('slug', $data['section_slug'])
                 ->first();
 
-            $data['child_id'] = $child->id_child;
-            $data['section_id'] = $section->id_section;
+            $data['child_id'] = $child->id;
+            $data['section_id'] = $section->id;
 
             unset($data['child_firstname']);
             unset($data['child_lastname']);

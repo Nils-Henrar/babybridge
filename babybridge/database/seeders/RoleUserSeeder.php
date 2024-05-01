@@ -24,6 +24,11 @@ class RoleUserSeeder extends Seeder
         $roleUsers = [
 
             [
+                'user_login' => 'admin',
+                'role' => 'admin',
+            ],
+
+            [
                 'user_login' => 'geraldine94',
                 'role' => 'worker',
             ],
@@ -87,7 +92,7 @@ class RoleUserSeeder extends Seeder
             $role = DB::table('roles')->where('role', $data['role'])->first();
 
             $data['user_id'] = $user->id;
-            $data['role_id'] = $role->id_role;
+            $data['role_id'] = $role->id;
 
             unset($data['user_login']);
             unset($data['role']);

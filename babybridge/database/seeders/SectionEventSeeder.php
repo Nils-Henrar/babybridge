@@ -107,8 +107,8 @@ class SectionEventSeeder extends Seeder
 
 
 
-            $data['section_id'] = $section->id_section;
-            $data['event_id'] = $event->id_event;
+            $data['section_id'] = $section->id;
+            $data['event_id'] = $event->id;
 
             unset($data['slug_section']);
             unset($data['slug_event']);

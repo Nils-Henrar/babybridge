@@ -13,13 +13,13 @@ return new class extends Migration
     {
         Schema::create('tutor_child', function (Blueprint $table) {
             $table->id('id');
-            $table->foreignId('locality_id')->nullable()->references('id_locality')->on('localities')
+            $table->foreignId('locality_id')->nullable()->references('id')->on('localities')
                 ->onUpdate('cascade')
                 ->onDelete('restrict');
             $table->foreignId('user_id')->references('id')->on('users')
                 ->onUpdate('cascade')
                 ->onDelete('restrict');
-            $table->foreignId('child_id')->references('id_child')->on('children')
+            $table->foreignId('child_id')->references('id')->on('children')
                 ->onUpdate('cascade')
                 ->onDelete('restrict');
             $table->string('stripe_id')->nullable()->index();

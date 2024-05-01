@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('tutor_child_id')->references('id')->on('tutor_child')
                 ->onUpdate('cascade')
                 ->onDelete('restrict');
-            $table->foreignId('event_id')->references('id_event')->on('events')
+            $table->foreignId('event_id')->references('id')->on('events')
                 ->onUpdate('cascade')
                 ->onDelete('restrict');
             $table->string('stripe_id')->nullable()->index();

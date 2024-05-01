@@ -9,8 +9,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('diaper_changes', function (Blueprint $table) {
-            $table->id('id_diaper');
-            $table->foreignId('child_id')->references('id_child')->on('children')
+            $table->id('id');
+            $table->foreignId('child_id')->references('id')->on('children')
                 ->onUpdate('cascade')
                 ->onDelete('restrict');
             $table->enum('poop_consistency', ['normal', 'soft', 'watery'])->nullable();

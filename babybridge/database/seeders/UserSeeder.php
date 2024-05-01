@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class UserSeeder extends Seeder
 {
@@ -22,6 +23,17 @@ class UserSeeder extends Seeder
         // Define the data to seed the table
 
         $users = [
+
+            [
+                'login' => 'admin',
+                'password' => 'admin',
+                'firstname' => 'Admin',
+                'lastname' => 'Admin',
+                'email' => 'admin@admin.com',
+                'phone' => null,
+                'langue' => 'fr',
+
+            ],
 
             [
                 'login' => 'marc23',
@@ -167,6 +179,10 @@ class UserSeeder extends Seeder
         ];
 
         // Insert the data in the table
+
+        foreach ($users as &$user) {
+            $user['password'] = Hash::make($user['password']);
+        }
 
         DB::table('users')->insert($users);
     }

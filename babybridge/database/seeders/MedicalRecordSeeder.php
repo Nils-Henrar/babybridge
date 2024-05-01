@@ -98,7 +98,7 @@ class MedicalRecordSeeder extends Seeder
                 ->where('lastname', $data['child_lastname'])
                 ->first();
 
-            $data['child_id'] = $child->id_child;
+            $data['child_id'] = $child->id;
 
             unset($data['child_firstname']);
             unset($data['child_lastname']);

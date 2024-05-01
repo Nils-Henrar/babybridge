@@ -69,8 +69,8 @@ class WorkerSectionSeeder extends Seeder
 
             $section = DB::table('sections')->where('slug', $data['section_slug'])->first();
 
-            $data['worker_id'] = $worker->id_worker;
-            $data['section_id'] = $section->id_section;
+            $data['worker_id'] = $worker->id;
+            $data['section_id'] = $section->id;
 
             unset($data['worker_login']);
             unset($data['section_slug']);

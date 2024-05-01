@@ -141,8 +141,8 @@ class ChildActivitySeeder extends Seeder
             $activity = Activity::where('description', $data['activity_description'])
                 ->first();
 
-            $data['child_id'] = $child->id_child;
-            $data['activity_id'] = $activity->id_activity;
+            $data['child_id'] = $child->id;
+            $data['activity_id'] = $activity->id;
 
             unset($data['child_firstname']);
             unset($data['child_lastname']);
