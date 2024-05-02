@@ -49,4 +49,19 @@ class User extends Authenticatable
     }
 
     public $timestamps = true;
+
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class);
+    }
+
+    public function worker()
+    {
+        return $this->hasOne(Worker::class);
+    }
+
+    public function tutor()
+    {
+        return $this->hasOne(ChildTutor::class);
+    }
 }
