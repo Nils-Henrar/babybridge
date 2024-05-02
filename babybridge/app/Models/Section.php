@@ -17,7 +17,7 @@ class Section extends Model
         'created_at',
     ];
 
-    public $timestamps = true;
+    public $timestamps = false;
 
     public function childSections()
     {
@@ -67,4 +67,6 @@ class Section extends Model
 
         return $workers;
     }
+
+    //
 }

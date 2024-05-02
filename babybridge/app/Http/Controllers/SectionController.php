@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Section;
 use Illuminate\Support\Facades\Gate;
+use App\Http\Requests\StoreSectionRequest;
+use App\Http\Requests\UpdateSectionRequest;
+use Illuminate\Support\Str;
 
 
 class SectionController extends Controller
@@ -30,15 +33,27 @@ class SectionController extends Controller
     {
         // Display the form to create a new section
 
-        return view('section.create');
+        return view('admin.section.create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreSectionRequest $request)
     {
-        //
+        // Store a new section
+
+        $section = new Section();
+
+        $data = $request->validated();
+
+        $section->name = $data['name'];
+        // Generate a slug from the name
+        $section->slug = Str::slug($data['name']);
+
+        $section->save();
+
+        return redirect()->route('admin.section.index');
     }
 
     /**
@@ -50,7 +65,7 @@ class SectionController extends Controller
 
         $section = Section::find($id);
 
-        return view('section.show', [
+        return view('admin.section.show', [
             'section' => $section,
         ]);
     }
@@ -61,14 +76,32 @@ class SectionController extends Controller
     public function edit(string $id)
     {
         //
+
+        $section = Section::find($id);
+
+        return view('admin.section.edit', [
+            'section' => $section,
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateSectionRequest $request, string $id)
     {
-        //
+        // Update a section
+
+        $section = Section::find($id);
+
+        $data = $request->validated();
+
+        $section->name = $data['name'];
+        // Generate a slug from the name
+        $section->slug = Str::slug($data['name']);
+
+        $section->save();
+
+        return redirect()->route('admin.section.index');
     }
 
     /**
@@ -82,6 +115,6 @@ class SectionController extends Controller
 
         $section->delete();
 
-        return redirect()->route('section.index');
+        return redirect()->route('admin.section.index');
     }
 }

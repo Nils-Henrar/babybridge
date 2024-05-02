@@ -85,9 +85,9 @@
                     <td>{{$child->child->lastname}}</td>
                     <td>{{$child->child->firstname}}</td>
                     <td>
-                        <a href="{{ route('child.show', $child->id) }}" class="btn btn-info">Voir</a>
-                        <a href="{{ route('child.edit', $child->id) }}" class="btn btn-warning">Modifier</a>
-                        <form action="{{ route('child.destroy', $child->id) }}" method="POST" style="display:inline;">
+                        <a href="{{ route('admin.child.show', $child->id) }}" class="btn btn-info">Voir</a>
+                        <a href="{{ route('admin.child.edit', $child->id) }}" class="btn btn-warning">Modifier</a>
+                        <form action="{{ route('admin.child.destroy', $child->id) }}" method="POST" style="display:inline;">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-danger">Supprimer</button>

@@ -35,7 +35,7 @@ class SectionPolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update($user, $section)
+    public function update($user)
     {
         return $user->roles->contains('role', 'admin');
     }
@@ -43,7 +43,7 @@ class SectionPolicy
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete($user, $section)
+    public function delete($user)
     {
         return $user->roles->contains('role', 'admin');
     }
@@ -51,7 +51,7 @@ class SectionPolicy
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user, Section $section): bool
+    public function restore(User $user)
     {
         return $user->roles->contains('role', 'admin');
     }
@@ -59,7 +59,7 @@ class SectionPolicy
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user, Section $section): bool
+    public function forceDelete(User $user)
     {
         return $user->roles->contains('role', 'admin');
     }
