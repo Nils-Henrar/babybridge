@@ -19,23 +19,52 @@ class Section extends Model
 
     public $timestamps = true;
 
-    public function children()
+    public function childSections()
     {
-        return $this->belongsToMany(Child::class);
+        return $this->hasMany(ChildSection::class);
     }
 
     public function events()
     {
         return $this->belongsToMany(Event::class);
     }
-
-    public function workers()
+    public function sectionWorkers()
     {
-        return $this->belongsToMany(Worker::class);
+        return $this->hasMany(SectionWorker::class);
     }
 
     public function sectionTypes()
     {
         return $this->hasMany(SectionType::class);
+    }
+
+
+    public function countChildren()
+    {
+        return $this->childSections->where('to', null)->count();
+    }
+
+    public function countWorkers()
+    {
+        return $this->sectionWorkers->where('to', null)->count();
+    }
+
+    public function currentChildren()
+    {
+        return $this->childSections->where('to', null);
+    }
+
+    public function currentWorkers()
+    {
+        $workers = [];
+
+        $workers = $this->sectionWorkers->map(function ($sectionWorker) {
+            //where to is null
+            if ($sectionWorker->to == null) {
+                return $sectionWorker->worker;
+            }
+        });
+
+        return $workers;
     }
 }

@@ -13,19 +13,9 @@ class Worker extends Model
 
     protected $fillable = [
         'user_id',
-        'lastname',
-        'firstname',
-        'email',
-        'phone',
-        'locality_id',
     ];
 
     public $timestamps = false;
-
-    public function locality()
-    {
-        return $this->belongsTo(Locality::class);
-    }
 
     public function sectionWorkers()
     {

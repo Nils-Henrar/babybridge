@@ -29,4 +29,9 @@ class SectionWorker extends Model
     {
         return $this->belongsTo(Section::class);
     }
+
+    public function users()
+    {
+        return $this->hasMany(User::class);
+    }
 }
