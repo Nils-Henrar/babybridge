@@ -13,8 +13,8 @@ return [
     | "mailers" array. Examples of each type of mailer are provided.
     |
     */
-
-    'default' => env('MAIL_MAILER', 'log'),
+    // mailgun par défaut
+    'default' => env('MAIL_MAILER', 'smtp'),
 
     /*
     |--------------------------------------------------------------------------
@@ -80,6 +80,11 @@ return [
                 'smtp',
                 'log',
             ],
+        ],
+
+        'mailgun' => [
+            'transport' => 'mailgun',
+
         ],
 
     ],
