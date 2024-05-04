@@ -32,6 +32,9 @@ class UserSeeder extends Seeder
                 'email' => 'admin@admin.com',
                 'phone' => null,
                 'langue' => 'fr',
+                'address' => null,
+                'postal_code' => null,
+                'city' => null,
 
             ],
 
@@ -43,6 +46,9 @@ class UserSeeder extends Seeder
                 'email' => 'marc@lemoine.com',
                 'phone' => '0601020304',
                 'langue' => 'fr',
+                'address' => 'Rue de la Paix, 12',
+                'postal_code' => '1000',
+                'city' => 'Bruxelles',
             ],
 
             [
@@ -53,6 +59,9 @@ class UserSeeder extends Seeder
                 'email' => 'julie@dupont.com',
                 'phone' => '0475842369',
                 'langue' => 'fr',
+                'address' => 'Rue de la Liberté, 56',
+                'postal_code' => '1000',
+                'city' => 'Bruxelles',
             ],
 
             [
@@ -63,6 +72,9 @@ class UserSeeder extends Seeder
                 'email' => 'paul@durand',
                 'phone' => '0485963254',
                 'langue' => 'fr',
+                'address' => 'Rue de la Joie, 78',
+                'postal_code' => '1000',
+                'city' => 'Bruxelles',
             ],
 
             [
@@ -73,6 +85,9 @@ class UserSeeder extends Seeder
                 'email' => 'sophie@leroy.com',
                 'langue' => 'fr',
                 'phone' => '0478963254',
+                'address' => 'Rue de la Paix, 90',
+                'postal_code' => '1000',
+                'city' => 'Bruxelles',
             ],
 
             [
@@ -83,6 +98,9 @@ class UserSeeder extends Seeder
                 'email' => 'thomas@moreau.com',
                 'phone' => '0498963254',
                 'langue' => 'fr',
+                'address' => 'Rue de l\'Eté, 12',
+                'postal_code' => '1050',
+                'city' => 'Bruxelles',
             ],
 
             [
@@ -93,6 +111,9 @@ class UserSeeder extends Seeder
                 'email' => 'lucie@lefevre.com',
                 'phone' => '0468965284',
                 'langue' => 'fr',
+                'address' => 'Rue de l\'Hiver, 34',
+                'postal_code' => '1050',
+                'city' => 'Bruxelles',
             ],
 
             [
@@ -103,6 +124,9 @@ class UserSeeder extends Seeder
                 'email' => 'geraldine@kemp.com',
                 'phone' => '0486682454',
                 'langue' => 'fr',
+                'address' => 'Rue de l\'Automne, 94',
+                'postal_code' => '1050',
+                'city' => 'Bruxelles',
             ],
 
             [
@@ -113,6 +137,9 @@ class UserSeeder extends Seeder
                 'email' => 'annabelle@vertigo.com',
                 'phone' => '0483365684',
                 'langue' => 'fr',
+                'address' => 'Rue du Printemps, 22',
+                'postal_code' => '1050',
+                'city' => 'Bruxelles',
             ],
 
             [
@@ -123,6 +150,9 @@ class UserSeeder extends Seeder
                 'email' => 'pierre@lebrun.com',
                 'phone' => '0483398884',
                 'langue' => 'fr',
+                'address' => 'Rue de l\'Eglise, 56',
+                'postal_code' => '1050',
+                'city' => 'Bruxelles',
 
             ],
 
@@ -134,6 +164,9 @@ class UserSeeder extends Seeder
                 'email' => 'sylvie@lemoine.com',
                 'phone' => '0477842369',
                 'langue' => 'fr',
+                'address' => 'Boulevard de la Liberté, 78',
+                'postal_code' => '1000',
+                'city' => 'Bruxelles',
             ],
 
             [
@@ -144,6 +177,9 @@ class UserSeeder extends Seeder
                 'email' => 'pauline@durand',
                 'phone' => '0485553254',
                 'langue' => 'fr',
+                'address' => 'Rue des Mimosas, 90',
+                'postal_code' => '1030',
+                'city' => 'Bruxelles',
             ],
 
             [
@@ -154,6 +190,9 @@ class UserSeeder extends Seeder
                 'email' => 'amandine@lareine.com',
                 'phone' => '0496887755',
                 'langue' => 'fr',
+                'address' => 'Rue des Roses, 78',
+                'postal_code' => '1030',
+                'city' => 'Bruxelles',
             ],
 
             [
@@ -164,6 +203,9 @@ class UserSeeder extends Seeder
                 'email' => 'aurelie@tarot.com',
                 'phone' => '0477968952',
                 'langue' => 'fr',
+                'address' => 'Rue des Lilas, 90',
+                'postal_code' => '6000',
+                'city' => 'Charleroi',
             ],
 
             [
@@ -174,6 +216,9 @@ class UserSeeder extends Seeder
                 'email' => 'sylvain@lefevre.com',
                 'phone' => '0489996625',
                 'langue' => 'fr',
+                'address' => 'Rue des Coquelicots, 12',
+                'postal_code' => '6000',
+                'city' => 'Charleroi',
             ],
 
         ];

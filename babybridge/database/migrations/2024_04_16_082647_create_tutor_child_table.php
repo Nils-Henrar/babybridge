@@ -13,9 +13,6 @@ return new class extends Migration
     {
         Schema::create('child_tutor', function (Blueprint $table) {
             $table->id('id');
-            $table->foreignId('locality_id')->nullable()->references('id')->on('localities')
-                ->onUpdate('cascade')
-                ->onDelete('restrict');
             $table->foreignId('user_id')->references('id')->on('users')
                 ->onUpdate('cascade')
                 ->onDelete('restrict');

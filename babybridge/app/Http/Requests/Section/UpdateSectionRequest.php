@@ -1,19 +1,18 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Section;
 
 use Illuminate\Foundation\Http\FormRequest;
 use App\Models\Section;
 
-class StoreSectionRequest extends FormRequest
+class UpdateSectionRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-
-        if ($this->user()->can('create', Section::class)) {
+        if ($this->user()->can('update', Section::class)) {
             return true;
         }
     }

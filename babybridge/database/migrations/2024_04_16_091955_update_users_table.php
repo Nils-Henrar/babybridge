@@ -15,10 +15,13 @@ return new class extends Migration
 
             // Ajouter les nouvelles colonnes avant de modifier les colonnes existantes
             $table->string('login', 30)->after('id');
-            $table->string('langue', 2)->after('email');
+            $table->string('langue', 2)->nullable()->after('email');
             $table->string('firstname', 60);
             $table->string('lastname', 60);
             $table->string('phone', 20)->nullable();
+            $table->string('address', 250)->nullable();
+            $table->string('postal_code', 6)->nullable();
+            $table->string('city', 50)->nullable();
 
             // Définir la contrainte d'unicité sur la colonne login
             $table->unique('login', 'users_login_unique');

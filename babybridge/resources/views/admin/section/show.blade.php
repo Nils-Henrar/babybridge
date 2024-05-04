@@ -98,9 +98,12 @@
 
             </tbody>
         </table>
+
     </div>
     <!-- /.card-body -->
 </div>
+<!-- retour -->
+<a href="{{ route('admin.section.index') }}" class="btn btn-secondary">Retour</a>
 <!-- /.card -->
 
 @endsection

@@ -5,12 +5,11 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\SectionController;
 use App\Http\Controllers\WorkerController;
 use App\Http\Controllers\ChildController;
+use App\Http\Controllers\UserController;
 
 
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
 
 //Admin Route
 Route::middleware([\App\Http\Middleware\IsAdminMiddleware::class])->group(function () {
@@ -32,6 +31,15 @@ Route::middleware([\App\Http\Middleware\IsAdminMiddleware::class])->group(functi
     Route::get('admin/worker/{id}/edit', [WorkerController::class, 'edit'])->name('admin.worker.edit');
     Route::put('admin/worker/{id}', [WorkerController::class, 'update'])->name('admin.worker.update');
     Route::delete('admin/worker/{id}', [WorkerController::class, 'destroy'])->name('admin.worker.destroy');
+
+    //User routes
+    Route::get('admin/user', [UserController::class, 'index'])->name('admin.user.index');
+    Route::get('admin/user/create', [UserController::class, 'create'])->name('admin.user.create');
+    Route::post('admin/user', [UserController::class, 'store'])->name('admin.user.store');
+    Route::get('admin/user/{id}', [UserController::class, 'show'])->name('admin.user.show');
+    Route::get('admin/user/{id}/edit', [UserController::class, 'edit'])->name('admin.user.edit');
+    Route::put('admin/user/{id}', [UserController::class, 'update'])->name('admin.user.update');
+    Route::delete('admin/user/{id}', [UserController::class, 'destroy'])->name('admin.user.destroy');
 
 
     //Child routes
@@ -67,4 +75,9 @@ Route::middleware([\App\Http\Middleware\IsWorkerMiddleware::class])->group(funct
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::middleware('auth')->group(function () {
+    Route::get('/', function () {
+        return view('welcome');
+    });
+    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+});

@@ -34,11 +34,21 @@
         <!-- /.card-body -->
 
         <div class="card-footer">
-            <button type="submit" class="btn btn-primary">Ajouter</button>
+            <button type="submit" class="btn btn-primary">Ajouter</button> <a href="{{ route('admin.section.index') }}" class="btn btn-secondary">Annuler</a>
         </div>
     </form>
 
 </div>
 <!-- /.card -->
+
+@if ($errors->any())
+<div class="alert alert-danger">
+    <ul>
+        @foreach ($errors->all() as $error)
+        <li>{{ $error }}</li>
+        @endforeach
+    </ul>
+</div>
+@endif
 
 @endsection

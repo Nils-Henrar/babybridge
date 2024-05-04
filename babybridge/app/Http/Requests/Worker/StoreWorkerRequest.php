@@ -1,0 +1,40 @@
+<?php
+
+namespace App\Http\Requests\Worker;
+
+use Illuminate\Foundation\Http\FormRequest;
+use App\Models\Worker;
+
+class StoreWorkerRequest extends FormRequest
+{
+    /**
+     * Determine if the user is authorized to make this request.
+     */
+    public function authorize(): bool
+    {
+        return true;
+    }
+
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
+     */
+    public function rules(): array
+    {
+
+        return [
+
+            'firstname' => 'required|string|max:60',
+            'lastname' => 'required|string|max:60',
+            'email' => 'required|email|max:255',
+            'language' => 'nullable|string|max:2',
+            'phone' => 'nullable|string|max:20',
+            'address' => 'nullable|string|max:255',
+            'postal_code' => 'nullable|string|max:6',
+            'city' => 'nullable|string|max:50',
+            'section_id' => 'nullable|exists:sections,id',
+
+        ];
+    }
+}

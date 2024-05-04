@@ -14,7 +14,7 @@ return [
     |
     */
 
-    'title' => 'AdminLTE 3',
+    'title' => 'Babybridge',
     'title_prefix' => '',
     'title_postfix' => '',
 
@@ -134,11 +134,11 @@ return [
     */
 
     'usermenu_enabled' => false,
-    'usermenu_header' => false,
+    'usermenu_header' => true,
     'usermenu_header_class' => 'bg-primary',
-    'usermenu_image' => false,
-    'usermenu_desc' => false,
-    'usermenu_profile_url' => false,
+    'usermenu_image' => true,
+    'usermenu_desc' => true,
+    'usermenu_profile_url' => true,
 
     /*
     |--------------------------------------------------------------------------
@@ -300,10 +300,19 @@ return [
             'text' => 'search',
             'topnav_right' => true,
         ],
+
         [
             'type' => 'fullscreen-widget',
             'topnav_right' => true,
         ],
+
+        [
+            'topnav_right' => true,
+            'type' => 'user-menu',
+        ],
+
+        //nom du user
+
 
         // Sidebar items:
         [
@@ -334,6 +343,33 @@ return [
             'url' => '/admin/section',
             'icon' => 'fas fa-fw fa-users',
             'can' => 'admin',
+        ],
+
+        [
+            'text' => 'Puéricultrices',
+            'url' => '/admin/worker',
+            'icon' => 'fas fa-fw fa-users',
+            'can' => 'admin',
+        ],
+
+        [
+            'text' => 'Enfants',
+            'url' => '/admin/child',
+            'icon' => 'fas fa-fw fa-users',
+            'can' => 'admin',
+        ],
+
+        [
+            'text' => 'Utilisateurs',
+            'url' => '/admin/user',
+            'icon' => 'fas fa-fw fa-users',
+            'can' => 'admin',
+        ],
+
+        [
+            'text' => 'Calendrier',
+            'url' => '/admin/calendar',
+            'icon' => 'fas fa-fw fa-calendar',
         ],
 
         [

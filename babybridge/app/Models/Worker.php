@@ -27,13 +27,8 @@ class Worker extends Model
         return $this->belongsTo(User::class);
     }
 
-
-
-
-    // public function sections()
-    // {
-    //     return $this->belongsToMany(Section::class, 'worker_sections', 'worker_id', 'section_id')
-    //         ->withPivot('from', 'to')
-    //         ->withTimestamps();
-    // }
+    public function currentSections()
+    {
+        return $this->sectionWorkers->where('to', null);
+    }
 }

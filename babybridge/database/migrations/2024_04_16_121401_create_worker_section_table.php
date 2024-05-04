@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
 
 return new class extends Migration
 {
@@ -19,7 +20,7 @@ return new class extends Migration
             $table->foreignId('section_id')->references('id')->on('sections')
                 ->onUpdate('cascade')
                 ->onDelete('restrict');
-            $table->dateTime('from');
+            $table->timestamp('from')->useCurrent();
             $table->dateTime('to')->nullable();
         });
     }

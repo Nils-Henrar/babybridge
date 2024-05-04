@@ -6,8 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Section;
 use Illuminate\Support\Facades\Gate;
-use App\Http\Requests\StoreSectionRequest;
-use App\Http\Requests\UpdateSectionRequest;
+use App\Http\Requests\Section\StoreSectionRequest;
+use App\Http\Requests\Section\UpdateSectionRequest;
 use Illuminate\Support\Str;
 
 
@@ -86,6 +86,12 @@ class SectionController extends Controller
 
     /**
      * Update the specified resource in storage.
+     * @param  \Illuminate\Http\Request  $request
+     * @param  string  $id
+     * 
+     * @return \Illuminate\Http\Response
+     * 
+     * 
      */
     public function update(UpdateSectionRequest $request, string $id)
     {
