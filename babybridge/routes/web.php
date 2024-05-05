@@ -44,7 +44,7 @@ Route::middleware([\App\Http\Middleware\IsAdminMiddleware::class])->group(functi
 
     //Child routes
 
-    Route::get('admin/child', [ChildController::class, 'index'])->name('admin.child.index');
+    Route::get('admin/child', [ChildController::class, 'adminIndex'])->name('admin.child.index');
     Route::get('admin/child/create', [ChildController::class, 'create'])->name('admin.child.create');
     Route::post('admin/child', [ChildController::class, 'store'])->name('admin.child.store');
     Route::get('admin/child/{id}', [ChildController::class, 'show'])->name('admin.child.show');

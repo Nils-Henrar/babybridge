@@ -68,5 +68,10 @@ class Section extends Model
         return $workers;
     }
 
+    public function currentType()
+    {
+        return $this->sectionTypes->where('to', null)->first();
+    }
+
     //
 }

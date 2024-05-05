@@ -22,6 +22,13 @@
     </div>
     <!-- /.card-header -->
 
+    <!-- message de succès après la création d'un utilisateur -->
+    @if (session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+    @endif
+
     <div class="card-body table-responsive p-0">
         <table class="table table-hover text-nowrap">
             <thead>

@@ -77,7 +77,7 @@ class User extends Authenticatable
 
     public function adminlte_desc()
     {
-        return 'I\'m a nice guy';
+        return $this->login;
     }
 
     public function adminlte_profile_url()
@@ -93,11 +93,9 @@ class User extends Authenticatable
 
     public function assignRole($role)
     {
-        $role = Role::whereRole('role', $role)->first();
+        $roleId = Role::where('role', $role)->first()->id;
 
-        if ($role) {
-            return $this->roles()->attach($role->id);
-        }
+        $this->roles()->attach($roleId);
     }
 
     public function sendIdentifiersByEmail($firstname, $lastname)

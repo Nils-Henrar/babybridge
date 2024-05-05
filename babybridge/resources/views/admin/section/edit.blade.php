@@ -21,18 +21,24 @@
         @csrf
         @method('PUT')
         <div class="card-body">
-            <div class="form-group
-            @error('name')
-            has-error
-            @enderror">
+            <div class="form-group">
                 <label for="name">Nom de la section</label>
                 <input type="text" class="form-control" id="name" name="name" placeholder="Nom de la section" value="{{ old('name', $section->name) }}">
                 @error('name')
-                <span class="help-block
-                @error('name')
-                has-error
-                @enderror">{{ $message }}</span>
+                <span class="help-block">{{ $message }}</span>
                 @enderror
+
+                <div class="form-group">
+                    <label for="type">Type</label>
+                    <select class="form-control" id="type" name="type">
+                        @foreach($types as $type)
+                        <option value="{{ $type->id }}" @if($section->currentType()->id == $type->id) selected @endif>{{ $type->name }}</option>
+                        @endforeach
+                    </select>
+                    @error('type')
+                    <span class="help-block text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
             </div>
         </div>
         <!-- /.card-body -->

@@ -37,6 +37,11 @@ class Child extends Model
         return $this->hasMany(Attendance::class);
     }
 
+    public function childTutors()
+    {
+        return $this->hasMany(ChildTutor::class);
+    }
+
     public function dailyReports()
     {
         return $this->hasMany(DailyReport::class);
@@ -70,5 +75,23 @@ class Child extends Model
     public function childMedRecords()
     {
         return $this->hasMany(MedicalRecord::class);
+    }
+
+    public function currentSection()
+    {
+        return $this->childSections()->where('to', null)->first();
+    }
+
+    public function getFullNameAttribute()
+    {
+        return $this->firstname . ' ' . $this->lastname;
+    }
+
+    public function getAgeAttribute()
+    {
+        $date = new \DateTime($this->birthdate);
+        $now = new \DateTime();
+        $interval = $now->diff($date);
+        return $interval->y;
     }
 }

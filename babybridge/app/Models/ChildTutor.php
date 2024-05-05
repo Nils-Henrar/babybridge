@@ -17,6 +17,8 @@ class ChildTutor extends Model
         'child_id',
     ];
 
+    public $timestamps = false;
+
     public function user()
     {
         return $this->belongsTo(User::class);

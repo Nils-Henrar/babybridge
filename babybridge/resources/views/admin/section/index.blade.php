@@ -8,18 +8,6 @@
 
 @section('content_body')
 
-
-<!-- 
-//crud section
-Route::get('/admin/sections', [SectionController::class, 'index'])->name('admin.sections.index');
-Route::get('/admin/sections/{id}', [SectionController::class, 'show'])->name('admin.sections.show');
-Route::get('/admin/sections/create', [SectionController::class, 'create'])->name('admin.sections.create');
-Route::post('/admin/sections', [SectionController::class, 'store'])->name('admin.sections.store');
-Route::get('/admin/sections/{id}/edit', [SectionController::class, 'edit'])->name('admin.sections.edit');
-Route::put('/admin/sections/{id}', [SectionController::class, 'update'])->name('admin.sections.update');
-Route::delete('/admin/sections/{id}', [SectionController::class, 'destroy'])->name('admin.sections.destroy'); -->
-
-
 <!-- tableau contenanant les sections -->
 
 <div class="card">
@@ -42,6 +30,7 @@ Route::delete('/admin/sections/{id}', [SectionController::class, 'destroy'])->na
                     <th>Titre</th>
                     <th>Enfants</th>
                     <th>Puéricultrices/teurs</th>
+                    <th>type</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -52,6 +41,8 @@ Route::delete('/admin/sections/{id}', [SectionController::class, 'destroy'])->na
                     <td>{{ $section->name}}</td>
                     <td>{{ $section->countChildren() }}</td>
                     <td>{{ $section->countWorkers() }}</td>
+                    <td>{{ $section->currentType() ? $section->currentType()->type->name : 'N/A' }}</td>
+
                     <td>
                         <a href="{{ route('admin.section.show', $section->id) }}" class="btn btn-info">Voir</a>
                         <a href="{{ route('admin.section.edit', $section->id) }}" class="btn btn-warning">Modifier</a>

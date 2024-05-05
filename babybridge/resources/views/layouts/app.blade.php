@@ -24,6 +24,15 @@
 @endif
 @stop
 
+{{-- Add a common navbar layout --}}
+
+@section('content_top_nav_right')
+<!-- athu user name -->
+<li class="nav-item d-none d-sm-inline-block">
+    <span href="#" class="nav-link">{{ Auth::user()->login }}</span>
+</li>
+@endsection
+
 {{-- Rename section content to content_body --}}
 
 @section('content')
@@ -48,12 +57,15 @@
 
 @push('js')
 <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js'></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
     $(document).ready(function() {
         // Add your common script logic here...
     });
 </script>
+
 @endpush
+
 
 {{-- Add common CSS customizations --}}
 

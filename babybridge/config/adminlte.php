@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
+
 return [
 
     /*
@@ -31,7 +33,7 @@ return [
     */
 
     'use_ico_only' => false,
-    'use_full_favicon' => false,
+    'use_full_favicon' => true,
 
     /*
     |--------------------------------------------------------------------------
@@ -133,7 +135,7 @@ return [
     |
     */
 
-    'usermenu_enabled' => false,
+    'usermenu_enabled' => true,
     'usermenu_header' => true,
     'usermenu_header_class' => 'bg-primary',
     'usermenu_image' => true,
@@ -298,7 +300,7 @@ return [
         [
             'type' => 'navbar-search',
             'text' => 'search',
-            'topnav_right' => true,
+            'topnav_right' => false,
         ],
 
         [
@@ -310,9 +312,6 @@ return [
             'topnav_right' => true,
             'type' => 'user-menu',
         ],
-
-        //nom du user
-
 
         // Sidebar items:
         [

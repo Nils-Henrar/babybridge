@@ -62,7 +62,7 @@ class WorkerController extends Controller
         $user->city = $data['city'];
 
 
-        $user->assignRole('worker');
+
 
         $identifiers = $user->sendIdentifiersByEmail($user->firstname, $user->lastname);
 
@@ -70,6 +70,8 @@ class WorkerController extends Controller
         $user->password = bcrypt($identifiers['password']);
 
         $user->save();
+
+        $user->assignRole('worker');
 
         $worker = new Worker();
 
