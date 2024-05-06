@@ -71,7 +71,7 @@
                     <td>
                         <a href="{{ route('admin.user.show', $user->id) }}" class="btn btn-primary">Voir</a>
                         <a href="{{ route('admin.user.edit', $user->id) }}" class="btn btn-warning">Modifier</a>
-                        <form method="POST" action="{{ route('admin.user.destroy', $user->id) }}" style="display:inline;">
+                        <form method="POST" action="{{ route('admin.user.destroy', $user->id) }}" style="display:inline;" class="delete-form">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-danger">Supprimer</button>
@@ -93,4 +93,21 @@
     {{ $users->links('pagination::bootstrap-5') }}
 </div>
 
+@endsection
+
+
+@section('js')
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const deleteForms = document.querySelectorAll('.delete-form');
+        deleteForms.forEach(form => {
+            form.addEventListener('submit', function(event) {
+                event.preventDefault(); // Stop the form from submitting immediately
+                if (confirm('Êtes-vous sûr de vouloir supprimer cette section ? Cette action est irréversible.')) {
+                    this.submit(); // Submit the form if the user confirmed
+                }
+            });
+        });
+    });
+</script>
 @endsection

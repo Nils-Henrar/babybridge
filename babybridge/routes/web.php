@@ -6,6 +6,7 @@ use App\Http\Controllers\SectionController;
 use App\Http\Controllers\WorkerController;
 use App\Http\Controllers\ChildController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\EventController;
 
 
 
@@ -51,6 +52,16 @@ Route::middleware([\App\Http\Middleware\IsAdminMiddleware::class])->group(functi
     Route::get('admin/child/{id}/edit', [ChildController::class, 'edit'])->name('admin.child.edit');
     Route::put('admin/child/{id}', [ChildController::class, 'update'])->name('admin.child.update');
     Route::delete('admin/child/{id}', [ChildController::class, 'destroy'])->name('admin.child.destroy');
+
+    //Event routes
+
+    Route::get('admin/event', [EventController::class, 'index'])->name('admin.event.index');
+    Route::get('admin/event/create', [EventController::class, 'create'])->name('admin.event.create');
+    Route::post('admin/event', [EventController::class, 'store'])->name('admin.event.store');
+    Route::get('admin/event/{id}', [EventController::class, 'show'])->name('admin.event.show');
+    Route::get('admin/event/{id}/edit', [EventController::class, 'edit'])->name('admin.event.edit');
+    Route::put('admin/event/{id}', [EventController::class, 'update'])->name('admin.event.update');
+    Route::delete('admin/event/{id}', [EventController::class, 'destroy'])->name('admin.event.destroy');
 });
 
 

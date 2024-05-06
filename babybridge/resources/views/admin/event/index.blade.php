@@ -1,23 +1,25 @@
 @extends ('layouts.app')
 
-@section('subtitle', 'Admin')
+@section('subtitle', 'Events')
 
-@section('content_header_title', 'Admin')
+@section('content_header_title', 'Events')
 
-@section('content_header_subtitle', 'Admin')
+@section('content_header_subtitle', 'Events')
 
 @section('content_body')
 
-<!-- tableau contenanant les sections -->
+<!-- Affichage de la liste des événements -->
 
 <div class="card">
-    <div class="card-header">
-        <h3 class="card-title">Liste des sections</h3>
+
+
+    <div class=" card-header">
+        <h3 class="card-title">Liste des événements</h3>
 
         <div class="card-tools">
-            <a href="{{ route('admin.section.create') }}" class="btn btn-primary">Ajouter une section</a>
-
+            <a href="{{ route('admin.event.create') }}" class="btn btn-primary">Ajouter un événement</a>
         </div>
+
         <!-- message de succès après la création d'un événement -->
         @if (session('success'))
         <div class="alert alert-success">
@@ -26,33 +28,31 @@
         @endif
 
     </div>
-    <!-- /.card-header -->
 
-    <div class="card-body table-responsive p-0">
-        <table class="table table-hover text-nowrap">
+
+    <!-- /.card-header -->
+    <div class="card-body">
+        <table id="events" class="table table-bordered table-striped">
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Titre</th>
-                    <th>Enfants</th>
-                    <th>Puéricultrices/teurs</th>
-                    <th>type</th>
-                    <th>Actions</th>
+                    <th>Évenement</th>
+                    <th>Date</th>
+                    <th>Description</th>
                 </tr>
             </thead>
-            <tbody>
-                @foreach($sections as $section)
-                <tr>
-                    <td>{{ $section->id }}</td>
-                    <td>{{ $section->name}}</td>
-                    <td>{{ $section->countChildren() }}</td>
-                    <td>{{ $section->countWorkers() }}</td>
-                    <td>{{ $section->currentType->type->name ?? 'N/A' }}</td>
 
+            <tbody>
+                @foreach ($events as $event)
+                <tr>
+                    <td>{{ $event->id }}</td>
+                    <td>{{ $event->title }}</td>
+                    <td>{{ $event->schedule }}</td>
+                    <td>{{ $event->description }}</td>
                     <td>
-                        <a href="{{ route('admin.section.show', $section->id) }}" class="btn btn-info">Voir</a>
-                        <a href="{{ route('admin.section.edit', $section->id) }}" class="btn btn-warning">Modifier</a>
-                        <form action="{{ route('admin.section.destroy', $section->id) }}" method="POST" style="display:inline;" class="delete-form">
+                        <a href="{{ route('admin.event.show', $event->id) }}" class="btn btn-info">Voir</a>
+                        <a href="{{ route('admin.event.edit', $event->id) }}" class="btn btn-warning">Modifier</a>
+                        <form action="{{ route('admin.event.destroy', $event->id) }}" method="POST" style="display:inline;" class=" delete-form">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-danger">Supprimer</button>
@@ -62,10 +62,11 @@
                 @endforeach
             </tbody>
         </table>
-
     </div>
-
+    <!-- /.card-body -->
 </div>
+<!-- /.card -->
+@endsection
 
 
 @section('js')
@@ -82,8 +83,4 @@
         });
     });
 </script>
-@endsection
-
-
-
 @endsection

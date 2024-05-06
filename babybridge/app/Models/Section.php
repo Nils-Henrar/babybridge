@@ -68,10 +68,21 @@ class Section extends Model
         return $workers;
     }
 
+    // public function currentType()
+    // {
+    //     return $this->sectionTypes->where('to', null)->first();
+    // }
+
+    // Dans Section.php
     public function currentType()
     {
-        return $this->sectionTypes->where('to', null)->first();
+        return $this->hasOne(SectionType::class)->whereNull('to')->with('type');
     }
 
-    //
+    public static function getSortedSections()
+    {
+        return Section::with('currentType.type')->get()->sortBy(function ($section) {
+            return optional($section->currentType)->type->name ?? 'N/A';
+        });
+    }
 }

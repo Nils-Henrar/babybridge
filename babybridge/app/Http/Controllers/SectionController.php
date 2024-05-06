@@ -110,6 +110,10 @@ class SectionController extends Controller
 
         $sectionType = $section->currentType();
 
+
+        //TODO
+        // Il faut changer la logique afin que le changement se fasse quand les enfants ont atteint une certaine moyenne d'age 
+        // (utiliser une tache cron pour cela / Créer une tâche planifiée (cron job) :)
         if ($data['type_id'] != $sectionType->type->id) {
             $sectionType->to = now();
             $sectionType->save();

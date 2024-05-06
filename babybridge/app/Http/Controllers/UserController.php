@@ -135,10 +135,21 @@ class UserController extends Controller
      */
     public function destroy(string $id)
     {
-        // delete the user
-
         $user = User::find($id);
 
+        // Supprime tous les rôles associés à cet utilisateur
+        $user->roles()->detach();
+
+        // Supprime toutes les relations entre cet utilisateur et les sections
+        $user->worker->sectionWorkers()->delete();
+
+        // Supprime le travailleur associé à cet utilisateur
+        $user->worker()->delete();
+
+        // Supprime le tuteur associé à cet utilisateur
+        $user->tutor()->delete();
+
+        // Supprime l'utilisateur lui-même
         $user->delete();
 
         return redirect()->route('admin.user.index')->with('success', 'L\'utilisateur a été supprimé avec succès');

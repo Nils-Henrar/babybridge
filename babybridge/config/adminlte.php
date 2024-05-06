@@ -366,6 +366,20 @@ return [
         ],
 
         [
+            'text' => 'Tuteurs',
+            'url' => '/admin/tutor',
+            'icon' => 'fas fa-fw fa-users',
+            'can' => 'admin',
+        ],
+
+        [
+            'text' => 'Événements',
+            'url' => '/admin/event',
+            'icon' => 'fas fa-fw fa-calendar',
+            'can' => 'admin',
+        ],
+
+        [
             'text' => 'Calendrier',
             'url' => '/admin/calendar',
             'icon' => 'fas fa-fw fa-calendar',
