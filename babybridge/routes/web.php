@@ -7,6 +7,7 @@ use App\Http\Controllers\WorkerController;
 use App\Http\Controllers\ChildController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\CalendarController;
 
 
 
@@ -62,6 +63,10 @@ Route::middleware([\App\Http\Middleware\IsAdminMiddleware::class])->group(functi
     Route::get('admin/event/{id}/edit', [EventController::class, 'edit'])->name('admin.event.edit');
     Route::put('admin/event/{id}', [EventController::class, 'update'])->name('admin.event.update');
     Route::delete('admin/event/{id}', [EventController::class, 'destroy'])->name('admin.event.destroy');
+
+    //Calendar routes
+
+    Route::get('admin/calendar', [CalendarController::class, 'index'])->name('admin.calendar.index');
 });
 
 
