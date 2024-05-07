@@ -27,8 +27,8 @@ class Worker extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function currentSections()
+    public function currentSection()
     {
-        return $this->sectionWorkers->where('to', null);
+        return $this->hasOne(SectionWorker::class)->where('to', null);
     }
 }

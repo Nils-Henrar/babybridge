@@ -44,9 +44,7 @@
                     <td>{{ $worker->id }}</td>
                     <td>{{$worker->user->lastname}}</td>
                     <td>{{$worker->user->firstname}}</td>
-                    @foreach($worker->currentSections() as $section)
-                    <td>{{ $section->section->name }}</td>
-                    @endforeach
+                    <td>{{$worker->currentSection->section->name ?? 'N/A'}}</td>
                     <td>
 
                         <a href="{{ route('admin.worker.show', $worker->id) }}" class="btn btn-info">Voir</a>

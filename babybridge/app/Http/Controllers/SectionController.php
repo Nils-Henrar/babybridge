@@ -35,7 +35,11 @@ class SectionController extends Controller
     {
         // Display the form to create a new section
 
-        return view('admin.section.create');
+        $types = Type::all();
+
+        return view('admin.section.create', [
+            'types' => $types,
+        ]);
     }
 
     /**
@@ -55,7 +59,7 @@ class SectionController extends Controller
 
         $section->save();
 
-        return redirect()->route('admin.section.index');
+        return redirect()->route('admin.section.index')->with('success', 'La section a été créée avec succès');
     }
 
     /**
@@ -108,19 +112,18 @@ class SectionController extends Controller
 
         $section->name = $data['name'];
 
-        $sectionType = $section->currentType();
-
+        $sectionType = $section->currentType;
 
         //TODO
         // Il faut changer la logique afin que le changement se fasse quand les enfants ont atteint une certaine moyenne d'age 
         // (utiliser une tache cron pour cela / Créer une tâche planifiée (cron job) :)
-        if ($data['type_id'] != $sectionType->type->id) {
+        if ($data['type'] != $sectionType->type->id) {
             $sectionType->to = now();
             $sectionType->save();
 
             $newSectionType = new SectionType();
             $newSectionType->section_id = $section->id;
-            $newSectionType->type_id = $data['type_id'];
+            $newSectionType->type_id = $data['type'];
 
             $newSectionType->save();
         }
@@ -130,7 +133,7 @@ class SectionController extends Controller
 
         $section->save();
 
-        return redirect()->route('admin.section.index');
+        return redirect()->route('admin.section.index')->with('success', 'La section a été modifiée avec succès');
     }
 
     /**

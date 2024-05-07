@@ -43,8 +43,12 @@
         </div>
         <div class="form-group">
             <label for="name">Section</label>
-            <input type="text" class="form-control" id="name" name="name" placeholder="Section" value="{{ $worker->currentSections()->first()->section->name }}" readonly>
+            <input type="text" class="form-control" id="name" name="name" placeholder="Section" value="{{ $worker->currentSection->section->name }}" readonly>
         </div>
+    </div>
+
+    <div class="card-footer">
+        <a href="{{ route('admin.worker.index') }}" class="btn btn-secondary mt-3">Retour à l'index</a>
     </div>
 </div>
 

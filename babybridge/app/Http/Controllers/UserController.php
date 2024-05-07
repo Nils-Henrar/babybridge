@@ -141,7 +141,7 @@ class UserController extends Controller
         $user->roles()->detach();
 
         // Supprime toutes les relations entre cet utilisateur et les sections
-        $user->worker->sectionWorkers()->delete();
+        $user->worker->sectionWorkers->delete();
 
         // Supprime le travailleur associé à cet utilisateur
         $user->worker()->delete();

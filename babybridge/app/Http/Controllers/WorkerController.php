@@ -8,6 +8,7 @@ use App\Models\Section;
 use App\Models\SectionWorker;
 use App\Models\User;
 use App\Http\Requests\Worker\StoreWorkerRequest;
+use App\Http\Requests\Worker\UpdateWorkerRequest;
 
 class WorkerController extends Controller
 {
@@ -86,7 +87,7 @@ class WorkerController extends Controller
             $sectionWorker->save();
         }
 
-        return redirect()->route('admin.worker.index');
+        return redirect()->route('admin.worker.index')->with('success', 'Le travailleur a été créé avec succès');
     }
 
     /**
@@ -125,9 +126,36 @@ class WorkerController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateWorkerRequest $request, string $id)
     {
-        //
+        // validate the request
+
+        $data = $request->validated();
+
+        $worker = Worker::find($id);
+
+        $worker->user->firstname = $data['firstname'];
+        $worker->user->lastname = $data['lastname'];
+        $worker->user->email = $data['email'];
+        $worker->user->langue = $data['language'];
+        $worker->user->phone = $data['phone'];
+        $worker->user->address = $data['address'];
+        $worker->user->postal_code = $data['postal_code'];
+        $worker->user->city = $data['city'];
+
+        $worker->user->save();
+
+        if ($data['section_id'] != $worker->section->id) {
+            $worker->currentSection()->to = now();
+            $worker->save();
+
+            $sectionWorker = new SectionWorker();
+            $sectionWorker->section_id = $data['section_id'];
+            $sectionWorker->worker_id = $worker->id;
+            $sectionWorker->save();
+        }
+
+        return redirect()->route('admin.worker.index')->with('success', 'Le travailleur a été mis à jour avec succès');
     }
 
     /**

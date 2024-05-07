@@ -19,108 +19,78 @@
     <form method="POST" action="{{ route('admin.worker.store') }}">
         @csrf
         <div class="card-body">
-            <div class="form-group
-            @error('firstname')
-            has-error
-            @enderror">
+            <div class="form-group">
                 <label for="firstname">Prénom</label>
-                <input type="text" class="form-control" id="firstname" name="firstname" placeholder="Prénom" value="{{ old('firstname') }}">
+                <input type="text" class="form-control @error('firstname') is-invalid @enderror" id="firstname" name="firstname" placeholder="Prénom" value="{{ old('firstname') }}">
                 @error('firstname')
-                <span class="help-block">{{ $message }}</span>
+                <span class="help-block text-danger">{{ $message }}</span>
                 @enderror
             </div>
-            <div class="form-group
-            @error('lastname')
-            has-error
-            @enderror">
+            <div class="form-group">
                 <label for="lastname">Nom</label>
-                <input type="text" class="form-control" id="lastname" name="lastname" placeholder="Nom" value="{{ old('lastname') }}">
+                <input type="text" class="form-control @error('lastname') is-invalid @enderror" id="lastname" name="lastname" placeholder="Nom" value="{{ old('lastname') }}">
                 @error('lastname')
-                <span class="help-block">{{ $message }}</span>
+                <span class="help-block text-danger">{{ $message }}</span>
                 @enderror
             </div>
-            <div class="form-group
-            @error('email')
-            has-error
-            @enderror">
+            <div class="form-group">
                 <label for="email">Email</label>
-                <input type="email" class="form-control" id="email" name="email" placeholder="Email" value="{{ old('email') }}">
+                <input type="email" class="form-control @error('email') is-invalid @enderror" id="email" name="email" placeholder="Email" value="{{ old('email') }}">
                 @error('email')
-                <span class="help-block">{{ $message }}</span>
+                <span class="help-block text-danger">{{ $message }}</span>
                 @enderror
             </div>
 
             <!-- langue -->
-            <div class="form-group
-            @error('language')
-            has-error
-            @enderror">
+            <div class="form-group">
                 <label for="language">Langue</label>
-                <select class="form-control" id="language" name="language">
+                <select class="form-control @error('language') is-invalid @enderror" id="language" name="language">
                     <option value="">-- Choisir une langue --</option>
                     <option value="fr" @if(old('language')=='fr' ) selected @endif>Français</option>
                     <option value="en" @if(old('language')=='en' ) selected @endif>Anglais</option>
                 </select>
                 @error('language')
-                <span class="help-block">{{ $message }}</span>
+                <span class="help-block text-danger">{{ $message }}</span>
                 @enderror
             </div>
-            <div class="form-group
-            @error('phone')
-            has-error
-            @enderror">
+            <div class="form-group">
                 <label for="phone">Téléphone</label>
-                <input type="text" class="form-control" id="phone" name="phone" placeholder="Téléphone" value="{{ old('phone') }}">
+                <input type="text" class="form-control @error('phone') is-invalid @enderror" id="phone" name="phone" placeholder="Téléphone" value="{{ old('phone') }}">
                 @error('phone')
-                <span class="help-block">{{ $message }}</span>
+                <span class="help-block text-danger">{{ $message }}</span>
                 @enderror
             </div>
-            <div class="form-group
-            @error('address')
-            has-error
-            @enderror">
+            <div class="form-group">
                 <label for="address">Adresse</label>
-                <input type="text" class="form-control" id="address" name="address" placeholder="Adresse" value="{{ old('address') }}">
+                <input type="text" class="form-control @error('address') is-invalid @enderror" id="address" name="address" placeholder="Adresse" value="{{ old('address') }}">
                 @error('address')
-                <span class="help-block
-                @error('address')
-                has-error
-                @enderror">{{ $message }}</span>
+                <span class="help-block text-danger">{{ $message }}</span>
                 @enderror
             </div>
-            <div class="form-group
-            @error('postal_code')
-            has-error
-            @enderror">
+            <div class="form-group">
                 <label for="postal_code">Code postal</label>
-                <input type="text" class="form-control" id="postal_code" name="postal_code" placeholder="Code postal" value="{{ old('postal_code') }}">
+                <input type="text" class="form-control @error('postal_code') is-invalid @enderror" id="postal_code" name="postal_code" placeholder="Code postal" value="{{ old('postal_code') }}">
                 @error('postal_code')
-                <span class="help-block">{{ $message }}</span>
+                <span class="help-block text-danger">{{ $message }}</span>
                 @enderror
             </div>
-            <div class="form-group
-            @error('city')
-            has-error
-            @enderror">
+            <div class="form-group">
                 <label for="city">Ville</label>
-                <input type="text" class="form-control" id="city" name="city" placeholder="Ville" value="{{ old('city') }}">
+                <input type="text" class="form-control @error('city') is-invalid @enderror" id="city" name="city" placeholder="Ville" value="{{ old('city') }}">
                 @error('city')
-                <span class="help-block">{{ $message }}</span>
+                <span class="help-block text-danger">{{ $message }}</span>
                 @enderror
             </div>
-            <div class="form-group
-            @error('section_id')
-            has-error
-            @enderror">
+            <div class="form-group">
                 <label for="section_id">Section</label>
-                <select class="form-control" id="section_id" name="section_id">
+                <select class="form-control @error('section_id') is-invalid @enderror" id="section_id" name="section_id">
                     <option value="">-- Choisir une section --</option>
                     @foreach($sections as $section)
                     <option value="{{ $section->id }}" @if(old('section_id')==$section->id) selected @endif>{{ $section->name }}</option>
                     @endforeach
                 </select>
                 @error('section_id')
-                <span class="help-block">{{ $message }}</span>
+                <span class="help-block text-danger">{{ $message }}</span>
                 @enderror
             </div>
         </div>

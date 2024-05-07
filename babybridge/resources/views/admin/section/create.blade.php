@@ -20,14 +20,23 @@
     <form method="POST" action="{{ route('admin.section.store') }}">
         @csrf
         <div class="card-body">
-            <div class="form-group
-            @error('name')
-            has-error
-            @enderror">
+            <div class="form-group">
                 <label for="name">Nom de la section</label>
-                <input type="text" class="form-control" id="name" name="name" placeholder="Nom de la section" value="{{ old('name') }}">
+                <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" placeholder="Nom de la section" value="{{ old('name') }}">
                 @error('name')
-                <span class="help-block">{{ $message }}</span>
+                <span class="alert alert-danger">{{ $message }}</span>
+                @enderror
+            </div>
+
+            <div class="form-group">
+                <label for="type">Type</label>
+                <select class="form-control @error('type') is-invalid @enderror" id="type" name="type">
+                    @foreach($types as $type)
+                    <option value="{{ $type->id }}">{{ $type->name }}</option>
+                    @endforeach
+                </select>
+                @error('type')
+                <span class="alert alert-danger">{{ $message }}</span>
                 @enderror
             </div>
         </div>

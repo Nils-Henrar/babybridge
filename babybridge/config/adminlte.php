@@ -330,7 +330,7 @@ return [
             'label' => 4,
             'label_color' => 'success',
         ],
-        ['header' => 'account_settings'],
+        ['header' => 'Menu'],
         [
             'text' => 'profile',
             'url' => 'admin/settings',

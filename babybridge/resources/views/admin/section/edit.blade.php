@@ -23,16 +23,16 @@
         <div class="card-body">
             <div class="form-group">
                 <label for="name">Nom de la section</label>
-                <input type="text" class="form-control" id="name" name="name" placeholder="Nom de la section" value="{{ old('name', $section->name) }}">
+                <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" placeholder="Nom de la section" value="{{ old('name', $section->name) }}">
                 @error('name')
                 <span class="help-block">{{ $message }}</span>
                 @enderror
 
                 <div class="form-group">
                     <label for="type">Type</label>
-                    <select class="form-control" id="type" name="type">
+                    <select class="form-control @error('type') is-invalid @enderror" id="type" name="type">
                         @foreach($types as $type)
-                        <option value="{{ $type->id }}" @if($section->currentType()->id == $type->id) selected @endif>{{ $type->name }}</option>
+                        <option value="{{ $type->id }}" @if($section->currentType->type->id == $type->id) selected @endif>{{ $type->name }}</option>
                         @endforeach
                     </select>
                     @error('type')

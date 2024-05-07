@@ -60,7 +60,7 @@
             </div>
             <div class="form-group">
                 <label for="special_infos">Informations particulières</label>
-                <textarea class="form-control" id="special_infos" name="special_infos" placeholder="Informations particulières">@if(old('special_infos')){{ old('special_infos') }}@endif</textarea>
+                <textarea class="form-control @error('special_infos') is-invalid @enderror" id="special_infos" name="special_infos" placeholder="Informations particulières">@if(old('special_infos')){{ old('special_infos') }}@endif</textarea>
             </div>
             <!-- il faut ajouter un champ pour chaque tuteur de l'enfant afin de créer un nouveau utilisateur pour chaque tuteur -->
             <!-- il faut ajouter également un script javascript pour ajouter dynamiquement des champs pour les tuteurs en fonction de combien de tuteurs on veut ajouter -->
@@ -75,7 +75,7 @@
                     <div class="card-body">
                         <div class="form-group">
                             <label for="tutor_lastname[]">Nom du Tuteur:</label>
-                            <input type="text" class="form-control" name="tutor_lastname[]" placeholder="Nom du tuteur">
+                            <input type="text" class="form-control @error('tutor_lastname.*') is-invalid @enderror" name="tutor_lastname[]" placeholder="Nom du tuteur">
                             @error('tutor_lastname.*')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -85,7 +85,7 @@
 
                         <div class="form-group">
                             <label for="tutor_firstname[]">Prénom du Tuteur:</label>
-                            <input type="text" class="form-control" name="tutor_firstname[]" placeholder="Prénom du tuteur">
+                            <input type="text" class="form-control @error('tutor_firstname.*') is-invalid @enderror" name="tutor_firstname[]" placeholder="Prénom du tuteur">
                             @error('tutor_firstname.*')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -94,7 +94,7 @@
                         </div>
                         <div class="form-group">
                             <label for="tutor_email[]">Email du Tuteur:</label>
-                            <input type="email" class="form-control" name="tutor_email[]" placeholder="Email du tuteur">
+                            <input type="email" class="form-control @error('tutor_email.*') is-invalid @enderror" name="tutor_email[]" placeholder="Email du tuteur">
                             @error('tutor_email.*')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -103,7 +103,7 @@
                         </div>
                         <div class="form-group">
                             <label for="tutor_phone[]">Téléphone du Tuteur:</label>
-                            <input type="text" class="form-control" name="tutor_phone[]" placeholder="Téléphone du tuteur">
+                            <input type="text" class="form-control @error('tutor_phone.*') is-invalid @enderror" name="tutor_phone[]" placeholder="Téléphone du tuteur">
                             @error('tutor_phone.*')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -114,7 +114,7 @@
                         <!-- langue -->
                         <div class="form-group">
                             <label for="tutor_language[]">Langue</label>
-                            <select class="form-control" name="tutor_language[]">
+                            <select class="form-control @error('tutor_language.*') is-invalid @enderror" name="tutor_language[]">
                                 <option value="">-- Choisir une langue --</option>
                                 <option value="fr">Français</option>
                                 <option value="en">Anglais</option>
@@ -127,7 +127,7 @@
                         </div>
                         <div class="form-group">
                             <label for="tutor_address[]">Adresse du Tuteur:</label>
-                            <input type="text" class="form-control" name="tutor_address[]" placeholder="Adresse du tuteur">
+                            <input type="text" class="form-control @error('tutor_address.*') is-invalid @enderror" name="tutor_address[]" placeholder="Adresse du tuteur">
                             @error('tutor_address.*')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -136,7 +136,7 @@
                         </div>
                         <div class="form-group">
                             <label for="tutor_postal_code[]">Code postal du Tuteur:</label>
-                            <input type="text" class="form-control" name="tutor_postal_code[]" placeholder="Code postal du tuteur">
+                            <input type="text" class="form-control @error('tutor_postal_code.*') is-invalid @enderror" name="tutor_postal_code[]" placeholder="Code postal du tuteur">
                             @error('tutor_postal_code.*')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -145,7 +145,7 @@
                         </div>
                         <div class="form-group">
                             <label for="tutor_city[]">Ville du Tuteur:</label>
-                            <input type="text" class="form-control" name="tutor_city[]" placeholder="Ville du tuteur">
+                            <input type="text" class="form-control @error('tutor_city.*') is-invalid @enderror" name="tutor_city[]" placeholder="Ville du tuteur">
                             @error('tutor_city.*')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
