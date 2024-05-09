@@ -29,7 +29,7 @@
         </div>
         <div class="form-group">
             <label for="section">Section</label>
-            <input type="text" class="form-control" id="section" name="section" placeholder="Section" value="{{ $child->currentSection()->section->name }}" readonly>
+            <input type="text" class="form-control" id="section" name="section" placeholder="Section" value="{{ $child->currentSection->section->name }}" readonly>
         </div>
 
         <!-- dossier médical de l'enfant -->

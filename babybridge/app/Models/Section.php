@@ -51,21 +51,13 @@ class Section extends Model
 
     public function currentChildren()
     {
-        return $this->childSections->where('to', null);
+        return $this->hasMany(ChildSection::class)->where('to', null);
     }
 
     public function currentWorkers()
     {
-        $workers = [];
-
-        $workers = $this->sectionWorkers->map(function ($sectionWorker) {
-            //where to is null
-            if ($sectionWorker->to == null) {
-                return $sectionWorker->worker;
-            }
-        });
-
-        return $workers;
+        
+        return $this->hasMany(SectionWorker::class)->where('to', null);
     }
 
     // public function currentType()

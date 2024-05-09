@@ -9,6 +9,7 @@ use App\Models\SectionWorker;
 use App\Models\User;
 use App\Http\Requests\Worker\StoreWorkerRequest;
 use App\Http\Requests\Worker\UpdateWorkerRequest;
+use App\Models\Attendance;
 
 class WorkerController extends Controller
 {
@@ -145,9 +146,9 @@ class WorkerController extends Controller
 
         $worker->user->save();
 
-        if ($data['section_id'] != $worker->section->id) {
-            $worker->currentSection()->to = now();
-            $worker->save();
+        if ($data['section_id'] != $worker->currentSection->section_id) {
+            $worker->currentSection->to = now();
+            $worker->currentSection->save();
 
             $sectionWorker = new SectionWorker();
             $sectionWorker->section_id = $data['section_id'];

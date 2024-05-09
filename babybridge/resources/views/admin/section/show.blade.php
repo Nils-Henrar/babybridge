@@ -2,11 +2,11 @@
 
 @section('subtitle', 'Sections')
 
-//titre nom de la section
+
 @section('content_header_title', 'Section')
 
 
-//sous titre nom de la section
+
 @section('content_header_subtitle', $section->name)
 
 @section('content_body')
@@ -28,7 +28,6 @@
         {{ session('success') }}
     </div>
     @endif
-
     <div class="card-body table-responsive p-0">
         <table class="table table-hover text-nowrap">
             <thead>
@@ -40,15 +39,16 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach($section->currentWorkers() as $worker)
+                @foreach($section->currentWorkers as $sectionWorker)
+                
                 <tr>
-                    <td>{{ $worker->id }}</td>
-                    <td>{{$worker->user->lastname}}</td>
-                    <td>{{$worker->user->firstname}}</td>
+                    <td>{{ $sectionWorker->worker->id }}</td>
+                    <td>{{$sectionWorker->worker->user->lastname}}</td>
+                    <td>{{$sectionWorker->worker->user->firstname}}</td>
                     <td>
-                        <a href="{{ route('admin.worker.show', $worker->id) }}" class="btn btn-info">Voir</a>
-                        <a href="{{ route('admin.worker.edit', $worker->id) }}" class="btn btn-warning">Modifier</a>
-                        <form action="{{ route('admin.worker.destroy', $worker->id) }}" method="POST" style="display:inline;">
+                        <a href="{{ route('admin.worker.show', $sectionWorker->worker->id) }}" class="btn btn-info">Voir</a>
+                        <a href="{{ route('admin.worker.edit', $sectionWorker->worker->id) }}" class="btn btn-warning">Modifier</a>
+                        <form action="{{ route('admin.worker.destroy', $sectionWorker->worker->id) }}" method="POST" style="display:inline;">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-danger">Supprimer</button>
@@ -85,16 +85,17 @@
                 </tr>
             </thead>
             <tbody>
+                @foreach($section->currentChildren as $childSection)
 
-                @foreach($section->currentChildren() as $child)
+                
                 <tr>
-                    <td>{{ $child->id }}</td>
-                    <td>{{$child->child->lastname}}</td>
-                    <td>{{$child->child->firstname}}</td>
+                    <td>{{$childSection->child->id }}</td>
+                    <td>{{$childSection->child->lastname}}</td>
+                    <td>{{$childSection->child->firstname}}</td>
                     <td>
-                        <a href="{{ route('admin.child.show', $child->id) }}" class="btn btn-info">Voir</a>
-                        <a href="{{ route('admin.child.edit', $child->id) }}" class="btn btn-warning">Modifier</a>
-                        <form action="{{ route('admin.child.destroy', $child->id) }}" method="POST" style="display:inline;">
+                        <a href="{{ route('admin.child.show', $childSection->child->id) }}" class="btn btn-info">Voir</a>
+                        <a href="{{ route('admin.child.edit', $childSection->child->id) }}" class="btn btn-warning">Modifier</a>
+                        <form action="{{ route('admin.child.destroy', $childSection->child->id) }}" method="POST" style="display:inline;">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-danger">Supprimer</button>

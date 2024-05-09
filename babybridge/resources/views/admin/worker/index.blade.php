@@ -22,6 +22,13 @@
             <a href="{{ route('admin.worker.create') }}" class="btn btn-primary">Ajouter un travailleur</a>
         </div>
 
+        <!-- message de succès après la création d'un utilisateur -->
+        @if (session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+        @endif
+
     </div>
     <!-- /.card-header -->
 

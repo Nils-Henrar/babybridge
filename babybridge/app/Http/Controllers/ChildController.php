@@ -154,9 +154,8 @@ class ChildController extends Controller
         $child->save();
 
 
-        //si la section a changé, on met à jour la table child_section
         if ($data['section']) {
-            $childSection = $child->currentSection();
+            $childSection = $child->currentSection;
 
             if ($data['section'] != $childSection->section->id) {
                 $childSection->to = now();

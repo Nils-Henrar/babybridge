@@ -51,7 +51,7 @@
                     <td>{{ $child->firstname }}</td>
                     <td>{{ $child->birthdate }}</td>
                     <td>
-                        {{$child->currentSection()->section->name}}
+                        {{$child->currentSection->section->name}}
                     </td>
                     <td>
                         <a href="{{ route('admin.child.show', $child->id) }}" class="btn btn-info">Voir</a>

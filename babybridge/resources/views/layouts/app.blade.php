@@ -13,12 +13,15 @@
 @hasSection('content_header_title')
 <h1 class="text-muted">
     @yield('content_header_title')
-
+    
     @hasSection('content_header_subtitle')
     <small class="text-dark">
         <i class="fas fa-xs fa-angle-right text-muted"></i>
         @yield('content_header_subtitle')
     </small>
+    @endif
+    @hasSection('extra-css')
+    @yield('extra-css')
     @endif
 </h1>
 @endif
@@ -37,6 +40,7 @@
 
 @section('content')
 @yield('content_body')
+@stack('scripts')
 @stop
 
 {{-- Create a common footer --}}
@@ -57,12 +61,11 @@
 
 @push('js')
 <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js'></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script>
-    $(document).ready(function() {
-        // Add your common script logic here...
-    });
-</script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-timepicker/0.5.2/css/bootstrap-timepicker.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-timepicker/0.5.2/js/bootstrap-timepicker.min.js"></script>
+<!-- Dans <head> -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
 @endpush
 
@@ -71,6 +74,7 @@
 
 @push('css')
 <style type="text/css">
+
     /*
 .card-header {
 border-bottom: none;

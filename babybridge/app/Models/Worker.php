@@ -31,4 +31,17 @@ class Worker extends Model
     {
         return $this->hasOne(SectionWorker::class)->where('to', null);
     }
+
+    public function getCurrentChildren()
+    {
+        $section = $this->currentSection->section ?? null;
+
+        if (!$section) {
+            return collect(); // Retourne une collection vide si aucune section n'est associée
+        }
+
+        return $section->currentChildren()->get()->map(function ($childSection) {
+            return $childSection->child;
+        });
+    }
 }

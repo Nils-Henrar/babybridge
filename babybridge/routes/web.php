@@ -76,15 +76,18 @@ Route::middleware([\App\Http\Middleware\IsWorkerMiddleware::class])->group(funct
 
     //Section routes
 
-    Route::get('worker/section', [SectionController::class, 'index'])->name('worker.section.index');
+    Route::get('worker/section/children', [SectionController::class, 'showChildren'])->name('worker.section.children');
+    Route::get('worker/section/attendance', [SectionController::class, 'createAttendance'])->name('worker.section.attendance');
     Route::post('worker/section', [SectionController::class, 'store'])->name('worker.section.store');
     Route::get('worker/section/{id}', [SectionController::class, 'show'])->name('worker.section.show');
 
-    Route::get('worker/worker', [WorkerController::class, 'index'])->name('worker.worker.index');
-    Route::get('worker/worker/{id}', [WorkerController::class, 'show'])->name('worker.worker.show');
-    Route::get('worker/worker/{id}/edit', [WorkerController::class, 'edit'])->name('worker.worker.edit');
-    Route::put('worker/worker/{id}', [WorkerController::class, 'update'])->name('worker.worker.update');
-    Route::delete('worker/worker/{id}', [WorkerController::class, 'destroy'])->name('worker.worker.destroy');
+
+
+
+    //Child routes
+
+    Route::get('worker/child', [ChildController::class, 'index'])->name('worker.child.index');
+    Route::get('worker/child/{id}', [ChildController::class, 'show'])->name('worker.child.show');
 });
 
 

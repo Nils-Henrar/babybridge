@@ -49,7 +49,7 @@
                 <label for="section">Section</label>
                 <select class="form-control @error('section') is-invalid @enderror" id="section" name="section">
                     @foreach($sections as $section)
-                    <option value="{{ $section->id }}" @if($child->currentSection()->id == $section->id) selected @endif>{{ $section->name }}</option>
+                    <option value="{{ $section->id }}" @if($child->currentSection->id == $section->id) selected @endif>{{ $section->name }}</option>
                     @endforeach
                 </select>
                 @error('section')

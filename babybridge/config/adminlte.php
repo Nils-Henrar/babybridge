@@ -385,6 +385,35 @@ return [
             'icon' => 'fas fa-fw fa-calendar',
         ],
 
+        //Worker menu
+
+        [
+            'text' => 'Section',
+            'icon' => 'fas fa-fw fa-gavel',
+            'submenu' => [
+                [
+                    'text' => 'Enfants',
+                    'url' => '/worker/section/children',
+                    'icon' => 'fas fa-fw fa-users',
+                    'can' => 'worker',
+                ],
+
+                [
+                    'text' => 'Présences',
+                    'url' => '/worker/section/attendance',
+                    'icon' => 'fas fa-fw fa-clock',
+
+                ],
+
+            ],
+
+        ],
+
+
+
+
+
+
         [
             'text' => 'change_password',
             'url' => 'admin/settings',

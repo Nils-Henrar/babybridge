@@ -11,6 +11,7 @@ use App\Http\Requests\Section\UpdateSectionRequest;
 use Illuminate\Support\Str;
 use App\Models\Type;
 use App\Models\SectionType;
+use App\Models\Worker;
 
 
 class SectionController extends Controller
@@ -148,5 +149,23 @@ class SectionController extends Controller
         $section->delete();
 
         return redirect()->route('admin.section.index');
+    }
+
+    //Afficher les enfants de la section du worker connecté
+
+    public function showChildren()
+    {
+        $children = auth()->user()->worker->getCurrentChildren();
+
+        return view('worker.section.index', compact('children'));
+    }
+
+    //Afficher Les enfants avec un bouton pour prendre les présences
+
+    public function createAttendance()
+    {
+        $children = auth()->user()->worker->getCurrentChildren();
+
+        return view('worker.section.attendance', compact('children'));
     }
 }

@@ -79,7 +79,7 @@ class Child extends Model
 
     public function currentSection()
     {
-        return $this->childSections()->where('to', null)->first();
+        return $this->hasOne(ChildSection::class)->where('to', null);
     }
 
     public function getFullNameAttribute()

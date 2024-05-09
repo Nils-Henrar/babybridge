@@ -43,50 +43,60 @@
                 @enderror
             </div>
             <div class="form-group">
-                <label for="phone">Téléphone</label>
-                <input type="text" class="form-control @error('phone') is-invalid @enderror" id="phone" name="phone" placeholder="Téléphone" value="{{ old('phone', $worker->user->phone) }}">
-                @error('phone')
-                <span class="help-block text-danger">{{ $message }}</span>
-                @enderror
-            </div>
-            <div class="form-group">
-                <label for="address">Adresse</label>
-                <input type="text" class="form-control @error('address') is-invalid @enderror" id="address" name="address" placeholder="Adresse" value="{{ old('address', $worker->user->address) }}">
-                @error('address')
-                <span class="help-block text-danger">{{ $message }}</span>
-                @enderror
-            </div>
-            <div class="form-group">
-                <label for="postal_code">Code postal</label>
-                <input type="text" class="form-control @error('postal_code') is-invalid @enderror" id="postal_code" name="postal_code" placeholder="Code postal" value="{{ old('postal_code', $worker->user->postal_code) }}">
-                @error('postal_code')
-                <span class="help-block text-danger">{{ $message }}</span>
-                @enderror
-            </div>
-            <div class="form-group">
-                <label for="city">Ville</label>
-                <input type="text" class="form-control @error('city') is-invalid @enderror" id="city" name="city" placeholder="Ville" value="{{ old('city', $worker->user->city) }}">
-                @error('city')
-                <span class="help-block text-danger">{{ $message }}</span>
-                @enderror
-            </div>
-            <div class="form-group">
-                <label for="section_id">Section</label>
-                <select class="form-control @error('section_id') is-invalid @enderror" id="section_id" name="section_id">
-                    @foreach($sections as $section)
-                    <option value="{{ $section->id }}" @if($worker->currentSection->section->id == $section->id) selected @endif>{{ $section->name }}</option>
-                    @endforeach
+                <label for="language">Langue</label>
+                <select class="form-control" id="language" name="language">
+                    <option value="">-- Choisir une langue --</option>
+                    <option value="fr" @if(old('language', $worker->user->langue)=='fr' ) selected @endif>Français</option>
+                    <option value="en" @if(old('language', $worker->user->langue)=='en' ) selected @endif>Anglais</option>
                 </select>
-                @error('section_id')
+                @error('language')
                 <span class="help-block text-danger">{{ $message }}</span>
                 @enderror
+                <div class="form-group">
+                    <label for="phone">Téléphone</label>
+                    <input type="text" class="form-control @error('phone') is-invalid @enderror" id="phone" name="phone" placeholder="Téléphone" value="{{ old('phone', $worker->user->phone) }}">
+                    @error('phone')
+                    <span class="help-block text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
+                <div class="form-group">
+                    <label for="address">Adresse</label>
+                    <input type="text" class="form-control @error('address') is-invalid @enderror" id="address" name="address" placeholder="Adresse" value="{{ old('address', $worker->user->address) }}">
+                    @error('address')
+                    <span class="help-block text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
+                <div class="form-group">
+                    <label for="postal_code">Code postal</label>
+                    <input type="text" class="form-control @error('postal_code') is-invalid @enderror" id="postal_code" name="postal_code" placeholder="Code postal" value="{{ old('postal_code', $worker->user->postal_code) }}">
+                    @error('postal_code')
+                    <span class="help-block text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
+                <div class="form-group">
+                    <label for="city">Ville</label>
+                    <input type="text" class="form-control @error('city') is-invalid @enderror" id="city" name="city" placeholder="Ville" value="{{ old('city', $worker->user->city) }}">
+                    @error('city')
+                    <span class="help-block text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
+                <div class="form-group">
+                    <label for="section_id">Section</label>
+                    <select class="form-control @error('section_id') is-invalid @enderror" id="section_id" name="section_id">
+                        @foreach($sections as $section)
+                        <option value="{{ $section->id }}" @if($worker->currentSection->section->id == $section->id) selected @endif>{{ $section->name }}</option>
+                        @endforeach
+                    </select>
+                    @error('section_id')
+                    <span class="help-block text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
             </div>
-        </div>
-        <!-- /.card-body -->
+            <!-- /.card-body -->
 
-        <div class="card-footer">
-            <button type="submit" class="btn btn-primary">Modifier</button> <a href="{{ route('admin.worker.index') }}" class="btn btn-secondary">Annuler</a>
-        </div>
+            <div class="card-footer">
+                <button type="submit" class="btn btn-primary">Modifier</button> <a href="{{ route('admin.worker.index') }}" class="btn btn-secondary">Annuler</a>
+            </div>
     </form>
 
 </div>
