@@ -9,14 +9,14 @@ class ChildMeal extends Model
 {
     use HasFactory;
 
-    protected $table = 'child_meals';
+    protected $table = 'child_meal';
 
     protected $fillable = [
         'child_id',
         'meal_id',
         'meal_time',
         'quantity',
-        'note',
+        'notes',
     ];
 
     public $timestamps = false;

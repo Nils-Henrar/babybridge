@@ -73,7 +73,7 @@
                         <button type="button" class="btn btn-danger float-right remove-tutor" style="display: none;">Retirer</button>
                     </div>
                     <div class="card-body">
-                        <div class="form-group">
+                        <div class="form-group">         
                             <label for="tutor_lastname[]">Nom du Tuteur:</label>
                             <input type="text" class="form-control @error('tutor_lastname.*') is-invalid @enderror" name="tutor_lastname[]" placeholder="Nom du tuteur">
                             @error('tutor_lastname.*')
@@ -180,12 +180,12 @@
 <script>
     $(document).ready(function() {
         var tutorCount = 0; // Initialise le compteur de tuteurs à 0
-
+        var idTutor = 1; // Initialise l'ID du tuteur à 1
         $('#add-tutor').click(function() {
             tutorCount++; // Incrémente le compteur à chaque clic
-            var newTutor = $('#tutor-template').clone().removeAttr('id').show();
+            var newTutor = $('#tutor-template').clone().removeAttr('id').show(); 
             newTutor.find('.card-title').text('Tuteur ' + tutorCount);
-
+            
             // Réinitialise la valeur de chaque champ
             newTutor.find('input, select').val('');
 

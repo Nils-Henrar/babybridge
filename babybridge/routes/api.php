@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AttendanceController;
+use App\Http\Controllers\Api\MealController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -13,12 +14,11 @@ Route::get('/user', function (Request $request) {
 Route::get('/events', [\App\Http\Controllers\Api\EventController::class, 'index']);
 
 
-
-//route pour les attendances
-
-// Route::get('/attendances/date/{date}', [AttendanceController::class, 'getAttendancesByDate'])->name('attendances.get_by_date');
-// Route::post('/attendance', [AttendanceController::class, 'storeAttendance'])->name('attendance.store');µ
-
+/* 
+*
+*AttendanceController 
+*
+*/
 // Récupération des présences pour une section pour une date donnée
 Route::get('/attendances/section/{section_id}/date/{date}', [AttendanceController::class, 'getSectionAttendances']);
 
@@ -26,7 +26,25 @@ Route::get('/attendances/section/{section_id}/date/{date}', [AttendanceControlle
 Route::post('/attendances', [AttendanceController::class, 'storeOrUpdateAttendance']);
 
 
+/*
+*
+*MealController 
+*
+*/
+// Route pour récupérer les repas des enfants par section et date
+Route::get('/meals/section/{section_id}/date/{date}', [MealController::class, 'getMealsBySectionAndDate']);
 
+// Dans web.php ou api.php selon votre configuration
+Route::get('/meal-types', [MealController::class, 'getAllMealTypes']);
+
+// Mise à jour ou création d'un repas
+Route::post('/meals', [MealController::class, 'storeOrUpdateMeal']);
+
+/**
+ * 
+ * ChildController
+ * 
+ */
 //rotue pour enfants
 Route::get('/children/section/{section_id}', [\App\Http\Controllers\Api\ChildController::class, 'getChildrenBySection'])->name('children.get_by_section');
 Route::get('/child/{child_id}', [\App\Http\Controllers\Api\ChildController::class, 'getChild'])->name('child.get');

@@ -405,6 +405,13 @@ return [
 
                 ],
 
+                [
+                    'text' => 'Repas',
+                    'url' => '/worker/section/meal',
+                    'icon' => 'fas fa-fw fa-utensils',
+
+                ],
+
             ],
 
         ],

@@ -77,9 +77,13 @@ Route::middleware([\App\Http\Middleware\IsWorkerMiddleware::class])->group(funct
     //Section routes
 
     Route::get('worker/section/children', [SectionController::class, 'showChildren'])->name('worker.section.children');
+  
+    //attendance routes
     Route::get('worker/section/attendance', [SectionController::class, 'createAttendance'])->name('worker.section.attendance');
-    Route::post('worker/section', [SectionController::class, 'store'])->name('worker.section.store');
-    Route::get('worker/section/{id}', [SectionController::class, 'show'])->name('worker.section.show');
+    
+    //meal routes
+
+    Route::get('worker/section/meal', [SectionController::class, 'createMeal'])->name('worker.section.meal');
 
 
 
