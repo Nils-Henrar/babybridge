@@ -20,7 +20,7 @@ return new class extends Migration
                 ->onUpdate('cascade')
                 ->onDelete('restrict');
             $table->dateTime('meal_time');
-            $table->enum('quantity', ['full', 'half', 'quarter', 'refused']);
+            $table->string('quantity');
             $table->string('notes')->nullable();
         });
     }

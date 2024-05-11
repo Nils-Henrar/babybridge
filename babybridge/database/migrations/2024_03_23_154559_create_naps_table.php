@@ -15,7 +15,7 @@ return new class extends Migration
                 ->onDelete('restrict');
             $table->dateTime('start_time');
             $table->dateTime('end_time');
-            $table->enum('quality', ['good', 'average', 'bad']);
+            $table->string('quality')->nullable();
             $table->string('notes')->nullable();
         });
     }

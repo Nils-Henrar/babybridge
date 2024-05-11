@@ -14,8 +14,10 @@ return new class extends Migration
                 ->onUpdate('cascade')
                 ->onDelete('restrict');
             $table->date('attendance_date');
-            $table->time('arrival_time')->nullable();
+            $table->time('arrival_time');
             $table->time('departure_time')->nullable();
+            $table->time('wake-up_time')->nullable();
+            $table->time('breakfast_time')->nullable();
             $table->string('notes')->nullable();
         });
     }
