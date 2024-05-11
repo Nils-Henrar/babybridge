@@ -19,7 +19,7 @@ class StoreChildRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
-    public function rules(): array
+    public function rules(): array 
     {
         return [
             'lastname' => 'required|string|max:255',
@@ -27,6 +27,7 @@ class StoreChildRequest extends FormRequest
             'birthdate' => 'required|date',
             'section' => 'required|exists:sections,id',
             'special_infos' => 'nullable|string',
+
             'tutor_lastname.*' => 'required|string|max:60',
             'tutor_firstname.*' => 'required|string|max:60',
             'tutor_email.*' => 'required|email',

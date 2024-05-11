@@ -168,4 +168,13 @@ class SectionController extends Controller
 
         return view('worker.section.attendance', compact('children'));
     }
+
+    //Afficher les enfants avec un bouton pour prendre les repas
+    
+    public function createMeal()
+    {
+        $children = auth()->user()->worker->getCurrentChildren();
+
+        return view('worker.section.meal', compact('children'));
+    }
 }

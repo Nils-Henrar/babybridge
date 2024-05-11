@@ -103,7 +103,12 @@ class User extends Authenticatable
     {
         // Générez le login
         do {
-            $login = substr($firstname, 0, 2) . substr($lastname, 0, 2) . rand(10, 999);
+            
+            $login = mb_substr($firstname, 0, 2, 'UTF-8') . mb_substr($lastname, 0, 2, 'UTF-8') . rand(10, 999);
+
+            $login = preg_replace("/[^A-Za-z0-9]/", '', $login);
+
+
         } while (User::where('login', $login)->exists());
 
         // Générez le mot de passe

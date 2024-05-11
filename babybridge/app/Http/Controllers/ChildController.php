@@ -11,6 +11,7 @@ use App\Http\Requests\Child\UpdateChildRequest;
 use App\Models\User;
 use App\Models\ChildSection;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class ChildController extends Controller
 {
@@ -52,6 +53,8 @@ class ChildController extends Controller
     {
 
         $data = $request->validated();
+
+        // dd($data);
         // Traitement pour la création de l'enfant
         $child = new Child;
         $child->lastname = $data['lastname'];
@@ -87,11 +90,17 @@ class ChildController extends Controller
 
             $tutor->password = bcrypt($identifiers['password']);
 
-            $tutor->save();
+            try {
+                $tutor->save();
+            } catch (\Exception $e) {
+                Log::error("Erreur lors de l'enregistrement du tuteur: " . $e->getMessage());
+                return back()->withErrors('Erreur lors de l\'enregistrement du tuteur.');
+            }
 
             //ajouter un enregistrement dans la table role_user
 
             $tutor->assignRole('tutor');
+            
 
             $childTutor = new ChildTutor;
             $childTutor->child_id = $child->id;

@@ -7,6 +7,7 @@ use App\Http\Requests\User\StoreUserRequest;
 use App\Http\Requests\User\UpdateUserRequest;
 use App\Models\User;
 use App\Models\Role;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
@@ -135,23 +136,26 @@ class UserController extends Controller
      */
     public function destroy(string $id)
     {
+
+        DB::statement('SET FOREIGN_KEY_CHECKS=0');
+
         $user = User::find($id);
+        
+        if($user->roles->contains('role', 'worker')) {
+            $user->worker->sectionWorkers()->delete();
+            $user->worker()->delete();
+        }
+    
+        if($user->roles->contains('role', 'tutor')) {
+            $user->tutor()->delete();
+        }
 
         // Supprime tous les rôles associés à cet utilisateur
         $user->roles()->detach();
-
-        // Supprime toutes les relations entre cet utilisateur et les sections
-        $user->worker->sectionWorkers->delete();
-
-        // Supprime le travailleur associé à cet utilisateur
-        $user->worker()->delete();
-
-        // Supprime le tuteur associé à cet utilisateur
-        $user->tutor()->delete();
-
         // Supprime l'utilisateur lui-même
         $user->delete();
-
+        
+        DB::statement('SET FOREIGN_KEY_CHECKS=1');
         return redirect()->route('admin.user.index')->with('success', 'L\'utilisateur a été supprimé avec succès');
     }
 }
