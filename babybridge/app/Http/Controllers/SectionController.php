@@ -177,4 +177,11 @@ class SectionController extends Controller
 
         return view('worker.section.meal', compact('children'));
     }
+
+    public function createDiaper()
+    {
+        $children = auth()->user()->worker->getCurrentChildren();
+
+        return view('worker.section.diaper_change', compact('children'));
+    }
 }

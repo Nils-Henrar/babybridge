@@ -85,6 +85,10 @@ Route::middleware([\App\Http\Middleware\IsWorkerMiddleware::class])->group(funct
 
     Route::get('worker/section/meal', [SectionController::class, 'createMeal'])->name('worker.section.meal');
 
+    //diaper routes
+
+    Route::get('worker/section/diaper-change', [SectionController::class, 'createDiaper'])->name('worker.section.diaper');
+
 
 
 

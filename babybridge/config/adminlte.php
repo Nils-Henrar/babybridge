@@ -317,24 +317,16 @@ return [
         [
             'type' => 'sidebar-menu-search',
             'text' => 'search',
+            'can' => 'admin',
         ],
-        [
-            'text' => 'blog',
-            'url' => 'admin/blog',
-            'can' => 'manage-blog',
-        ],
-        [
-            'text' => 'pages',
-            'url' => 'admin/pages',
-            'icon' => 'far fa-fw fa-file',
-            'label' => 4,
-            'label_color' => 'success',
-        ],
+
         ['header' => 'Menu'],
+
         [
             'text' => 'profile',
             'url' => 'admin/settings',
             'icon' => 'fas fa-fw fa-user',
+            'icon_color' => 'primary',
         ],
 
         [
@@ -383,103 +375,57 @@ return [
             'text' => 'Calendrier',
             'url' => '/admin/calendar',
             'icon' => 'fas fa-fw fa-calendar',
+            'can' => 'admin',
+            'icon_color' => 'gray',
         ],
 
         //Worker menu
+        
 
         [
-            'text' => 'Section',
-            'icon' => 'fas fa-fw fa-gavel',
-            'submenu' => [
-                [
-                    'text' => 'Enfants',
-                    'url' => '/worker/section/children',
-                    'icon' => 'fas fa-fw fa-users',
-                    'can' => 'worker',
-                ],
-
-                [
-                    'text' => 'Présences',
-                    'url' => '/worker/section/attendance',
-                    'icon' => 'fas fa-fw fa-clock',
-
-                ],
-
-                [
-                    'text' => 'Repas',
-                    'url' => '/worker/section/meal',
-                    'icon' => 'fas fa-fw fa-utensils',
-
-                ],
-
-            ],
-
+            'text' => 'Enfants',
+            'url' => '/worker/section/children',
+            'icon' => 'fa-solid fa-children',
+            'can' => 'worker',
+            'icon_color' => 'pink',
         ],
 
-
-
-
-
-
         [
-            'text' => 'change_password',
-            'url' => 'admin/settings',
-            'icon' => 'fas fa-fw fa-lock',
-        ],
-        [
-            'text' => 'multilevel',
-            'icon' => 'fas fa-fw fa-share',
-            'submenu' => [
-                [
-                    'text' => 'level_one',
-                    'url' => '#',
-                ],
-                [
-                    'text' => 'level_one',
-                    'url' => '#',
-                    'submenu' => [
-                        [
-                            'text' => 'level_two',
-                            'url' => '#',
-                        ],
-                        [
-                            'text' => 'level_two',
-                            'url' => '#',
-                            'submenu' => [
-                                [
-                                    'text' => 'level_three',
-                                    'url' => '#',
-                                ],
-                                [
-                                    'text' => 'level_three',
-                                    'url' => '#',
-                                ],
-                            ],
-                        ],
-                    ],
-                ],
-                [
-                    'text' => 'level_one',
-                    'url' => '#',
-                ],
-            ],
-        ],
-        ['header' => 'labels'],
-        [
-            'text' => 'important',
+            'text' => 'Présences',
+            'url' => '/worker/section/attendance',
+            'icon' => 'fas fa-fw fa-clock',
+            'can' => 'worker',
             'icon_color' => 'red',
-            'url' => '#',
+
         ],
+
+        
+
         [
-            'text' => 'warning',
-            'icon_color' => 'yellow',
-            'url' => '#',
+            'text' => 'Repas',
+            'url' => '/worker/section/meal',
+            'icon' => 'fas fa-fw fa-utensils',
+            'can' => 'worker',
+            'icon_color' => 'teal',      
+
         ],
+
         [
-            'text' => 'information',
-            'icon_color' => 'cyan',
-            'url' => '#',
+            'text' => 'Changements de couches',
+            'url' => '/worker/section/diaper-change',
+            'icon' => 'fas fa-fw fa-baby',
+            'can' => 'worker',
+            'icon_color' => 'indigo',
         ],
+
+        [
+            'text' => 'Activités',
+            'url' => '/worker/section/activity',
+            'icon' => 'fa-solid fa-puzzle-piece',
+            'can' => 'worker',
+            'icon_color' => 'orange',
+        ],
+      
     ],
 
     /*
