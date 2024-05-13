@@ -198,4 +198,11 @@ class SectionController extends Controller
 
         return view('worker.section.photo', compact('children'));
     }
+
+    public function createNap()
+    {
+        $children = auth()->user()->worker->getCurrentChildren();
+
+        return view('worker.section.nap', compact('children'));
+    }
 }

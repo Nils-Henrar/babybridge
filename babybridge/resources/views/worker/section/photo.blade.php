@@ -112,7 +112,7 @@ async function loadPhotosForDate(date) {
     document.getElementById('loading').style.display = 'flex'; // Afficher le loader
     const sectionId = '{{ Auth::user()->worker->currentSection->section->id }}';
     try {
-        const childrenResponse = await fetch(`/api/children/section/${sectionId}`);
+        const childrenResponse = await fetch(`/api/children/section/${sectionId}/date/${date}`);
         const childrenData = await childrenResponse.json();
 
         const photoResponse = await fetch(`/api/photos/section/${sectionId}/date/${date}`);
@@ -129,6 +129,7 @@ function displayChildrenWithPhotos(children, photos) {
     const container = document.getElementById('photo-container');
     container.innerHTML = '';
     children.forEach(child => {
+        if (!child) return;
         const childPhotos = photos.filter(photo => photo.child_id === child.id);
         let photoHtml = childPhotos.map(photo => {
             // Utilisation de asset pour générer l'URL de l'image

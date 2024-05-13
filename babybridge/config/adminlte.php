@@ -399,14 +399,21 @@ return [
 
         ],
 
-        
-
         [
             'text' => 'Repas',
             'url' => '/worker/section/meal',
             'icon' => 'fas fa-fw fa-utensils',
             'can' => 'worker',
             'icon_color' => 'teal',      
+
+        ],
+
+        [
+            'text' => 'Sièstes',
+            'url' => '/worker/section/nap',
+            'icon' => 'fas fa-fw fa-bed',
+            'can' => 'worker',
+            'icon_color' => 'purple',
 
         ],
 
@@ -423,7 +430,7 @@ return [
             'url' => '/worker/section/diaper-change',
             'icon' => 'fas fa-fw fa-baby',
             'can' => 'worker',
-            'icon_color' => 'indigo',
+            'icon_color' => 'olive',
         ],
 
         

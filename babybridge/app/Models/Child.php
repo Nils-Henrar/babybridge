@@ -67,7 +67,7 @@ class Child extends Model
         return $this->hasMany(ChildMeal::class);
     }
 
-    public function childNaps()
+    public function naps()
     {
         return $this->hasMany(Nap::class);
     }

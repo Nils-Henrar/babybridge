@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\MealController;
 use App\Http\Controllers\Api\DiaperChangesController;
 use App\Http\Controllers\Api\ActivityController;
 use App\Http\Controllers\Api\PhotoController;
+use App\Http\Controllers\Api\NapController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -75,7 +76,23 @@ Route::post('/activities/section/{section_id}/date/{date}', [ActivityController:
 
 Route::get('/activity-types', [ActivityController::class, 'getAllActivityTypes']);
 
+/**
+ * 
+ * NapController
+ * 
+ */
 
+ // Route pour obtenir les siestes par section et date
+ Route::get('/naps/section/{sectionId}/date/{date}', [NapController::class, 'getNapsBySectionAndDate']);
+
+ //naps details
+ Route::get('/naps/{napId}', [NapController::class, 'getNap'])->name('naps.get');
+ 
+ Route::post('/naps', [NapController::class, 'storeNap'])->name('naps.store');
+ Route::put('/naps/{napId}', [NapController::class, 'updateNap'])->name('naps.update');
+ 
+ 
+ 
 
 /**
  * 
@@ -90,6 +107,8 @@ Route::get('/photos/section/{section_id}/date/{date}', [PhotoController::class, 
 
 // Route pour enregistrer ou mettre à jour une photo
 Route::post('/photos', [PhotoController::class, 'storeOrUpdatePhoto']);
+
+
 
 
 /**

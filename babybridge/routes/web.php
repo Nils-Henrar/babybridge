@@ -98,6 +98,10 @@ Route::middleware([\App\Http\Middleware\IsWorkerMiddleware::class])->group(funct
 
     Route::get('worker/section/photo', [SectionController::class, 'createPhoto'])->name('worker.section.photo');
 
+    //Nap routes
+
+    Route::get('worker/section/nap', [SectionController::class, 'createNap'])->name('worker.section.nap');
+
 
 
 

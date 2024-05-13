@@ -13,8 +13,8 @@ return new class extends Migration
             $table->foreignId('child_id')->references('id')->on('children')
                 ->onUpdate('cascade')
                 ->onDelete('restrict');
-            $table->dateTime('start_time');
-            $table->dateTime('end_time');
+            $table->dateTime('started_at');
+            $table->dateTime('ended_at')->nullable();
             $table->string('quality')->nullable();
             $table->string('notes')->nullable();
         });
