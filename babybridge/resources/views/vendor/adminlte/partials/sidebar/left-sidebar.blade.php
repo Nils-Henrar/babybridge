@@ -1,4 +1,4 @@
-<aside class="main-sidebar {{ config('adminlte.classes_sidebar', 'sidebar-dark-primary elevation-4') }} sidebar-light-red" style="background-color: #176FA1;">
+<aside class="main-sidebar {{ config('adminlte.classes_sidebar', 'sidebar-dark-primary elevation-4') }} sidebar-light-primary" style="background-color: #176FA1;">
     {{-- Sidebar brand logo --}} @if(config('adminlte.logo_img_xl')) @include('adminlte::partials.common.brand-logo-xl') @else @include('adminlte::partials.common.brand-logo-xs') @endif {{-- Sidebar menu --}}
     <div class="sidebar">
         <nav class="pt-2">

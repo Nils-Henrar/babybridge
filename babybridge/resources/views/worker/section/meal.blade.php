@@ -48,7 +48,7 @@
         margin: 0 5px;
         padding: 5px 10px;
         font-size: 20px;
-        background-color: #ffffff;
+        background-color: #f8f9fa;
         border: none;
         color: #176FA1;
         cursor: pointer;
@@ -96,11 +96,6 @@
 
     .btn-primary:hover {
         background-color: #105078;
-    }
-
-    /* Styles pour les icônes fléchées de navigation */
-    .fas {
-        font-size: 24px; /* Ajuster selon la taille désirée */
     }
 
     .fa-arrow-left,

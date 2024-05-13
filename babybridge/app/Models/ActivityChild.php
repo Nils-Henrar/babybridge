@@ -9,7 +9,7 @@ class ActivityChild extends Model
 {
     use HasFactory;
 
-    protected $table = 'ativity_child';
+    protected $table = 'activity_child';
 
     protected $fillable = [
         'child_id',

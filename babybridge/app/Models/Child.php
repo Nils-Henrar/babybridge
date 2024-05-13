@@ -47,7 +47,7 @@ class Child extends Model
         return $this->hasMany(DailyReport::class);
     }
 
-    public function childPhotos()
+    public function photos()
     {
         return $this->hasMany(Photo::class);
     }
@@ -57,7 +57,7 @@ class Child extends Model
         return $this->hasMany(DiaperChange::class);
     }
 
-    public function ActivityChildren()
+    public function activityChildren()
     {
         return $this->hasMany(ActivityChild::class);
     }

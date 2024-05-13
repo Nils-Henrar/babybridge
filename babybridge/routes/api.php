@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\AttendanceController;
 use App\Http\Controllers\Api\MealController;
 use App\Http\Controllers\Api\DiaperChangesController;
 use App\Http\Controllers\Api\ActivityController;
+use App\Http\Controllers\Api\PhotoController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -54,12 +55,52 @@ Route::get('/diaper-changes/section/{section_id}/date/{date}', [DiaperChangesCon
 // Route pour mettre à jour ou créer un changement de couche
 Route::post('/diaper-changes', [DiaperChangesController::class, 'storeOrUpdateDiaperChange']);
 
+/*
+*
+*ActivityController
+*
+*/
+
+// Route pour obtenir les activités des enfants par section et date
+Route::get('/activities/section/{section_id}/date/{date}', [ActivityController::class, 'getActivitiesBySectionAndDate']);
+
+// Route pour enregistrer ou mettre à jour une activité pour un enfant
+Route::post('/activities', [ActivityController::class, 'storeOrUpdateActivity']);
+
+// Route pour enregistrer une activité pour tous les enfants présents d'une section pour une date donnée
+Route::post('/activities/section/{section_id}/date/{date}', [ActivityController::class, 'storeActivityForPresentChildren']);
+
+
+//route pour charger les descriptions des activités
+
+Route::get('/activity-types', [ActivityController::class, 'getAllActivityTypes']);
+
+
+
+/**
+ * 
+ * SectionController
+ * 
+ */
+
+//route pour obtenir les enfants d'une section
+
+// Route pour obtenir les photos des enfants par section et date
+Route::get('/photos/section/{section_id}/date/{date}', [PhotoController::class, 'getPhotosBySectionAndDate']);
+
+// Route pour enregistrer ou mettre à jour une photo
+Route::post('/photos', [PhotoController::class, 'storeOrUpdatePhoto']);
+
 
 /**
  * 
  * ChildController
  * 
  */
-//rotue pour enfants
+//route pour obtenir les enfants d'une section
 Route::get('/children/section/{section_id}', [\App\Http\Controllers\Api\ChildController::class, 'getChildrenBySection'])->name('children.get_by_section');
+
+// Route pour obtenir les enfants présents d'une section pour une date donnée 
+Route::get('/children/section/{section_id}/date/{date}', [\App\Http\Controllers\Api\ChildController::class, 'getChildrenBySectionAndDate'])->name('children.get_by_section_and_date');
+
 Route::get('/child/{child_id}', [\App\Http\Controllers\Api\ChildController::class, 'getChild'])->name('child.get');

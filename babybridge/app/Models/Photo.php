@@ -18,7 +18,7 @@ class Photo extends Model
         'path',
     ];
 
-    public $timestamps = true;
+    public $timestamps = false;
 
     public function child()
     {

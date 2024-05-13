@@ -387,7 +387,7 @@ return [
             'url' => '/worker/section/children',
             'icon' => 'fa-solid fa-children',
             'can' => 'worker',
-            'icon_color' => 'pink',
+            'icon_color' => 'yellow',
         ],
 
         [
@@ -411,6 +411,14 @@ return [
         ],
 
         [
+            'text' => 'Activités',
+            'url' => '/worker/section/activity',
+            'icon' => 'fa-solid fa-puzzle-piece',
+            'can' => 'worker',
+            'icon_color' => 'orange',
+        ],
+
+        [
             'text' => 'Changements de couches',
             'url' => '/worker/section/diaper-change',
             'icon' => 'fas fa-fw fa-baby',
@@ -418,12 +426,14 @@ return [
             'icon_color' => 'indigo',
         ],
 
+        
+
         [
-            'text' => 'Activités',
-            'url' => '/worker/section/activity',
-            'icon' => 'fa-solid fa-puzzle-piece',
+            'text' => 'Photos',
+            'url' => '/worker/section/photo',
+            'icon' => 'fas fa-fw fa-camera',
             'can' => 'worker',
-            'icon_color' => 'orange',
+            'icon_color' => 'pink',
         ],
       
     ],

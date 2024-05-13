@@ -49,11 +49,22 @@
         margin-right: 10px; /* Espacement entre les entrées */
         
     }
+
+    .title-section {
+        font-size: 2rem;
+        font-weight: bold;
+        color: #176FA1;
+        margin-bottom: 30px;
+        text-align: center;
+    }
 </style>
 @endsection
 
 @section('content_body')
 <div class="container">
+
+    <div class="title-section">Section: {{ Auth::user()->worker->currentSection->section->name }}</div>
+    
     <div class="date-picker-container">
         <button id="prev-day"><i class="fas fa-arrow-left"></i></button>
         <input type="text" id="date-picker" class="form-control" style="display: inline-block; width: auto;">

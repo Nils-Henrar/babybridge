@@ -16,6 +16,8 @@ class Attendance extends Model
         'attendance_date',
         'arrival_time',
         'departure_time',
+        'wake-up_time',
+        'breakfast_time',
         'notes',
     ];
 

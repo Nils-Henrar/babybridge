@@ -184,4 +184,18 @@ class SectionController extends Controller
 
         return view('worker.section.diaper_change', compact('children'));
     }
+
+    public function createActivity()
+    {
+        $children = auth()->user()->worker->getCurrentChildren();
+
+        return view('worker.section.activity', compact('children'));
+    }
+
+    public function createPhoto()
+    {
+        $children = auth()->user()->worker->getCurrentChildren();
+
+        return view('worker.section.photo', compact('children'));
+    }
 }
