@@ -442,6 +442,15 @@ return [
             'can' => 'worker',
             'icon_color' => 'pink',
         ],
+
+        // Tutor
+
+        [
+            'text' => 'Journal de bord',
+            'url' => '/tutor/child/daily-journal',
+            'icon' => 'fas fa-fw fa-book',
+            'can' => 'tutor',
+        ]
       
     ],
 

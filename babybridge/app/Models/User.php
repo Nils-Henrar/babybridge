@@ -61,6 +61,11 @@ class User extends Authenticatable
         return $this->belongsToMany(Role::class);
     }
 
+    public function children()
+    {
+        return $this->belongsToMany(Child::class, 'child_tutor');
+    }
+
     public function worker()
     {
         return $this->hasOne(Worker::class);

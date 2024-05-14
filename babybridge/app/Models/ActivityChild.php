@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 class ActivityChild extends Model
 {
@@ -27,5 +28,15 @@ class ActivityChild extends Model
     public function activity()
     {
         return $this->belongsTo(Activity::class);
+    }
+
+    public function formatForJournal()
+    {
+        return [
+            'type' => 'activity',
+            'time' => Carbon::parse($this->performed_at)->format('H:i'),
+            'description' => "{$this->child->getFullNameAttribute()} a participé à l'activité {$this->activity->description}.",
+            'child_name' => $this->child->getFullNameAttribute(),
+        ];
     }
 }

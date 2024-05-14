@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\DiaperChangesController;
 use App\Http\Controllers\Api\ActivityController;
 use App\Http\Controllers\Api\PhotoController;
 use App\Http\Controllers\Api\NapController;
+use App\Http\Controllers\Api\DailyJournalController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -123,3 +124,20 @@ Route::get('/children/section/{section_id}', [\App\Http\Controllers\Api\ChildCon
 Route::get('/children/section/{section_id}/date/{date}', [\App\Http\Controllers\Api\ChildController::class, 'getChildrenBySectionAndDate'])->name('children.get_by_section_and_date');
 
 Route::get('/child/{child_id}', [\App\Http\Controllers\Api\ChildController::class, 'getChild'])->name('child.get');
+
+//route pour obtenir les enfants d'un useur(tuteur)
+
+
+
+
+
+/**
+ * 
+ * DailyJournalController
+ * 
+ */
+
+//  Route::get('children/{childId}/daily-journal/{date}', [DailyJournalController::class, 'show']);
+//  Route::get('/children/user/{userId}', [\App\Http\Controllers\Api\ChildController::class, 'getChildrenByUser'])->name('children.get_by_user');
+
+Route::get('/children/user/{userId}/daily-journal/{date}', [DailyJournalController::class, 'showByUser']);

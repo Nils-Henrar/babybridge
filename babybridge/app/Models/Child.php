@@ -42,6 +42,12 @@ class Child extends Model
         return $this->hasMany(ChildTutor::class);
     }
 
+    public function users()
+    {
+        return $this->belongsToMany(User::class, 'child_tutor', 'child_id', 'user_id');
+    }
+
+
     public function dailyReports()
     {
         return $this->hasMany(DailyReport::class);

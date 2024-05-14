@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Child;
 use App\Models\Section;
 use App\Http\Resources\ChildResource;
+use App\Models\ChildTutor;
 use Illuminate\Support\Facades\Log;
 
 class ChildController extends Controller
@@ -61,6 +62,13 @@ class ChildController extends Controller
             ]);
             return response()->json(['message' => 'Server error'], 500);
         }
+    }
+
+    public function getChildrenByUser($userId)
+    {
+        $children = ChildTutor::where('user_id', $userId)->with('child')->get()->pluck('child');
+        
+        return response()->json($children);
     }
     
 }

@@ -100,7 +100,6 @@ class ChildController extends Controller
             //ajouter un enregistrement dans la table role_user
 
             $tutor->assignRole('tutor');
-            
 
             $childTutor = new ChildTutor;
             $childTutor->child_id = $child->id;
@@ -209,8 +208,6 @@ class ChildController extends Controller
 
         DB::statement('SET FOREIGN_KEY_CHECKS=0');
 
-
-
         $child = Child::find($id);
 
 
@@ -219,5 +216,16 @@ class ChildController extends Controller
         DB::statement('SET FOREIGN_KEY_CHECKS=1');
 
         return redirect()->route('admin.child.index')->with('success', 'L\'enfant a été supprimé avec succès');
+    }
+
+    function dailyJournal()
+    {
+        //récupérer les enfants du tuteur connecté
+        
+        $children = auth()->user()->children;
+
+
+
+        return view('tutor.child.daily_journal', compact('children'));
     }
 }

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 class Attendance extends Model
 {
@@ -16,8 +17,8 @@ class Attendance extends Model
         'attendance_date',
         'arrival_time',
         'departure_time',
-        'wake-up_time',
-        'breakfast_time',
+        // 'wake-up_time',
+        // 'breakfast_time',
         'notes',
     ];
 
@@ -26,5 +27,16 @@ class Attendance extends Model
     public function child()
     {
         return $this->belongsTo(Child::class);
+    }
+
+    public function formatForJournal()
+    {
+        return [
+            'type' => 'arrival',
+            'arrival_time' => Carbon::parse($this->arrival_time)->format('H:i'),
+            'departure_time' => Carbon::parse($this->departure_time)->format('H:i'),
+            'description' => "{$this->child->getFullNameAttribute()} est arrivé.",
+            'child_name' => $this->child->getFullNameAttribute(),
+        ];
     }
 }

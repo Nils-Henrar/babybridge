@@ -11,50 +11,65 @@
     .small-box {
         background-color: #D9D9D9;
         padding: 20px;
-        margin-bottom: 20px; /* Ajoute un espace entre les boxes */
+        margin-bottom: 20px;
+        /* Ajoute un espace entre les boxes */
         align-items: center;
-        border-radius: 50px; /* Arrondit les coins */
+        border-radius: 50px;
+        /* Arrondit les coins */
         color: #176FA1;
     }
+
     .attendance-inner {
         display: flex;
         justify-content: space-between;
         align-items: center;
     }
+
     .attendance-time-input {
-        margin: 0 10px; /* Espacement entre les champs de temps */
+        margin: 0 10px;
+        /* Espacement entre les champs de temps */
     }
+
     .save-btn {
-        white-space: nowrap; /* Assure que le texte du bouton ne passe pas à la ligne */
+        white-space: nowrap;
+        /* Assure que le texte du bouton ne passe pas à la ligne */
     }
+
     .form-group {
-    margin-bottom: 15px; /* Ajoute un espace sous chaque groupe de formulaire */
+        margin-bottom: 15px;
+        /* Ajoute un espace sous chaque groupe de formulaire */
     }
 
     .small-box .inner {
-        padding: 15px; /* Ajoute du padding à l'intérieur de chaque box pour espace les éléments */
+        padding: 15px;
+        /* Ajoute du padding à l'intérieur de chaque box pour espace les éléments */
     }
 
     .timepicker {
-        width: 10%; /* Assure que les pickers prennent toute la largeur disponible */
-        text-align: center; /* Centre le texte dans les champs de temps */
-        font-size: 2rem; /* Taille de police normale */
+        width: 10%;
+        /* Assure que les pickers prennent toute la largeur disponible */
+        text-align: center;
+        /* Centre le texte dans les champs de temps */
+        font-size: 2rem;
+        /* Taille de police normale */
         /* arrondir les bords */
         border-radius: 25px;
     }
 
     .time-label {
-        font-size: 1.5rem; /* Taille de police normale */
-        color: #176FA1; /* Couleur bleue */
+        font-size: 1.5rem;
+        /* Taille de police normale */
+        color: #176FA1;
+        /* Couleur bleue */
     }
 
     .date-picker-container button {
-    margin: 0 5px;
-    padding: 5px 10px;
-    font-size: 20px;
-    background-color: #ffffff;
-    border: none;
-    color: #176FA1;
+        margin: 0 5px;
+        padding: 5px 10px;
+        font-size: 20px;
+        /* background-color: #ffffff; */
+        border: none;
+        color: #176FA1;
     }
 
     .date-picker-container input {
@@ -79,8 +94,6 @@
         margin-bottom: 30px;
         text-align: center;
     }
-
-
 </style>
 @endsection
 
@@ -109,63 +122,64 @@
 
 @push('scripts')
 <script>
-// Assure que le script est exécuté après que le document soit entièrement chargé
+    // Assure que le script est exécuté après que le document soit entièrement chargé
 
 
-async function loadChildrenAndAttendances(date) {
-    document.getElementById('loading').style.display = 'flex'; // Afficher le loader
-    let sectionId = '{{ Auth::user()->worker->currentSection->section->id }}' // ID de la section, assurez-vous qu'il est correctement défini
-    try {
-        const childrenResponse = await fetch(`/api/children/section/${sectionId}`);
-        const childrenData = await childrenResponse.json();
-        const attendancesResponse = await fetch(`/api/attendances/section/${sectionId}/date/${date}`);
-        const attendancesData = await attendancesResponse.json();
-        displayChildrenWithAttendances(childrenData, attendancesData);
-        document.getElementById('loading').style.display = 'none'; // Masquer le loader
-    } catch (error) {
-        console.error('Error:', error);
-        document.getElementById('loading').style.display = 'none'; // Masquer le loader en cas d'erreur
-    }
-}
-
-
-
-document.addEventListener("DOMContentLoaded", function() {
-    const datePickerElement = document.getElementById('date-picker');
-    const datePicker = flatpickr(datePickerElement, {
-        defaultDate: "today",
-        dateFormat: "Y-m-d",
-        onChange: function(selectedDates, dateStr, instance) {
-            console.log('Date after change in datePicker:', dateStr);
-            loadChildrenAndAttendances(dateStr); // Charge les données pour la date sélectionnée
+    async function loadChildrenAndAttendances(date) {
+        document.getElementById('loading').style.display = 'flex'; // Afficher le loader
+        let sectionId = '{{ Auth::user()->worker->currentSection->section->id }}' // ID de la section, assurez-vous qu'il est correctement défini
+        try {
+            const childrenResponse = await fetch(`/api/children/section/${sectionId}`);
+            const childrenData = await childrenResponse.json();
+            const attendancesResponse = await fetch(`/api/attendances/section/${sectionId}/date/${date}`);
+            const attendancesData = await attendancesResponse.json();
+            displayChildrenWithAttendances(childrenData, attendancesData);
+            document.getElementById('loading').style.display = 'none'; // Masquer le loader
+        } catch (error) {
+            console.error('Error:', error);
+            document.getElementById('loading').style.display = 'none'; // Masquer le loader en cas d'erreur
         }
-    });
+    }
 
-    // Bouton pour aller au jour précédent
-    document.getElementById('prev-day').addEventListener('click', () => {
-        const currentDate = datePicker.selectedDates[0];
-        const prevDate = new Date(currentDate.setDate(currentDate.getDate() - 1));
-        datePicker.setDate(prevDate);
+
+
+    document.addEventListener("DOMContentLoaded", function() {
+        const datePickerElement = document.getElementById('date-picker');
+        const datePicker = flatpickr(datePickerElement, {
+            defaultDate: "today",
+            dateFormat: "Y-m-d",
+            onChange: function(selectedDates, dateStr, instance) {
+                console.log('Date after change in datePicker:', dateStr);
+                loadChildrenAndAttendances(dateStr); // Charge les données pour la date sélectionnée
+            }
+        });
+
+        // Bouton pour aller au jour précédent
+        document.getElementById('prev-day').addEventListener('click', () => {
+            const currentDate = datePicker.selectedDates[0];
+            const prevDate = new Date(currentDate.setDate(currentDate.getDate() - 1));
+            datePicker.setDate(prevDate);
+            loadChildrenAndAttendances(datePickerElement.value);
+        });
+
+        // Bouton pour aller au jour suivant
+        document.getElementById('next-day').addEventListener('click', () => {
+            const currentDate = datePicker.selectedDates[0];
+            const nextDate = new Date(currentDate.setDate(currentDate.getDate() + 1));
+            datePicker.setDate(nextDate);
+            loadChildrenAndAttendances(datePickerElement.value);
+        });
+
         loadChildrenAndAttendances(datePickerElement.value);
     });
 
-    // Bouton pour aller au jour suivant
-    document.getElementById('next-day').addEventListener('click', () => {
-        const currentDate = datePicker.selectedDates[0];
-        const nextDate = new Date(currentDate.setDate(currentDate.getDate() + 1));
-        datePicker.setDate(nextDate);
-        loadChildrenAndAttendances(datePickerElement.value);
-    });
+    function displayChildrenWithAttendances(children, attendances) {
+        let container = document.getElementById('attendance-container');
+        container.innerHTML = ''; // Clear previous contents if needed
 
-    loadChildrenAndAttendances(datePickerElement.value);
-});
-function displayChildrenWithAttendances(children, attendances) {
-    let container = document.getElementById('attendance-container');
-    container.innerHTML = ''; // Clear previous contents if needed
-
-    children.forEach(child => {
-        const attendance = attendances.find(a => a.child_id === child.id) || {};
-        let boxHtml = `
+        children.forEach(child => {
+            const attendance = attendances.find(a => a.child_id === child.id) || {};
+            let boxHtml = `
             <div class="col-lg-12 col-6">
                 <div class="small-box">
                     <div class="inner">
@@ -183,51 +197,49 @@ function displayChildrenWithAttendances(children, attendances) {
                 </div>
             </div>
         `;
-        container.innerHTML += boxHtml;
-    });
-
-    // Initialisez Flatpickr
-    flatpickr(".timepicker", {
-        enableTime: true,
-        noCalendar: true,
-        dateFormat: "H:i",
-        time_24hr: true
-    });
-}
-
-
-async function updateAttendance(childId) {
-    const arrivalTime = document.getElementById(`arrival-${childId}`).value;
-    const departureTime = document.getElementById(`departure-${childId}`).value;
-    const attendance_date = document.getElementById('date-picker').value; // Utilisez directement la valeur du datePicker
-    const data = {
-        child_id: childId,
-        arrival_time: arrivalTime,
-        departure_time: departureTime,
-        attendance_date: attendance_date // Utilise la date sélectionnée
-    };
-
-    console.log('Updating attendance:', data);
-
-    try {
-        const response = await fetch('/api/attendances', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-            },
-            body: JSON.stringify(data)
+            container.innerHTML += boxHtml;
         });
-        if (!response.ok) {
-            throw new Error('Failed to update attendance');
-        }
-        alert('Attendance updated successfully');
-    } catch (error) {
-        console.error('Error:', error);
-        alert('Error updating attendance');
-    }
-}
 
-    
+        // Initialisez Flatpickr
+        flatpickr(".timepicker", {
+            enableTime: true,
+            noCalendar: true,
+            dateFormat: "H:i",
+            time_24hr: true
+        });
+    }
+
+
+    async function updateAttendance(childId) {
+        const arrivalTime = document.getElementById(`arrival-${childId}`).value;
+        const departureTime = document.getElementById(`departure-${childId}`).value;
+        const attendance_date = document.getElementById('date-picker').value; // Utilisez directement la valeur du datePicker
+        const data = {
+            child_id: childId,
+            arrival_time: arrivalTime,
+            departure_time: departureTime,
+            attendance_date: attendance_date // Utilise la date sélectionnée
+        };
+
+        console.log('Updating attendance:', data);
+
+        try {
+            const response = await fetch('/api/attendances', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                },
+                body: JSON.stringify(data)
+            });
+            if (!response.ok) {
+                throw new Error('Failed to update attendance');
+            }
+            alert('Attendance updated successfully');
+        } catch (error) {
+            console.error('Error:', error);
+            alert('Error updating attendance');
+        }
+    }
 </script>
 @endpush

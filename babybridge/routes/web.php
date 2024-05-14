@@ -111,6 +111,14 @@ Route::middleware([\App\Http\Middleware\IsWorkerMiddleware::class])->group(funct
     Route::get('worker/child/{id}', [ChildController::class, 'show'])->name('worker.child.show');
 });
 
+//Tutor Route
+
+Route::middleware([\App\Http\Middleware\IsTutorMiddleware::class])->group(function () {
+
+    //journal 
+    Route::get('tutor/child/daily-journal', [ChildController::class, 'dailyJournal'])->name('tutor.child.daily-journal');
+});
+
 
 
 Auth::routes();
