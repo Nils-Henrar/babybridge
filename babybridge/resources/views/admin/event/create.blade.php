@@ -43,6 +43,15 @@
                 @enderror
             </div>
 
+            <!-- Prix -->
+            <div class="form-group">
+                <label for="price">Prix</label>
+                <input type="number" class="form-control @error('price') is-invalid @enderror" id="price" name="price" placeholder="Prix" value="{{ old('price') }}" step="0.01" min="0">
+                @error('price')
+                <span class="help-block text-danger">{{ $message }}</span>
+                @enderror
+            </div>
+
             <!-- cocher les sections qui participent à l'événement avec un moyen de toutes les cocher/décocher -->
             <div class="form-group">
                 <label>Sections</label>

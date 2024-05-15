@@ -8,6 +8,7 @@ use App\Http\Controllers\ChildController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\CalendarController;
+use App\Http\Controllers\PaymentController;
 
 
 
@@ -77,10 +78,10 @@ Route::middleware([\App\Http\Middleware\IsWorkerMiddleware::class])->group(funct
     //Section routes
 
     Route::get('worker/section/children', [SectionController::class, 'showChildren'])->name('worker.section.children');
-  
+
     //attendance routes
     Route::get('worker/section/attendance', [SectionController::class, 'createAttendance'])->name('worker.section.attendance');
-    
+
     //meal routes
 
     Route::get('worker/section/meal', [SectionController::class, 'createMeal'])->name('worker.section.meal');
@@ -117,6 +118,14 @@ Route::middleware([\App\Http\Middleware\IsTutorMiddleware::class])->group(functi
 
     //journal 
     Route::get('tutor/child/daily-journal', [ChildController::class, 'dailyJournal'])->name('tutor.child.daily-journal');
+
+    Route::get('/tutor/payment', [PaymentController::class, 'index'])->name('tutor.payment');
+
+    Route::post('/tutor/payment/{payment}/pay', [PaymentController::class, 'pay'])->name('tutor.payment.pay');
+
+    Route::get('/tutor/payment/{payment}/success', [PaymentController::class, 'success'])->name('tutor.payment.success');
+
+    Route::get('/tutor/paymens/{payment}/cancel', [PaymentController::class, 'cancel'])->name('tutor.payment.cancel');
 });
 
 

@@ -26,6 +26,9 @@ class PaymentSeeder extends Seeder
                 'child_firstname' => 'Hugo',
                 'child_lastname' => 'Lemoine',
                 'event_slug' => 'la-ferme-en-folie',
+                'status' => 'pending',
+                'currency' => 'eur',
+
 
             ],
 
@@ -34,6 +37,9 @@ class PaymentSeeder extends Seeder
                 'child_firstname' => 'Léa',
                 'child_lastname' => 'Dupont',
                 'event_slug' => 'spectacle-de-magie',
+                'status' => 'pending',
+                'currency' => 'eur',
+
             ],
 
             [
@@ -41,6 +47,9 @@ class PaymentSeeder extends Seeder
                 'child_firstname' => 'Lucas',
                 'child_lastname' => 'Durand',
                 'event_slug' => 'spectacle-de-marionnettes',
+                'status' => 'pending',
+                'currency' => 'eur',
+
             ],
 
             [
@@ -48,6 +57,9 @@ class PaymentSeeder extends Seeder
                 'child_firstname' => 'Jules',
                 'child_lastname' => 'Leroy',
                 'event_slug' => 'bienvenue-au-cirque',
+                'status' => 'pending',
+                'currency' => 'eur',
+
             ],
 
             [
@@ -55,6 +67,9 @@ class PaymentSeeder extends Seeder
                 'child_firstname' => 'Louise',
                 'child_lastname' => 'Moreau',
                 'event_slug' => 'natation-pour-les-petits',
+                'status' => 'pending',
+                'currency' => 'eur',
+
             ],
 
             [
@@ -62,6 +77,9 @@ class PaymentSeeder extends Seeder
                 'child_firstname' => 'Emma',
                 'child_lastname' => 'Lefevre',
                 'event_slug' => 'la-ferme-en-folie',
+                'status' => 'pending',
+                'currency' => 'eur',
+
             ],
 
             [
@@ -69,6 +87,9 @@ class PaymentSeeder extends Seeder
                 'child_firstname' => 'Hugo',
                 'child_lastname' => 'Lemoine',
                 'event_slug' => 'spectacle-de-magie',
+                'status' => 'pending',
+                'currency' => 'eur',
+
             ],
 
             [
@@ -76,6 +97,9 @@ class PaymentSeeder extends Seeder
                 'child_firstname' => 'Léa',
                 'child_lastname' => 'Dupont',
                 'event_slug' => 'spectacle-de-marionnettes',
+                'status' => 'pending',
+                'currency' => 'eur',
+
             ],
 
             [
@@ -83,6 +107,9 @@ class PaymentSeeder extends Seeder
                 'child_firstname' => 'Lucas',
                 'child_lastname' => 'Durand',
                 'event_slug' => 'bienvenue-au-cirque',
+                'status' => 'pending',
+                'currency' => 'eur',
+
             ],
 
             [
@@ -90,6 +117,9 @@ class PaymentSeeder extends Seeder
                 'child_firstname' => 'Jules',
                 'child_lastname' => 'Leroy',
                 'event_slug' => 'natation-pour-les-petits',
+                'status' => 'pending',
+                'currency' => 'eur',
+
             ],
 
             [
@@ -97,6 +127,9 @@ class PaymentSeeder extends Seeder
                 'child_firstname' => 'Louise',
                 'child_lastname' => 'Moreau',
                 'event_slug' => 'la-ferme-en-folie',
+                'status' => 'pending',
+                'currency' => 'eur',
+
             ],
 
             [
@@ -104,6 +137,9 @@ class PaymentSeeder extends Seeder
                 'child_firstname' => 'Emma',
                 'child_lastname' => 'Lefevre',
                 'event_slug' => 'spectacle-de-magie',
+                'status' => 'pending',
+                'currency' => 'eur',
+
             ],
 
             [
@@ -111,6 +147,9 @@ class PaymentSeeder extends Seeder
                 'child_firstname' => 'Hugo',
                 'child_lastname' => 'Lemoine',
                 'event_slug' => 'spectacle-de-marionnettes',
+                'status' => 'pending',
+                'currency' => 'eur',
+
             ],
 
 
@@ -139,6 +178,7 @@ class PaymentSeeder extends Seeder
             $data['child_tutor_id'] = $tutorChild->id;
 
             $data['event_id'] = $event->id;
+            $data['amount'] = $event->price;
         }
 
         unset($data);

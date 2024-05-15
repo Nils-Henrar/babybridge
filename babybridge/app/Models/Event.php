@@ -15,6 +15,7 @@ class Event extends Model
         'title',
         'schedule',
         'description',
+        'price',
 
     ];
 
@@ -23,5 +24,10 @@ class Event extends Model
     public function sections()
     {
         return $this->belongsToMany(Section::class);
+    }
+
+    public function payments()
+    {
+        return $this->hasMany(Payment::class);
     }
 }

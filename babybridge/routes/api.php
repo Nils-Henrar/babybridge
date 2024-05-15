@@ -9,14 +9,15 @@ use App\Http\Controllers\Api\ActivityController;
 use App\Http\Controllers\Api\PhotoController;
 use App\Http\Controllers\Api\NapController;
 use App\Http\Controllers\Api\DailyJournalController;
+use App\Http\Controllers\Api\PaymentController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
-//route pour events
+    //route pour events
 
-Route::get('/events', [\App\Http\Controllers\Api\EventController::class, 'index']);
+;
 
 
 /* 
@@ -83,17 +84,17 @@ Route::get('/activity-types', [ActivityController::class, 'getAllActivityTypes']
  * 
  */
 
- // Route pour obtenir les siestes par section et date
- Route::get('/naps/section/{sectionId}/date/{date}', [NapController::class, 'getNapsBySectionAndDate']);
+// Route pour obtenir les siestes par section et date
+Route::get('/naps/section/{sectionId}/date/{date}', [NapController::class, 'getNapsBySectionAndDate']);
 
- //naps details
- Route::get('/naps/{napId}', [NapController::class, 'getNap'])->name('naps.get');
- 
- Route::post('/naps', [NapController::class, 'storeNap'])->name('naps.store');
- Route::put('/naps/{napId}', [NapController::class, 'updateNap'])->name('naps.update');
- 
- 
- 
+//naps details
+Route::get('/naps/{napId}', [NapController::class, 'getNap'])->name('naps.get');
+
+Route::post('/naps', [NapController::class, 'storeNap'])->name('naps.store');
+Route::put('/naps/{napId}', [NapController::class, 'updateNap'])->name('naps.update');
+
+
+
 
 /**
  * 
@@ -127,6 +128,26 @@ Route::get('/child/{child_id}', [\App\Http\Controllers\Api\ChildController::clas
 
 //route pour obtenir les enfants d'un useur(tuteur)
 
+/*
+*
+*EventController
+*
+*/
+Route::get('/events', [\App\Http\Controllers\Api\EventController::class, 'index']);
+
+Route::get('/events/available/{userId}', [\App\Http\Controllers\Api\EventController::class, 'getAvailableEvents'])->name('events.available');
+
+/**
+ * 
+ * PaymentController
+ * 
+ */
+
+
+Route::get('/tutor/payments', [PaymentController::class, 'index'])->name('tutor.payments');
+Route::post('/tutor/payments/{payment}/pay', [PaymentController::class, 'pay'])->name('tutor.payments.pay');
+Route::get('/tutor/payments/{payment}/success', [PaymentController::class, 'success'])->name('tutor.payments.success');
+Route::get('/tutor/payments/{payment}/cancel', [PaymentController::class, 'cancel'])->name('tutor.payments.cancel');
 
 
 

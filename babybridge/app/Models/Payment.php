@@ -21,6 +21,8 @@ class Payment extends Model
         'paid_at',
     ];
 
+    public $timestamps = false;
+
     public function childTutor()
     {
         return $this->belongsTo(ChildTutor::class);
@@ -30,4 +32,6 @@ class Payment extends Model
     {
         return $this->belongsTo(Event::class);
     }
+
+    
 }

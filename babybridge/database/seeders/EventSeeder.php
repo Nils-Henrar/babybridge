@@ -27,6 +27,7 @@ class EventSeeder extends Seeder
                 'slug' => null,
                 'schedule' => '2024-06-12 14:00:00',
                 'description' => 'La ferme débarque à la crèche, les enfants pourront découvrir les animaux de la ferme et participer à des ateliers de découverte.',
+                'price' => '5.00'
             ],
 
             [
@@ -34,6 +35,7 @@ class EventSeeder extends Seeder
                 'slug' => null,
                 'schedule' => '2024-09-16 14:00:00',
                 'description' => 'Un magicien viendra émerveiller les enfants avec des tours de magie',
+                'price' => '7.00'
             ],
 
             [
@@ -41,6 +43,7 @@ class EventSeeder extends Seeder
                 'slug' => null,
                 'schedule' => '2024-12-12 14:00:00',
                 'description' => 'Un spectacle de marionnettes sera proposé aux enfants.',
+                'price' => '3.00'
             ],
 
             [
@@ -48,6 +51,7 @@ class EventSeeder extends Seeder
                 'slug' => null,
                 'schedule' => '2024-07-08 12:00:00',
                 'description' => 'Un spectacle de cirque sera proposé aux enfants, avec des clowns, des acrobates et des animaux.',
+                'price' => '10.00'
             ],
 
             [
@@ -55,6 +59,7 @@ class EventSeeder extends Seeder
                 'slug' => null,
                 'schedule' => '2024-08-12 14:00:00',
                 'description' => 'Des leçons de natation spécialement conçues pour les bébés et les tout-petits, avec des activités aquatiques adaptées à leur niveau de développement.',
+                'price' => '5.00'
             ]
         ];
 

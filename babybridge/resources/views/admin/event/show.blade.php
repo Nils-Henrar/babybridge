@@ -61,7 +61,7 @@
                                 <td>{{ $childSection->child->id }}</td>
                                 <td>{{ $childSection->child->lastname }}</td>
                                 <td>{{ $childSection->child->firstname }}</td>
-                                <td>
+                                <td>{{ $childSection->child->payments->where('event_id', $event->id)->first()->status }}
                                 </td>
                             </tr>
 

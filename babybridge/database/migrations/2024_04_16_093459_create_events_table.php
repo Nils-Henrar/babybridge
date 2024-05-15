@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('slug', 100)->unique();
             $table->datetime('schedule')->nullable();
             $table->string('description', 255)->nullable();
+            $table->decimal('price', 10, 2)->nullable();
         });
     }
 

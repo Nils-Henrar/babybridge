@@ -29,6 +29,7 @@ class StoreEventRequest extends FormRequest
             'description' => 'nullable|string',
             'sections' => 'required|array',
             'sections.*' => 'required|exists:sections,id',
+            'price' => 'nullable|numeric',
         ];
     }
 }

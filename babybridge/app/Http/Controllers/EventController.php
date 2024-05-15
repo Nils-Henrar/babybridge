@@ -8,6 +8,9 @@ use App\Models\Section;
 use App\Http\Requests\Event\StoreEventRequest;
 use App\Http\Requests\Event\UpdateEventRequest;
 use Illuminate\Support\Str;
+use App\Models\Child;
+use App\Models\Payment;
+use App\Models\ChildTutor;
 
 class EventController extends Controller
 {
@@ -45,22 +48,52 @@ class EventController extends Controller
      */
     public function store(StoreEventRequest $request)
     {
-
         $data = $request->validated();
 
         $event = new Event();
-
         $event->title = $data['title'];
         $event->schedule = $data['schedule'];
         $event->description = $data['description'];
         $event->slug = Str::slug($data['title']);
-
+        $event->price = $data['price'];
         $event->save();
 
         $event->sections()->attach($data['sections']);
 
+
+        // si le prix est null, on ne crée pas de paiement
+        if ($event->price === null) {
+            return redirect()->route('admin.event.index')->with('success', 'L\'événement a été créé avec succès');
+        }
+
+        // Ajoute des paiements en attente pour chaque tuteur-enfant des sections associées
+        $sectionIds = $data['sections'];
+        $children = Child::whereHas('childSections', function ($query) use ($sectionIds) {
+            $query->whereIn('section_id', $sectionIds);
+        })->with('childTutors')->get();
+
+        foreach ($children as $child) {
+            var_dump('child', $child);
+            foreach ($child->childTutors as $tutor) {
+                var_dump('tutor', $tutor);
+                if ($tutor) {
+                    Payment::create([
+                        'child_tutor_id' => $tutor->id,
+                        'event_id' => $event->id,
+                        'amount' => $event->price,
+                        'status' => 'pending',
+                        'paid_at' => null,
+                    ]);
+                }
+            }
+        }
+
+
+
+
         return redirect()->route('admin.event.index')->with('success', 'L\'événement a été créé avec succès');
     }
+
 
     /**
      * Display the specified resource.
@@ -130,8 +163,25 @@ class EventController extends Controller
 
         $event->sections()->detach();
 
+        $event->payments()->delete();
+
         $event->delete();
 
         return redirect()->route('admin.event.index')->with('success', 'L\'événement a été supprimé avec succès');
+    }
+
+    /**
+     * 
+     * Vue pour afficher et sélectionner les événements par le tuteur
+     */
+
+    public function selectEvents()
+
+    {
+        $events = Event::all();
+
+        return view('tutor.event.index', [
+            'events' => $events,
+        ]);
     }
 }
