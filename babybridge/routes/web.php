@@ -103,13 +103,15 @@ Route::middleware([\App\Http\Middleware\IsWorkerMiddleware::class])->group(funct
 
     Route::get('worker/section/nap', [SectionController::class, 'createNap'])->name('worker.section.nap');
 
-
+    //User routes
+    
+    Route::get('worker/profile', [UserController::class, 'workerProfile'])->name('worker.profile');
 
 
     //Child routes
 
     Route::get('worker/child', [ChildController::class, 'index'])->name('worker.child.index');
-    Route::get('worker/child/{id}', [ChildController::class, 'show'])->name('worker.child.show');
+    Route::get('worker/child/{id}', [ChildController::class, 'profile'])->name('worker.child.profile');
 });
 
 //Tutor Route
@@ -119,6 +121,9 @@ Route::middleware([\App\Http\Middleware\IsTutorMiddleware::class])->group(functi
     //journal 
     Route::get('tutor/child/daily-journal', [ChildController::class, 'dailyJournal'])->name('tutor.child.daily-journal');
 
+
+    //payment 
+
     Route::get('/tutor/payment', [PaymentController::class, 'index'])->name('tutor.payment');
 
     Route::post('/tutor/payment/{payment}/pay', [PaymentController::class, 'pay'])->name('tutor.payment.pay');
@@ -126,6 +131,15 @@ Route::middleware([\App\Http\Middleware\IsTutorMiddleware::class])->group(functi
     Route::get('/tutor/payment/{payment}/success', [PaymentController::class, 'success'])->name('tutor.payment.success');
 
     Route::get('/tutor/paymens/{payment}/cancel', [PaymentController::class, 'cancel'])->name('tutor.payment.cancel');
+
+
+    //User 
+
+    Route::get('/tutor/profile', [UserController::class, 'tutorProfile'])->name('tutor.profile');
+
+    Route::get('/tutor/child/{childId}', [ChildController::class, 'profileForTutor'])->name('tutor.child.profile');
+
+    
 });
 
 

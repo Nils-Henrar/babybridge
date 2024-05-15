@@ -99,10 +99,29 @@ class Child extends Model
     }
 
     public function getAgeAttribute()
+    // onaffiche nombre d'anées et de mois
     {
         $date = new \DateTime($this->birthdate);
         $now = new \DateTime();
         $interval = $now->diff($date);
-        return $interval->y;
+
+        if($interval->y == 0){
+            return $interval->m . ' mois';
+        }
+
+        return $interval->y . ' ans et ' . $interval->m . ' mois';
+    }
+
+    public function getBirthdateFormAttribute()
+    {
+        return date('d/m/Y', strtotime($this->birthdate));
+    }
+    public function getSectionWorkersAttribute()
+    {
+        $section = $this->currentSection;
+        if ($section) {
+            return $section->section->currentWorkers;
+        }
+        return null;
     }
 }

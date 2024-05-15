@@ -158,4 +158,18 @@ class UserController extends Controller
         DB::statement('SET FOREIGN_KEY_CHECKS=1');
         return redirect()->route('admin.user.index')->with('success', 'L\'utilisateur a été supprimé avec succès');
     }
+
+
+    public function workerProfile()
+    {
+        $user = auth()->user();
+        return view('worker.user.profile', compact('user'));
+    }
+
+
+    public function tutorProfile()
+    {
+        $user = auth()->user();
+        return view('tutor.user.profile', compact('user'));
+    }
 }

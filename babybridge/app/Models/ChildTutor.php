@@ -31,6 +31,6 @@ class ChildTutor extends Model
 
     public function payments()
     {
-        return $this->hasMany(Payment::class);
+        return $this->hasMany(Payment::class , 'child_tutor_id');
     }
 }

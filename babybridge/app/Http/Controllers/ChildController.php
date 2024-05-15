@@ -223,9 +223,13 @@ class ChildController extends Controller
         //récupérer les enfants du tuteur connecté
         
         $children = auth()->user()->children;
-
-
-
         return view('tutor.child.daily_journal', compact('children'));
+    }
+
+
+    public function profileForTutor($childId)
+    {
+        $child = Child::findOrFail($childId);
+        return view('tutor.child.profile', compact('child'));
     }
 }
