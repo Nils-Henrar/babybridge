@@ -42,6 +42,11 @@ class Child extends Model
         return $this->hasMany(ChildTutor::class);
     }
 
+    public function payments()
+    {
+        return $this->hasManyThrough(Payment::class, ChildTutor::class, 'child_id', 'child_tutor_id');
+    }
+
     public function users()
     {
         return $this->belongsToMany(User::class, 'child_tutor', 'child_id', 'user_id');

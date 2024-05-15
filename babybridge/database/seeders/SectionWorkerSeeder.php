@@ -25,7 +25,7 @@ class SectionWorkerSeeder extends Seeder
 
             [
                 'worker_login' => 'geraldine94',
-                'section_slug' => 'les-lilas',
+                'section_slug' => 'les-mimosas',
                 'from' => '2023-03-22 10:00:00',
                 'to' => null,
             ],

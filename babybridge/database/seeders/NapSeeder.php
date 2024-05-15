@@ -27,8 +27,8 @@ class NapSeeder extends Seeder
             [
                 'child_firstname' => 'Hugo',
                 'child_lastname' => 'Lemoine',
-                'start_time' => '2024-03-22 10:00:00',
-                'end_time' => '2024-03-22 11:00:00',
+                'started_at' => '2024-03-22 10:00:00',
+                'ended_at' => '2024-03-22 11:00:00',
                 'quality' => 'good',
                 'notes' => null,
 
@@ -37,8 +37,8 @@ class NapSeeder extends Seeder
             [
                 'child_firstname' => 'Léa',
                 'child_lastname' => 'Dupont',
-                'start_time' => '2024-03-22 10:00:00',
-                'end_time' => '2024-03-22 12:00:00',
+                'started_at' => '2024-03-22 10:00:00',
+                'ended_at' => '2024-03-22 12:00:00',
                 'quality' => 'good',
                 'notes' => 'Léa a dormi 1h',
             ],
@@ -46,8 +46,8 @@ class NapSeeder extends Seeder
             [
                 'child_firstname' => 'Lucas',
                 'child_lastname' => 'Durand',
-                'start_time' => '2024-03-22 09:00:00',
-                'end_time' => '2024-03-22 09:30:00',
+                'started_at' => '2024-03-22 09:00:00',
+                'ended_at' => '2024-03-22 09:30:00',
                 'quality' => 'average',
                 'notes' => null,
             ],
@@ -55,8 +55,8 @@ class NapSeeder extends Seeder
             [
                 'child_firstname' => 'Jules',
                 'child_lastname' => 'Leroy',
-                'start_time' => '2024-03-22 10:00:00',
-                'end_time' => '2024-03-22 11:00:00',
+                'started_at' => '2024-03-22 10:00:00',
+                'ended_at' => '2024-03-22 11:00:00',
                 'quality' => 'bad',
                 'notes' => 'Jules a refusé de dormir',
 
@@ -65,8 +65,8 @@ class NapSeeder extends Seeder
             [
                 'child_firstname' => 'Louise',
                 'child_lastname' => 'Moreau',
-                'start_time' => '2024-03-22 09:00:00',
-                'end_time' => '2024-03-22 10:30:00',
+                'started_at' => '2024-03-22 09:00:00',
+                'ended_at' => '2024-03-22 10:30:00',
                 'quality' => 'bad',
                 'notes' => 'Louise n\'a pas dormi du tout',
             ],
@@ -74,8 +74,8 @@ class NapSeeder extends Seeder
             [
                 'child_firstname' => 'Emma',
                 'child_lastname' => 'Lefevre',
-                'start_time' => '2024-03-22 10:00:00',
-                'end_time' => '2024-03-22 11:00:00',
+                'started_at' => '2024-03-22 10:00:00',
+                'ended_at' => '2024-03-22 11:00:00',
                 'quality' => 'good',
                 'notes' => null,
             ],

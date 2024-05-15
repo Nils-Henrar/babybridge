@@ -125,7 +125,7 @@ async function loadNapsForDate(date) {
     document.getElementById('loading').style.display = 'flex'; // Affiche le loader
     let sectionId = '{{ Auth::user()->worker->currentSection->section->id }}' // ID de la section
     try {
-        const childrenResponse = await fetch(`/api/children/section/${sectionId}`);
+        const childrenResponse = await fetch(`/api/children/section/${sectionId}/date/${date}`);
         const childrenData = await childrenResponse.json();
         const napsResponse = await fetch(`/api/naps/section/${sectionId}/date/${date}`);
         const napsData = await napsResponse.json();

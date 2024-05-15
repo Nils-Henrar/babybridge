@@ -26,7 +26,7 @@ class ChildSectionSeeder extends Seeder
             [
                 'child_firstname' => 'Hugo',
                 'child_lastname' => 'Lemoine',
-                'section_slug' => 'les-lilas',
+                'section_slug' => 'les-mimosas',
                 'from' => '2023-03-22 10:00:00',
                 'to' => null,
             ],
@@ -58,7 +58,7 @@ class ChildSectionSeeder extends Seeder
             [
                 'child_firstname' => 'Louise',
                 'child_lastname' => 'Moreau',
-                'section_slug' => 'Les-bleuets',
+                'section_slug' => 'Les-mimosas',
                 'from' => '2023-03-22 13:00:00',
                 'to' => null,
             ],
@@ -82,7 +82,7 @@ class ChildSectionSeeder extends Seeder
             [
                 'child_firstname' => 'Arthur',
                 'child_lastname' => 'Roux',
-                'section_slug' => 'Les-pâquerettes',
+                'section_slug' => 'Les-mimosas',
                 'from' => '2023-03-22 16:00:00',
                 'to' => null,
             ],

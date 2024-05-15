@@ -380,7 +380,7 @@ return [
         ],
 
         //Worker menu
-        
+
 
         [
             'text' => 'Enfants',
@@ -404,7 +404,7 @@ return [
             'url' => '/worker/section/meal',
             'icon' => 'fas fa-fw fa-utensils',
             'can' => 'worker',
-            'icon_color' => 'teal',      
+            'icon_color' => 'teal',
 
         ],
 
@@ -433,7 +433,7 @@ return [
             'icon_color' => 'olive',
         ],
 
-        
+
 
         [
             'text' => 'Photos',
@@ -450,8 +450,17 @@ return [
             'url' => '/tutor/child/daily-journal',
             'icon' => 'fas fa-fw fa-book',
             'can' => 'tutor',
+        ],
+
+        [
+            'text' => 'Paiements',
+            'url' => '/tutor/payment',
+            'icon' => 'fas fa-fw fa-money-bill-wave',
+            'can' => 'tutor',
         ]
-      
+
+
+
     ],
 
     /*

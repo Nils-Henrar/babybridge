@@ -119,7 +119,7 @@ async function loadDiaperChangesForDate(date) {
 
     try {
         // Récupérer les données des enfants de la section
-        const childrenResponse = await fetch(`/api/children/section/${sectionId}`);
+        const childrenResponse = await fetch(`/api/children/section/${sectionId}/date/${date}`);
         const childrenData = await childrenResponse.json();
 
         const diaperResponse = await fetch(`/api/diaper-changes/section/${sectionId}/date/${date}`);
@@ -139,6 +139,7 @@ function displayChildrenWithDiaperChanges(children, diaperChanges) {
     container.innerHTML = ''; // Effacer le contenu précédent
 
     children.forEach(child => {
+        if (!child) return;
         const childDiaperChanges = diaperChanges.filter(change => change.child_id === child.id);
 
         let diaperHtml = childDiaperChanges.map(change => {

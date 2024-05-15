@@ -4,19 +4,13 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Child;
-use Illuminate\Http\Request;
-use App\Http\Resources\ChildDailyJournalResource;
 use App\Models\ChildTutor;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
 class DailyJournalController extends Controller
 {
-    public function show($childId, $date)
-    {
-        $child = $this->getChildData($childId, $date);
-        return new ChildDailyJournalResource($child);
-    }
 
     public function showByUser($userId, $date)
     {
@@ -61,29 +55,36 @@ class DailyJournalController extends Controller
     protected function formatChildEntries($child, $date)
     {
         $entries = collect();
-        foreach (['naps', 'childMeals', 'activityChildren', 'photos', 'diaperChanges'] as $relation) {
-            $child->$relation->each(function ($item) use ($entries, $date) {
-                if (Carbon::parse($item->started_at)->format('Y-m-d') == $date) {
-                    $entries->push($item->formatForJournal());
-                }
+        $relations = ['naps', 'childMeals', 'activityChildren', 'photos', 'diaperChanges'];
 
-                if (Carbon::parse($item->meal_time)->format('Y-m-d') == $date) {
-                    $entries->push($item->formatForJournal());
-                }
-
-                if (Carbon::parse($item->performed_at)->format('Y-m-d') == $date) {
-                    $entries->push($item->formatForJournal());
-                }
-
-                if (Carbon::parse($item->taken_at)->format('Y-m-d') == $date) {
-                    $entries->push($item->formatForJournal());
-                }
-
-                if (Carbon::parse($item->happened_at)->format('Y-m-d') == $date) {
+        foreach ($relations as $relation) {
+            $child->$relation->each(function ($item) use ($entries, $date, $relation) {
+                $field = $this->getDateFieldForRelation($relation);
+                if (Carbon::parse($item->$field)->format('Y-m-d') == $date) {
                     $entries->push($item->formatForJournal());
                 }
             });
         }
+
+        Log::info('Entries: ' . $entries);
         return $entries;
+    }
+
+    protected function getDateFieldForRelation($relation)
+    {
+        switch ($relation) {
+            case 'naps':
+                return 'started_at';
+            case 'childMeals':
+                return 'meal_time';
+            case 'activityChildren':
+                return 'performed_at';
+            case 'photos':
+                return 'taken_at';
+            case 'diaperChanges':
+                return 'happened_at';
+            default:
+                throw new \Exception("Invalid relation: $relation");
+        }
     }
 }

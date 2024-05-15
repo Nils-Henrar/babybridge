@@ -195,7 +195,7 @@ async function loadChildrenAndMeals(date) {
 
     try {
         // Récupérer les données des enfants de la section
-        const childrenResponse = await fetch(`/api/children/section/${sectionId}`);
+        const childrenResponse = await fetch(`/api/children/section/${sectionId}/date/${date}`);
         const childrenData = await childrenResponse.json();
 
         // Récupérer les repas des enfants pour la section et la date spécifiées
@@ -213,7 +213,9 @@ async function loadChildrenAndMeals(date) {
 function displayChildrenWithMeals(children, meals) {
     let container = document.getElementById('meal-container');
     container.innerHTML = ''; // Effacer le contenu précédent
+    console.log('Children:', children);
     children.forEach(child => {
+        if (!child) return;
         const flatMeals = meals.flat();
         const childMeals = flatMeals.filter(meal => meal.child_id === child.id);
 
