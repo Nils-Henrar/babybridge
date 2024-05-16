@@ -27,6 +27,7 @@ class StoreChildRequest extends FormRequest
             'birthdate' => 'required|date',
             'section' => 'required|exists:sections,id',
             'special_infos' => 'nullable|string',
+            'photo' => 'nullable|file|mimes:jpeg,jpg,png|max:2048',
 
             'tutor_lastname.*' => 'required|string|max:60',
             'tutor_firstname.*' => 'required|string|max:60',

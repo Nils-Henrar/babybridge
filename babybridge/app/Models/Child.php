@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Section;
 use Faker\Provider\Medical;
+use Illuminate\Support\Str;
 
 class Child extends Model
 {
@@ -19,6 +20,7 @@ class Child extends Model
         'gender',
         'birthdate',
         'special_infos',
+        'photo_path',
     ];
 
     public $timestamps = false;
@@ -96,6 +98,11 @@ class Child extends Model
     public function getFullNameAttribute()
     {
         return $this->firstname . ' ' . $this->lastname;
+    }
+
+    public function slugifiedFullName()
+    {
+        return Str::slug($this->fullname);
     }
 
     public function getAgeAttribute()

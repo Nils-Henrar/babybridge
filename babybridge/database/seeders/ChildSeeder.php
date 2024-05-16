@@ -29,6 +29,8 @@ class ChildSeeder extends Seeder
                 'lastname' => 'Dupont',
                 'gender' => 'F',
                 'birthdate' => '2021-08-12',
+                'special_infos' => 'Allergie au lait',
+                'photo_path' => 'profile/Léa Dupont/lea-dupont.jpg',
             ],
 
             [
@@ -36,6 +38,8 @@ class ChildSeeder extends Seeder
                 'lastname' => 'Durand',
                 'gender' => 'M',
                 'birthdate' => '2022-02-22',
+                'special_infos' => 'Asthme',
+                'photo_path' => 'profile/Lucas Durand/lucas-durand.jpg',
             ],
 
             [
@@ -43,6 +47,8 @@ class ChildSeeder extends Seeder
                 'lastname' => 'Lefevre',
                 'gender' => 'F',
                 'birthdate' => '2022-03-22',
+                'special_infos' => 'Allergie aux fruits à coque',
+                'photo_path' => 'profile/Emma Lefevre/emma-lefevre.jpg',
             ],
 
             [
@@ -50,6 +56,8 @@ class ChildSeeder extends Seeder
                 'lastname' => 'Leroy',
                 'gender' => 'M',
                 'birthdate' => '2022-05-22',
+                'special_infos' => 'Allergie aux fruits de mer',
+                'photo_path' => 'profile/Jules Leroy/jules-leroy.jpeg',
 
             ],
 
@@ -58,6 +66,8 @@ class ChildSeeder extends Seeder
                 'lastname' => 'Moreau',
                 'gender' => 'F',
                 'birthdate' => '2024-03-22',
+                'special_infos' => 'Allergie aux fruits à coque',
+                'photo_path' => 'profile/Louise Moreau/louise-moreau.jpg',
             ],
 
             [
@@ -65,6 +75,8 @@ class ChildSeeder extends Seeder
                 'lastname' => 'Lemoine',
                 'gender' => 'M',
                 'birthdate' => '2021-02-14',
+                'special_infos' => 'Asthme',
+                'photo_path' => 'profile/Hugo Lemoine/hugo-lemoine.jpeg',
             ],
 
             [
@@ -72,6 +84,8 @@ class ChildSeeder extends Seeder
                 'lastname' => 'Girard',
                 'gender' => 'F',
                 'birthdate' => '2023-01-25',
+                'special_infos' => 'Allergie au lait',
+                'photo_path' => 'profile/Chloé Girard/chloe-girard.jpg',
             ],
 
             [
@@ -79,6 +93,8 @@ class ChildSeeder extends Seeder
                 'lastname' => 'Roux',
                 'gender' => 'M',
                 'birthdate' => '2023-03-22',
+                'special_infos' => 'Allergie aux fruits de mer',
+                'photo_path' => 'profile/Arthur Roux/arthur-roux.jpg',
             ],
 
         ];

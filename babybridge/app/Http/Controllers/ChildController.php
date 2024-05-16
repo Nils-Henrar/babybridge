@@ -12,6 +12,8 @@ use App\Models\User;
 use App\Models\ChildSection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class ChildController extends Controller
 {
@@ -62,6 +64,25 @@ class ChildController extends Controller
         $child->birthdate = $data['birthdate'];
         $child->special_infos = $data['special_infos'];
 
+        if ($request->hasFile('photo') && $request->file('photo')->isValid()) {
+            $file = $request->file('photo');
+            
+            // slugify the name
+            $originalName = Str::slug($child->fullname);
+            // Changer le nom du fichier
+            $newOriginalName = $originalName . '.' . $file->getClientOriginalExtension();
+    
+            $targetPath = "profile/{$child->fullname}";
+            
+            // Assurez-vous que le répertoire cible existe
+            Storage::disk('public')->makeDirectory($targetPath);
+    
+            // Stocker le fichier dans le dossier spécifié
+            $photoPath = $file->storeAs($targetPath, $newOriginalName, 'public'); 
+    
+            $child->photo_path = $photoPath;
+        }
+        
         $child->save();
 
         if ($data['section']) {
@@ -148,8 +169,8 @@ class ChildController extends Controller
      */
     public function update(UpdateChildRequest $request, string $id)
     {
-        // validate the request
 
+        // validate the request
         $data = $request->validated();
 
         $child = Child::find($id);
@@ -158,6 +179,29 @@ class ChildController extends Controller
         $child->firstname = $data['firstname'];
         $child->birthdate = $data['birthdate'];
         $child->special_infos = $data['special_infos'];
+
+
+        if ($request->hasFile('photo') && $request->file('photo')->isValid()) {
+            $file = $request->file('photo');
+
+            // détruire l'ancienne photo
+            Storage::disk('public')->delete($child->photo_path);
+            
+            // slugify the name
+            $originalName = Str::slug($child->fullname);
+            // Changer le nom du fichier
+            $newOriginalName = $originalName . '.' . $file->getClientOriginalExtension();
+    
+            $targetPath = "profile/{$child->fullname}";
+            
+            // Assurez-vous que le répertoire cible existe
+            Storage::disk('public')->makeDirectory($targetPath);
+    
+            // Stocker le fichier dans le dossier spécifié
+            $photoPath = $file->storeAs($targetPath, $newOriginalName, 'public'); 
+    
+            $child->photo_path = $photoPath;
+        }
 
         $child->save();
 

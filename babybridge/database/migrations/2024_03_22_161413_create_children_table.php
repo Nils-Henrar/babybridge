@@ -18,6 +18,7 @@ return new class extends Migration
             $table->enum('gender', ['M', 'F']);
             $table->date('birthdate');
             $table->text('special_infos')->nullable();
+            $table->string('photo_path')->nullable();
         });
     }
 

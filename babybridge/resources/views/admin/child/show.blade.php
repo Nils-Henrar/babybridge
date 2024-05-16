@@ -15,6 +15,14 @@
         <h3 class="card-title">Profil de l'enfant</h3>
     </div>
     <div class="card-body">
+
+        <!-- Photo de profil-->
+        <div class="text-center">
+            <!-- aller chercher le full name slug -->
+            <img src="{{ asset('storage/'.$child->photo_path)}}"class="img-fluid" style="height: 200px; width: 200px; object-fit: cover; border-radius: 50%;" alt="Photo de profil">
+        </div>
+
+
         <div class="form-group">
             <label for="name">Nom</label>
             <input type="text" class="form-control" id="name" name="name" placeholder="Nom" value="{{ $child->lastname }}" readonly>

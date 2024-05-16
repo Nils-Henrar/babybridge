@@ -27,6 +27,9 @@ class UpdateChildRequest extends FormRequest
             'lastname' => 'required|string|max:255',
             'firstname' => 'required|string|max:255',
             'birthdate' => 'required|date',
+            'special_infos' => 'nullable|string',
+            'photo' => 'nullable|file|mimes:jpeg,jpg,png|max:2048',
+
             'section' => 'required|exists:sections,id',
             'special_infos' => 'nullable|string',
             'tutor_id.*' => 'required|exists:users,id',

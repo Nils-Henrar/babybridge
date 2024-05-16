@@ -43,11 +43,12 @@ class PhotoController extends Controller
             }
     
             $childId = $request->child_id;
-            $childName = Child::find($childId)->firstname;
+            $childName = Child::find($childId)->fullname;
     
             // Récupérer le fichier photo et son nom original
             $file = $request->file('photo');
             $originalName = $file->getClientOriginalName();
+
             // enlever les espaces et les caractères spéciaux
             $originalName = preg_replace('/[^A-Za-z0-9\-]/', '', $originalName);
             $targetPath = "public/photos/{$childName}";

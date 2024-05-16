@@ -15,7 +15,7 @@
         <h3 class="card-title">Modifier les informations de l'enfant</h3>
     </div>
     <div class="card-body">
-        <form method="POST" action="{{ route('admin.child.update', $child->id) }}">
+        <form method="POST" action="{{ route('admin.child.update', $child->id) }}" enctype="multipart/form-data">
             @csrf
             @method('PUT')
             <div class="form-group">
@@ -45,6 +45,23 @@
                 </span>
                 @enderror
             </div>
+
+            <!-- upload de photo de profil -->
+            <div class="form-group">
+                <label for="photo">Photo de profil</label>
+
+                <input type="file" class="form-control-file @error('photo') is-invalid @enderror" id="photo" name="photo" accept="image/*" value="{{ $child->photo_path }}">
+                @if($child->photo_path)
+                <img src="{{ asset('storage/'.$child->photo_path) }}" class="img-fluid" style="height: 100px; width: 100px; object-fit: cover; border-radius: 50%;" alt="Photo de profil">
+                @endif
+                @error('photo')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+                @enderror
+            </div>
+
+
             <div class="form-group">
                 <label for="section">Section</label>
                 <select class="form-control @error('section') is-invalid @enderror" id="section" name="section">
@@ -132,5 +149,6 @@
     </ul>
 </div>
 @endif
+
 
 @endsection
