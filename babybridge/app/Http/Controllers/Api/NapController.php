@@ -80,4 +80,19 @@ class NapController extends Controller
         return response()->json($nap);
     }
 
+
+    function deleteNap($napId)
+    
+    {
+        $nap = Nap::findOrFail($napId);
+
+        if($nap){
+            $nap->delete();
+            return response()->json(['message' => 'Sieste supprimée avec succès']);
+        } else {
+            return response()->json(['message' => 'Sieste non trouvée'], 404);
+        }
+
+    }
+
 }    

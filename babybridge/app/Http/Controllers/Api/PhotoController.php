@@ -28,7 +28,7 @@ class PhotoController extends Controller
     }
 
     // Méthode pour mettre à jour ou créer une photo
-    public function storeOrUpdatePhoto(Request $request)
+     public function storePhoto(Request $request)
     {
         try {
             $validator = Validator::make($request->all(), [
@@ -37,47 +37,102 @@ class PhotoController extends Controller
                 'taken_at' => 'required|date_format:Y-m-d H:i:s',
                 'photo' => 'required|file|mimes:jpeg,jpg,png|max:2048'
             ]);
-    
+
             if ($validator->fails()) {
                 return response()->json($validator->errors(), 422);
             }
-    
+
             $childId = $request->child_id;
             $childName = Child::find($childId)->fullname;
-    
-            // Récupérer le fichier photo et son nom original
+
             $file = $request->file('photo');
             $originalName = $file->getClientOriginalName();
-
-            // enlever les espaces et les caractères spéciaux
             $originalName = preg_replace('/[^A-Za-z0-9\-]/', '', $originalName);
             $targetPath = "public/photos/{$childName}";
-    
-            // Stocker le fichier dans le dossier spécifié et conserver le nom original
             $file->storeAs($targetPath, $originalName);
-    
-            // Construire le chemin complet pour enregistrer dans la base de données
             $storagePath = "photos/{$childName}/{$originalName}";
-    
-            $photoPath = $request->file('photo')->store("photos/{$childName}", 'public');
-            $photo = Photo::updateOrCreate(
-                [
-                    'child_id' => $childId,
-                    'taken_at' => $request->taken_at
-                ],
-                [
-                    'description' => $request->description,
-                    'path' => $photoPath // Chemin relatif stocké
-                ]
-            );
-            
-    
+
+            $photo = Photo::create([
+                'child_id' => $childId,
+                'description' => $request->description,
+                'taken_at' => $request->taken_at,
+                'path' => $storagePath
+            ]);
+
             return response()->json(['message' => 'Photo saved successfully', 'photo' => $photo]);
         } catch (\Exception $e) {
             Log::error('Failed to save photo: ' . $e->getMessage());
             return response()->json(['error' => 'Failed to save photo: ' . $e->getMessage()], 500);
         }
     }
+
+    public function updatePhoto(Request $request, $id)
+    
+    {
+        try {
+            $validator = Validator::make($request->all(), [
+                'child_id' => 'required|integer|exists:children,id',
+                'description' => 'nullable|string',
+                'taken_at' => 'required|date_format:Y-m-d H:i:s',
+                'photo' => 'file|mimes:jpeg,jpg,png|max:2048'
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json($validator->errors(), 422);
+            }
+
+            $photo = Photo::findOrFail($id);
+
+            if ($request->hasFile('photo')) {
+                $childName = $photo->child->fullname;
+                $file = $request->file('photo');
+                $originalName = $file->getClientOriginalName();
+                $originalName = preg_replace('/[^A-Za-z0-9\-]/', '', $originalName);
+                $targetPath = "public/photos/{$childName}";
+                $file->storeAs($targetPath, $originalName);
+                $storagePath = "photos/{$childName}/{$originalName}";
+                $photo->path = $storagePath;
+            }
+
+            $photo->description = $request->description;
+            $photo->taken_at = $request->taken_at;
+            $photo->save();
+
+            return response()->json(['message' => 'Photo updated successfully', 'photo' => $photo]);
+        } catch (\Exception $e) {
+            Log::error('Failed to update photo: ' . $e->getMessage());
+            return response()->json(['error' => 'Failed to update photo: ' . $e->getMessage()], 500);
+        }
+    }
+
+    public function getPhoto($id)
+    
+    {
+        try {
+            $photo = Photo::findOrFail($id);
+            return response()->json($photo);
+        } catch (\Exception $e) {
+            Log::error('Failed to retrieve photo: ' . $e->getMessage());
+            return response()->json(['error' => 'Failed to retrieve photo: ' . $e->getMessage()], 500);
+        }
+    }
+
+    public function deletePhoto($id)
+    
+    {
+        try {
+            $photo = Photo::findOrFail($id);
+            Storage::disk('public')->delete($photo->path);
+            $photo->delete();
+
+            return response()->json(['message' => 'Photo deleted successfully']);
+        } catch (\Exception $e) {
+            Log::error('Failed to delete photo: ' . $e->getMessage());
+            return response()->json(['error' => 'Failed to delete photo: ' . $e->getMessage()], 500);
+        }
+    }
+
+
     
 
     

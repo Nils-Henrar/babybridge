@@ -8,131 +8,147 @@
 
 @section('extra-css')
 <style>
-    /* Styles généraux pour la page */
-    .container {
-        max-width: 1200px;
-        margin: auto;
-        padding: 20px;
-    }
-
-    /* Styles pour les sections de titre */
-    .title-section {
-        font-size: 2rem;
-        font-weight: bold;
-        color: #176FA1;
-        margin-bottom: 30px;
-        text-align: center;
-    }
-
-    /* Styles pour les boîtes d'information */
     .small-box {
-        background-color: #D9D9D9;
+        position: relative;
+        background-color: #f0f0f0;
         padding: 20px;
         margin-bottom: 20px;
-        border-radius: 50px;
-        color: #176FA1;
+        border-radius: 10px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         display: flex;
-        justify-content: space-between;
         align-items: center;
-    }
+}
 
-    /* Styles pour les entrées de date et de temps */
-    .date-picker-container,
-    .timepicker-container {
-        text-align: center;
-        margin-bottom: 20px;
-    }
+.child-photo {
+    flex-shrink: 0;
+    margin-right: 15px;
+}
 
-    .date-picker-container button,
-    .timepicker-container button {
-        margin: 0 5px;
-        padding: 5px 10px;
-        font-size: 20px;
-        background-color: #f8f9fa;
-        border: none;
-        color: #176FA1;
-        cursor: pointer;
-    }
+.child-photo img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 50%;
+}
 
-    .date-picker-container input,
-    .timepicker-container input {
-        text-align: center;
-        font-size: 20px;
-        border-radius: 25px;
-        padding: 8px 10px;
-    }
+.child-info {
+    color: #176FA1;
+    margin-right: 20px;
+}
 
-    /* Styles pour les formulaires dans les modals */
-    .form-group {
-        margin-bottom: 15px;
-    }
-
-    .form-group label {
-        font-size: 1.5rem;
-        color: #176FA1;
-    }
-
-    .form-group select{
-        font-size: 1rem;
-        border-radius: 25px;
-        padding: 8px 10px;
-    }
-
-    .form-control {
-        font-size: 1.2rem;
-        border-radius: 25px;
-        padding: 8px 10px;
-    }
-
-    /* Boutons pour enregistrer et fermer dans les modals */
-    .btn-primary {
-        background-color: #176FA1;
-        border: none;
-        padding: 10px 20px;
-        font-size: 1.2rem;
-        color: white;
-        margin-top: 10px;
-    }
-
-    .btn-primary:hover {
-        background-color: #105078;
-    }
-
-    .fa-arrow-left,
-    .fa-arrow-right {
-        color: #176FA1; /* Couleur bleue pour les icônes de navigation */
-    }
-
-    /* Loader pendant le chargement des données */
-    #loading {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        background-color: rgba(0, 0, 0, 0.5); /* Fond semi-transparent */
-    }
-
-    #loading div {
-        font-size: 2rem;
-        color: white;
-    }
-
-    .meal-details {
+.meal-details {
     display: flex;
     flex-wrap: wrap; /* Permet aux éléments de passer à la ligne si l'espace horizontal est insuffisant */
     justify-content: flex-start; /* Alignement horizontal */
     align-items: center; /* Alignement vertical */
     gap: 10px; /* Espacement entre les éléments */
+}
+
+.meal-entry {
+    position: relative;
+    min-width: 150px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    margin-right: 10px;
+    text-align: center;
+}
+
+.meal-entry .delete-icon {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    color: red;
+    cursor: pointer;
+}
+
+.title-section {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #176FA1;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.date-picker-container {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.btn-primary {
+    background-color: #176FA1;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1.2rem;
+    color: white;
+    cursor: pointer;
+}
+
+.btn-primary:hover {
+    background-color: #105078;
+}
+
+.select-checkbox {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        cursor: pointer;
+        transform: scale(1.5);
+        accent-color: #176FA1;
     }
 
-    .meal-entry {
-        flex: 1;
-        min-width: 150px; /* Minimum width for each meal entry */
-        padding: 5px;
-        background-color: #f0f0f0;
-        border-radius: 10px;
-        margin-right: 10px; /* Espacement entre les entrées */
+    .select-all-btn {
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        cursor: pointer;
+        margin-left: 20px;
+        
     }
+
+    .select-all-btn:hover {
+        /* gris sombre */
+        background-color: #666;
+    }
+
+    .select-all-container {
+        display: flex;
+        justify-content: flex-start;
+        margin-bottom: 15px;
+        margin-right: 20px;
+
+    }
+
+    /* Assurez-vous que .form-check dans la small-box est positionné correctement */
+    .small-box .form-check {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+    }
+
+    /* Assurez-vous que les éléments dans .small-box n'ont pas de marges excessives */
+    .small-box .form-check-input {
+        margin: 0;
+    }
+
+    .meal-time {
+    font-size: 1rem;
+    color: #333;
+}
+
+    .meal-quantity {
+        font-size: 1rem;
+        color: #333;
+    }
+
+    .large-icon {
+        font-size: 2rem; /* Ajustez cette valeur pour obtenir la taille désirée */
+        color: #176FA1; /* Ajustez la couleur selon vos besoins */
+    }
+
 </style>
 
 @endsection
@@ -160,7 +176,15 @@
 
 @push('scripts')
 <script>
-    document.addEventListener("DOMContentLoaded", function() {
+
+document.addEventListener("DOMContentLoaded", function() {
+    const token = `{{ session('authToken') }}`; // Récupérer le token stocké dans la session
+    if (token) {
+        sessionStorage.setItem('authToken', token);
+        console.log('Token stored in session storage');
+    }else{
+        console.log('No token found');
+    }
     const datePickerElement = document.getElementById('date-picker');
     const datePicker = flatpickr(datePickerElement, {
         defaultDate: "today",
@@ -221,29 +245,53 @@ function displayChildrenWithMeals(children, meals) {
 
         let mealsHtml = childMeals.map(meal => `
         <div class="meal-entry">
-            <strong>
-                ${meal.meal.type === 'feeding bottle' ? '<i class="fa-solid fa-bottle-water"></i>' : 
-                meal.meal.type === 'fruit' ? '<i class="fas fa-apple-alt"></i>' : 
-                '<i class="fas fa-carrot"></i>'}
-            </strong>: ${meal.quantity} ${ meal.meal.type === 'feeding bottle' ? 'ml' : '' }<p>${new Date(meal.meal_time).toLocaleTimeString()}</p>
+            <i class="delete-icon fas fa-times-circle" onclick="deleteMeal(${meal.id})"></i>
+            <i class="fa-solid ${meal.meal.type === 'feeding bottle' ? 'fa-bottle-water' : meal.meal.type === 'fruit' ? 'fa-apple-alt' : 'fa-carrot'} large-icon"></i>
+            <div class="meal-time">${new Date(meal.meal_time).toLocaleTimeString()}</div>
+            <div class="meal-quantity">${meal.quantity} ${meal.meal.type === 'feeding bottle' ? 'ml' : ''}</div>
+            <button class="btn btn-info btn-sm mt-2" onclick="openMealModal(${child.id}, ${meal.id})">Modifier</button>
         </div>
+
         `).join('');
         let boxHtml = `
             <div class="col-lg-12 col-6">
                 <div class="small-box">
-                    <div class="inner">
-                        <h3>${child.firstname} ${child.lastname}</h3>
+                    <div class="child-photo">
+                        <img src="{{ asset('storage/${child.photo_path}') }}" alt="Photo de profil de ${child.firstname}">
+                    </div>
+                        <div class="child-info">
+                            <h3>${child.firstname}</h3>
+                            <p> ${child.lastname} </p>
+                        </div>
+
                         <div class="meal-details">
                             ${mealsHtml}
                         </div>
-                        <button class="btn btn-primary" onclick="openMealModal(${child.id})">Ajouter un repas</button>
+
+                        <div class="form-check">
+
+                        <input class="form-check-input select-checkbox child-checkbox" type="checkbox" value="${child.id}" id="child-${child.id}">
+
+                        </div>
                     </div>
+
                 </div>
             </div>
         `;
         container.innerHTML += boxHtml;
     });
+
+    const addButtonHtml = `
+        <div class="select-all-container">
+            <button class="btn btn-primary" onclick="openMealModal()"><i class="fas fa-plus"></i></button>
+            <button class="btn btn-secondary select-all-btn" onclick="selectAllChildren()">Select. tous</button>   
+        </div>
+    `;
+
+    container.insertAdjacentHTML('afterbegin', addButtonHtml);
 }
+
+
 
 function loadMealTypes() {
     fetch('/api/meal-types')
@@ -268,30 +316,36 @@ function loadMealTypes() {
 
 
 async function submitMealForm() {
+    const mealId = document.getElementById('mealId').value;
     const mealTime = document.getElementById('meal_time').value;
     const mealType = document.getElementById('meal_type').value;
     const quantity = document.getElementById('quantity').value;
     const notes = document.getElementById('notes').value;
     const mealDate = document.getElementById('date-picker').value;
-    const selectedChildId = document.getElementById('childIdInput').value;
+    const selectedChildIds = Array.from(document.querySelectorAll('.child-checkbox:checked')).map(checkbox => checkbox.value);
+    const token = sessionStorage.getItem('authToken'); // Récupérer le token stocké dans la session
 
     const data = {
-        child_id: selectedChildId,
+        child_ids : selectedChildIds,
         meal_id: mealType,
-        date: mealDate,
-        time: mealTime,
+        meal_time: `${mealDate} ${mealTime}:00`,
         quantity: quantity,
         notes: notes
     };
 
     console.log('Meal data:', data);
 
+    const url = mealId ? `/api/meals/${mealId}` : '/api/meals';
+    const method = mealId ? 'PUT' : 'POST';
+
     try {
-        const response = await fetch('/api/meals', {
-            method: 'POST',
+        const response = await fetch(url, {
+            method: method,
             headers: {
                 'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                'Accept': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                'Authorization': `Bearer ${token}` // Ajouter le token d'authentification
             },
             body: JSON.stringify(data)
         });
@@ -312,6 +366,7 @@ async function submitMealForm() {
         alert('Erreur lors de l\'enregistrement du repas.');
     }
 }
+
 
 
 function adjustQuantityInput() {
@@ -341,6 +396,14 @@ function adjustQuantityInput() {
             </select>
         `;
     }
+}
+
+function selectAllChildren() {
+    const isChecked = document.querySelector('.select-all-btn').innerText === 'Sélectionner tout';
+    document.querySelectorAll('.child-checkbox').forEach(checkbox => {
+        checkbox.checked = isChecked;
+    });
+    document.querySelector('.select-all-btn').innerText = isChecked ? 'Désélectionner tout' : 'Sélectionner tout';
 }
 
 function updateNotesBasedOnQuantity() {
@@ -373,14 +436,83 @@ function updateNotesBasedOnQuantity() {
     notesTextarea.value = note; // Met à jour le champ des notes
 }
 
+async function deleteMeal(mealId) {
+    if (!confirm('Êtes-vous sûr de vouloir supprimer ce repas?')) {
+        return;
+    }
+    const token = sessionStorage.getItem('authToken'); // Récupérer le token stocké dans la session
+
+    try {
+        const response = await fetch(`/api/meals/${mealId}`, {
+            method: 'DELETE',
+            headers: {
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                'Authorization': `Bearer ${token}`, // Ajouter le token d'authentification
+
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to delete meal');
+        }
+
+        const result = await response.json();
+        console.log('Meal deleted successfully:', result);
+        alert('Repas supprimé avec succès');
+
+        // Recharger les repas pour la date actuelle
+        loadChildrenAndMeals(document.getElementById('date-picker').value);
+    } catch (error) {
+        console.error('Error deleting meal:', error);
+        alert('Erreur lors de la suppression du repas');
+    }
+}
 
 
 
-function openMealModal(childId) {
-    console.log('Opening modal for child:', childId); // Vérifier que l'ID est correct et que la fonction est appelée
-    document.getElementById('childIdInput').value = childId;
+
+
+
+async function openMealModal(mealId = null) {
+    const modal = $('#mealModal');
+    const form = document.getElementById('mealForm');
+
+    if(!mealId) {
+        const selectedChildIds = Array.from(document.querySelectorAll('.child-checkbox:checked')).map(checkbox => checkbox.value);
+        if(selectedChildIds.length === 0) {
+            alert('Veuillez sélectionner au moins un enfant pour ajouter un repas.');
+            return;
+        }
+
+        form.reset(); // Réinitialiser le formulaire
+        document.getElementById('mealId').value = '';
+        document.getElementById('meal_time').value = '';
+        document.getElementById('meal_type').value = '';
+        document.getElementById('quantity').value = '';
+        document.getElementById('notes').value = '';
+
+    } else {
+        try {
+            const response = await fetch(`/api/meals/${mealId}`);
+            if (!response.ok) {
+                throw new Error('Failed to load meal details');
+            }
+
+            const meal = await response.json();
+            document.getElementById('mealId').value = meal.id;
+            document.getElementById('meal_time').value = meal.meal_time.substr(11, 5);
+            document.getElementById('meal_type').value = meal.meal_id;
+            document.getElementById('quantity').value = meal.quantity;
+            document.getElementById('notes').value = meal.notes;
+        } catch (error) {
+            console.error('Error loading meal details:', error);
+            alert('Failed to load meal details');
+            return;
+        }
+    }
     $('#mealModal').modal('show');
 }
+
 
 </script>
 @endpush

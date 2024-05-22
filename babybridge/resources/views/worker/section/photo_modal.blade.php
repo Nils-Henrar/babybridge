@@ -10,14 +10,16 @@
             </div>
             <div class="modal-body">
             <form id="photoForm" enctype="multipart/form-data">
-                <input type="hidden" id="childIdInput" name="child_id">
+                <input type="hidden" id="childId" name="child_id">
+                <input type="hidden" id="photoId" name="photo_id">
+
                 <div class="form-group">
                     <label for="photo_description">Description</label>
                     <input type="text" class="form-control" id="photo_description" name="description">
                 </div>
                 <div class="form-group">
                     <label for="taken_at">Date de la prise</label>
-                    <input type="datetime-local" class="form-control" id="taken_at" name="taken_at" required>
+                    <input type="time" class="form-control" id="taken_at" name="taken_at" required>
                 </div>
 
                 <div class="form-group">

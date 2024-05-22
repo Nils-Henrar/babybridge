@@ -10,7 +10,7 @@
             </div>
             <div class="modal-body">
                 <form id="activityForm">
-                    <input type="hidden" id="childIdInput" value="">
+                    <input type="hidden" id="activityId" value="">
                     <div class="form-group">
                         <label for="activity_description">Description de l'activité</label>
                         <select class="form-control" id="activity_description" required>
@@ -20,7 +20,7 @@
                         <label for="activity_time">Heure de l'activité</label>
                         <input type="time" class="form-control" id="activity_time" required>
                     </div>
-                    <button type="submit" class="btn btn-primary">Enregistrer</button>
+                    <button type="button" class="btn btn-primary" onclick="submitActivityForm()">Enregistrer</button>
                 </form>
             </div>
         </div>

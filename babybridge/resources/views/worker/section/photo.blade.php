@@ -9,14 +9,32 @@
 @section('extra-css')
 <style>
     .small-box {
-        background-color: #f9f9f9;
+        background-color: #f0f0f0;
         padding: 20px;
         margin-bottom: 20px;
         border-radius: 10px;
         box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         display: flex;
-        justify-content: space-between;
         align-items: center;
+        position: relative;
+    }
+    .child-photo {
+        flex-shrink: 0;
+        margin-right: 15px;
+    }
+    .child-photo img {
+        width: 100px;
+        height: 100px;
+        object-fit: cover;
+        border-radius: 50%;
+    }
+    .child-info {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        color: #176FA1;
+        margin-right: 20px;
     }
     .photo-details {
         display: flex;
@@ -26,11 +44,24 @@
         gap: 10px;
     }
     .photo-entry {
+        position: relative;
         min-width: 150px;
         padding: 10px;
-        background-color: #f0f0f0;
+        background-color: #f9f9f9;
         border-radius: 10px;
         margin-right: 10px;
+        text-align: center;
+    }
+    .photo-entry img {
+        width: 100px;
+        height: auto;
+    }
+    .photo-entry .delete-icon {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        color: red;
+        cursor: pointer;
     }
     .title-section {
         font-size: 2rem;
@@ -53,6 +84,10 @@
     }
     .btn-primary:hover {
         background-color: #105078;
+    }
+    .large-icon {
+        font-size: 2rem;
+        color: #176FA1;
     }
 </style>
 @endsection
@@ -82,6 +117,13 @@
 @push('scripts')
 <script>
 document.addEventListener("DOMContentLoaded", function() {
+    const token = `{{ session('authToken') }}`; // Récupérer le token stocké dans la session
+    if (token) {
+        sessionStorage.setItem('authToken', token);
+        console.log('Token stored in session storage');
+    }else{
+        console.log('No token found');
+    }
     const datePickerElement = document.getElementById('date-picker');
     const datePicker = flatpickr(datePickerElement, {
         defaultDate: "today",
@@ -132,24 +174,30 @@ function displayChildrenWithPhotos(children, photos) {
         if (!child) return;
         const childPhotos = photos.filter(photo => photo.child_id === child.id);
         let photoHtml = childPhotos.map(photo => {
-            // Utilisation de asset pour générer l'URL de l'image
+            const takenAt = new Date(photo.taken_at).toLocaleTimeString();
             return `
-                <div class="photo-entry" onclick="openPhotoModal(${child.id})">
-                    <strong>${photo.description}</strong>
-                    <img src="/storage/${photo.path}" alt="Child Photo" style="width: 100px; height: auto;">
-                    <p>${new Date(photo.taken_at).toLocaleTimeString()}</p>
-                </div>
+            <div class="photo-entry">
+                <i class="delete-icon fas fa-times-circle" onclick="deletePhoto(${photo.id})"></i>
+                <img src="/storage/${photo.path}" alt="Child Photo" class="large-icon">
+                <div class="photo-description">${photo.description}</div>
+                <div class="photo-time">${takenAt}</div>
+                <button class="btn btn-info btn-sm mt-2" onclick="openPhotoModal(${child.id}, ${photo.id})">Modifier</button>
+            </div>
             `;
         }).join('');
 
         let boxHtml = `
             <div class="col-lg-12 col-6">
                 <div class="small-box">
-                    <div class="inner">
-                        <h3>${child.firstname} ${child.lastname}</h3>
-                        <div class="photo-details">${photoHtml}</div>
-                        <button class="btn btn-primary" onclick="openPhotoModal(${child.id})">Ajouter une photo</button>
+                    <div class="child-photo">
+                        <img src="{{ asset('storage/${child.photo_path}') }}" alt="Photo de profil de ${child.firstname}">
                     </div>
+                    <div class="child-info">
+                        <h3>${child.firstname}</h3>
+                        <p> ${child.lastname} </p>
+                    </div>
+                    <div class="photo-details">${photoHtml}</div>
+                    <button class="btn btn-primary" onclick="openPhotoModal(${child.id})"><i class="fas fa-plus"></i></button>
                 </div>
             </div>
         `;
@@ -157,15 +205,110 @@ function displayChildrenWithPhotos(children, photos) {
     });
 }
 
-
-function openPhotoModal(childId, description='', path='') {
-    // Initialiser le formulaire dans le modal ici
-    document.getElementById('childIdInput').value = childId;
-    $('#photoModal').modal('show');
-    console.log('Opening photo modal for child:', childId);
+async function submitPhotoForm() {
+    const form = document.getElementById('photoForm');
+    const formData = new FormData(form);
     
+    const takenAtTime = document.getElementById('taken_at').value;
+    const takenAtDate = document.getElementById('date-picker').value;
+
+    const takenAt = `${takenAtDate} ${takenAtTime}:00`;
+
+    formData.set('taken_at', takenAt);
+
+    const photoId = document.getElementById('photoId').value;
+    const token = sessionStorage.getItem('authToken'); // Récupérer le token stocké dans la session
+
+    const url = photoId ? `/api/photos/${photoId}` : '/api/photos';
+    const method = photoId ? 'PUT' : 'POST';
+
+    try {
+        const response = await fetch(url, {
+            method: method,
+            headers: {
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                'Authorization': `Bearer ${token}` // Ajouter le token dans les headers
+            },
+            body: formData
+        });
+
+        console.log('Response:', response);
+
+        formData.forEach((value, key) => console.log(key, value));
+        
+        if (response.ok) {
+            const result = await response.json();
+            console.log('Photo saved successfully:', result);
+            $('#photoModal').modal('hide');
+            loadPhotosForDate(document.getElementById('date-picker').value);
+            alert('Photo enregistrée avec succès!');
+        } else {
+            const errorText = await response.text();
+            console.error('Error saving photo:', errorText);
+            alert('Erreur lors de l\'enregistrement de la photo');
+        }
+    } catch (error) {
+        console.error('Error saving photo:', error);
+        alert('Erreur lors de l\'enregistrement de la photo');
+    }
 }
 
+function openPhotoModal(childId, photoId = null) {
+    console.log('Opening photo modal for child:', childId);
+    document.getElementById('childId').value = childId;
+    document.getElementById('photoForm').reset();
+    document.getElementById('image_preview').style.display = 'none';
+
+    if (photoId) {
+        fetch(`/api/photos/${photoId}`)
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('photoId').value = data.id;
+                document.getElementById('photo_description').value = data.description;
+                document.getElementById('taken_at').value = data.taken_at.substr(11, 5); // Extract only the time for the input
+                document.getElementById('image_preview').src = `/storage/${data.path}`;
+                document.getElementById('image_preview').style.display = 'block';
+            })
+            .catch(error => {
+                console.error('Error loading photo details:', error);
+                alert('Failed to load photo details.');
+            });
+    } else {
+        document.getElementById('photoId').value = '';
+        document.getElementById('photo_description').value = '';
+        document.getElementById('taken_at').value = '';
+    }
+
+    $('#photoModal').modal('show');
+}
+
+async function deletePhoto(photoId) {
+    if (!confirm('Êtes-vous sûr de vouloir supprimer cette photo?')) return;
+
+    const token = sessionStorage.getItem('authToken'); // Récupérer le token stocké dans la session
+
+    try {
+        const response = await fetch(`/api/photos/${photoId}`, {
+            method: 'DELETE',
+            headers: {
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                'Authorization': `Bearer ${token}` // Ajouter le token dans les headers
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to delete photo');
+        }
+
+        const result = await response.json();
+        console.log('Photo deleted successfully:', result);
+        alert('Photo supprimée avec succès');
+        loadPhotosForDate(document.getElementById('date-picker').value);
+    } catch (error) {
+        console.error('Error deleting photo:', error);
+        alert('Erreur lors de la suppression de la photo');
+    }
+}
 
 function previewImage() {
     var preview = document.getElementById('image_preview');
@@ -182,48 +325,6 @@ function previewImage() {
     } else {
         preview.src = "";
         preview.style.display = 'none'; // Cacher l'image si aucun fichier n'est sélectionné
-    }
-}
-
-async function submitPhotoForm() {
-    const form = document.getElementById('photoForm');
-    const formData = new FormData(form);
-
-     // Obtenir la date et l'heure, remplacer 'T' par un espace
-     let takenAt = document.getElementById('taken_at').value.replace('T', ' ') + ':00';
-    formData.set('taken_at', takenAt);  // Mettre à jour le formData avec la nouvelle chaîne de date
-
-    formData.forEach((value, key) => {
-        console.log(key, value);
-    });
-
-    try {
-        const response = await fetch('/api/photos', {
-            method: 'POST',
-            headers: {
-                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-                // 'Content-Type': 'application/json' <-- Cette ligne doit être retirée pour les FormData
-            },
-
-            body: formData
-        });
-
-        console.log('Body:', formData);
-
-        if (response.ok) {
-            const result = await response.json();  // Assurez-vous que le serveur renvoie du JSON
-            console.log('Photo saved successfully:', result);
-            $('#photoModal').modal('hide');
-            loadPhotosForDate(document.getElementById('date-picker').value);
-            alert('Photo enregistrée avec succès!');
-        } else {
-            const errorText = await response.text();  // Pour le débogage, obtenir la réponse du serveur même en cas d'erreur
-            console.error('Error saving photo:', errorText);
-            alert('Erreur lors de l\'enregistrement de la photo');
-        }
-    } catch (error) {
-        console.error('Error saving photo:', error);
-        alert('Erreur lors de l\'enregistrement de la photo');
     }
 }
 

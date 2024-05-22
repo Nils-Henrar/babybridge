@@ -28,43 +28,55 @@ class MealController extends Controller
     }
 
     // Méthode pour mettre à jour ou créer un repas
-    public function storeOrUpdateMeal(Request $request)
+    public function storeMeal(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'child_id' => 'required|integer|exists:children,id',
+            'child_ids' => 'required|array',
+            'child_ids.*' => 'exists:children,id',
+            'meal_time' => 'required|date_format:Y-m-d H:i:s',
             'meal_id' => 'required|integer|exists:meals,id',
-            'date' => 'required|date', // Just the date
-            'time' => 'required', // Just the time
             'quantity' => 'required',
-            'notes' => 'sometimes|string'
+            'notes' => 'nullable|string'
         ]);
     
         if ($validator->fails()) {
             return response()->json($validator->errors(), 422);
         }
-
-        
-
-        $time = $request->time . ':00'; // ajouter les secondes pour le format de date MySQL
     
-        $datetime = Carbon::createFromFormat('Y-m-d H:i:s', $request->date . ' ' . $time);
-    
-        $meal = ChildMeal::updateOrCreate(
-            [
-                'child_id' => $request->child_id,
+        foreach ($request->child_ids as $childId) {
+            ChildMeal::create([
+                'child_id' => $childId,
                 'meal_id' => $request->meal_id,
-                'meal_time' => $datetime
-            ],
-            [
+                'meal_time' => $request->meal_time,
                 'quantity' => $request->quantity,
                 'notes' => $request->notes
-            ]
-        );
+            ]);
+        }
     
-        return response()->json([
-            'message' => 'Meal record saved successfully',
-            'meal' => $meal
+        return response()->json(['message' => 'Repas enregistré avec succès']);
+    }
+    
+    public function updateMeal(Request $request, $mealId)
+    {
+        $validator = Validator::make($request->all(), [
+            'meal_id' => 'required|integer|exists:meals,id',
+            'meal_time' => 'required|date_format:Y-m-d H:i:s', // format '2021-12-31 12:00:00
+            'quantity' => 'required',
+            'notes' => 'nullable|string'
         ]);
+    
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422);
+        }
+    
+        $meal = ChildMeal::findOrFail($mealId);
+        $meal->update([
+            'meal_time' => $request->meal_time,
+            'quantity' => $request->quantity,
+            'notes' => $request->notes
+        ]);
+    
+        return response()->json(['message' => 'Repas mis à jour avec succès']);
     }
 
     public function getAllMealTypes()
@@ -72,5 +84,20 @@ class MealController extends Controller
         $mealTypes = Meal::all();
     
         return response()->json($mealTypes);
+    }
+
+    public function deleteMeal($mealId)
+    {
+        $meal = ChildMeal::findOrFail($mealId);
+        $meal->delete();
+    
+        return response()->json(['message' => 'Repas supprimé avec succès']);
+    }
+
+    public function getMeal($mealId)
+    {
+        $meal = ChildMeal::findOrFail($mealId);
+    
+        return response()->json($meal);
     }
 }
