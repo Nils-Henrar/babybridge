@@ -23,6 +23,15 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $user = auth()->user();
+
+
+        if ($user->roles->contains('role', 'worker')) {
+            return redirect()->route('worker.section.children');
+        } elseif ($user->roles->contains('role', 'admin')) {
+            return redirect()->route('admin.user.index');
+        } elseif ($user->roles->contains('role', 'parent')) {
+            return redirect()->route('tutor.daily_journal');
+        }
     }
 }
