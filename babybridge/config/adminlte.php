@@ -32,8 +32,8 @@ return [
     |
     */
 
-    'use_ico_only' => false,
-    'use_full_favicon' => true,
+    'use_ico_only' => true,
+    'use_full_favicon' => false,
 
     /*
     |--------------------------------------------------------------------------
@@ -65,12 +65,13 @@ return [
     |
     */
 
-    'logo' => '<b>BabyBridge</b>',
-    'logo_img' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
-    'logo_img_class' => 'brand-image img-circle elevation-3',
+    'logo' => null,
+    'logo_img' => 'vendor/adminlte/dist/img/Logo.png',
+    'logo_img_class' => 'brand-image img-circle elevation',
     'logo_img_xl' => null,
     'logo_img_xl_class' => 'brand-image-xs',
-    'logo_img_alt' => 'Admin Logo',
+    'logo_img_alt' => 'BabyBridge',
+    
 
     /*
     |--------------------------------------------------------------------------
@@ -86,13 +87,13 @@ return [
     */
 
     'auth_logo' => [
-        'enabled' => false,
+        'enabled' => true,
         'img' => [
-            'path' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
+            'path' => 'vendor/adminlte/dist/img/Logo.png',
             'alt' => 'Auth Logo',
             'class' => '',
-            'width' => 50,
-            'height' => 50,
+            'width' => 600,
+            'height' => 300,
         ],
     ],
 
@@ -115,11 +116,11 @@ return [
         'enabled' => true,
         'mode' => 'fullscreen',
         'img' => [
-            'path' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
+            'path' => 'vendor/adminlte/dist/img/Logo.png',
             'alt' => 'AdminLTE Preloader Image',
             'effect' => 'animation__shake',
-            'width' => 60,
-            'height' => 60,
+            'width' => 600,
+            'height' => 300,
         ],
     ],
 
@@ -137,7 +138,7 @@ return [
 
     'usermenu_enabled' => true,
     'usermenu_header' => true,
-    'usermenu_header_class' => 'bg-primary',
+    'usermenu_header_class' => 'bg-gradient-info',
     'usermenu_image' => true,
     'usermenu_desc' => true,
     'usermenu_profile_url' => true,
@@ -173,12 +174,12 @@ return [
     |
     */
 
-    'classes_auth_card' => 'card-outline card-primary',
-    'classes_auth_header' => '',
+    'classes_auth_card' => '',
+    'classes_auth_header' => 'bg-gradient-info',
     'classes_auth_body' => '',
-    'classes_auth_footer' => '',
-    'classes_auth_icon' => '',
-    'classes_auth_btn' => 'btn-flat btn-primary',
+    'classes_auth_footer' => 'text-center',
+    'classes_auth_icon' => 'fa-lg text-info',
+    'classes_auth_btn' => 'btn-flat btn-info',
 
     /*
     |--------------------------------------------------------------------------
@@ -314,20 +315,48 @@ return [
         ],
 
         // Sidebar items:
-        [
-            'type' => 'sidebar-menu-search',
-            'text' => 'search',
-            'can' => 'admin',
-        ],
+        // [
+        //     'type' => 'sidebar-menu-search',
+        //     'text' => 'search',
+        //     'can' => 'admin',
+        // ],
 
         ['header' => 'Menu'],
 
         [
             'text' => 'profile',
-            'url' => 'admin/settings',
+            'url' => 'tutor/profile/',
             'icon' => 'fas fa-fw fa-user',
-            'icon_color' => 'primary',
+            'can' => 'tutor',
         ],
+
+        // [
+        //     'text' => 'profile',
+        //     'url' => 'admin/user/profile',
+        //     'icon' => 'fas fa-fw fa-user',
+        //     'can' => 'admin',
+        // ],
+
+        // [
+        //     'text' => 'Dashboard',
+        //     'url' => '/admin/dashboard',
+        //     'icon' => 'fas fa-fw fa-tachometer-alt',
+        //     'can' => 'admin',
+        // ],
+
+        // [
+        //     'text' => 'Dashboard',
+        //     'url' => '/worker/dashboard',
+        //     'icon' => 'fas fa-fw fa-tachometer-alt',
+        //     'can' => 'worker',
+        // ],
+
+        // [
+        //     'text' => 'Dashboard',
+        //     'url' => '/tutor/dashboard',
+        //     'icon' => 'fas fa-fw fa-tachometer-alt',
+        //     'can' => 'tutor',
+        // ],
 
         [
             'text' => 'Sections',
@@ -357,12 +386,12 @@ return [
             'can' => 'admin',
         ],
 
-        [
-            'text' => 'Tuteurs',
-            'url' => '/admin/tutor',
-            'icon' => 'fas fa-fw fa-users',
-            'can' => 'admin',
-        ],
+        // [
+        //     'text' => 'Tuteurs',
+        //     'url' => '/admin/tutor',
+        //     'icon' => 'fas fa-fw fa-users',
+        //     'can' => 'admin',
+        // ],
 
         [
             'text' => 'Événements',
@@ -376,7 +405,6 @@ return [
             'url' => '/admin/calendar',
             'icon' => 'fas fa-fw fa-calendar',
             'can' => 'admin',
-            'icon_color' => 'gray',
         ],
 
         //Worker menu
@@ -413,7 +441,7 @@ return [
             'url' => '/worker/section/nap',
             'icon' => 'fas fa-fw fa-bed',
             'can' => 'worker',
-            'icon_color' => 'purple',
+            'icon_color' => 'primary',
 
         ],
 
@@ -430,7 +458,7 @@ return [
             'url' => '/worker/section/diaper-change',
             'icon' => 'fas fa-fw fa-baby',
             'can' => 'worker',
-            'icon_color' => 'olive',
+            'icon_color' => 'white',
         ],
 
 
