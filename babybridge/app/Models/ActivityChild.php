@@ -30,7 +30,7 @@ class ActivityChild extends Model
         return $this->belongsTo(Activity::class);
     }
 
-    public function formatForJournal()
+    public function formatForJournal() 
     {
         return [
             'type' => 'activity',

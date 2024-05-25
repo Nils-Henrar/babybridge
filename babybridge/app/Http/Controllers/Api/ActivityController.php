@@ -20,10 +20,10 @@ class ActivityController extends Controller
         $section = Section::with(['childSections' => function ($query) use ($date) {
             $query->whereHas('child.attendances', function ($q) use ($date) {
                 $q->whereDate('attendance_date', $date); 
-            });
+            }); // Récupère les enfants qui ont été présents à la section à la date donnée
         }, 'childSections.child.activityChildren' => function ($query) use ($date) {
             $query->whereDate('performed_at', $date)->with('activity');
-        }])->findOrFail($sectionId);
+        }])->findOrFail($sectionId); // Récupère les activités des enfants de la section à la date donnée
 
         $activities = $section->childSections->flatMap(function ($childSection) {
             return $childSection->child->activityChildren;

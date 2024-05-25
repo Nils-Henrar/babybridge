@@ -10,15 +10,63 @@ use App\Http\Controllers\Api\PhotoController;
 use App\Http\Controllers\Api\NapController;
 use App\Http\Controllers\Api\DailyJournalController;
 use App\Http\Controllers\Api\PaymentController;
+use App\Http\Middleware\IsWorkerMiddleware;
+use App\Http\Controllers\Auth\LoginController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
-    //route pour events
+Route::post('/login', [LoginController::class, 'login']);
 
-;
 
+Route::middleware(['auth:sanctum', IsWorkerMiddleware::class])->group(function () {
+    // Mise à jour ou création d'une présence
+Route::post('/attendances', [AttendanceController::class, 'storeOrUpdateAttendance']);
+
+Route::delete('/attendances/{childId}/{date}', [AttendanceController::class, 'deleteAttendance']);
+
+
+// Repas
+Route::post('/meals', [MealController::class, 'storeMeal']);
+
+Route::put('/meals/{mealId}', [MealController::class, 'updateMeal']);
+
+Route::delete('/meals/{mealId}', [MealController::class, 'deleteMeal']);
+
+
+// Changements de couches
+Route::post('/diaper-changes', [DiaperChangesController::class, 'storeDiaperChange']);
+
+Route::put('/diaper-changes/{diaperChangeId}', [DiaperChangesController::class, 'updateDiaperChange']);
+
+Route::delete('/diaper-changes/{id}', [DiaperChangesController::class, 'deleteDiaperChange']);
+
+
+// activities
+Route::post('/activities', [ActivityController::class, 'storeActivities']);
+
+Route::put('/activities/{activityId}', [ActivityController::class, 'updateActivity']);
+
+Route::delete('/activities/{activityId}', [ActivityController::class, 'deleteActivity']);
+
+Route::get('/activities/{activityId}', [ActivityController::class, 'getActivity']);
+
+
+//naps
+Route::post('/naps', [NapController::class, 'storeNap'])->name('naps.store');
+Route::put('/naps/{napId}', [NapController::class, 'updateNap'])->name('naps.update');
+
+Route::delete('/naps/{napId}', [NapController::class, 'deleteNap'])->name('naps.delete');
+
+
+//photos
+Route::post('/photos', [PhotoController::class, 'storePhoto']);
+Route::put('/photos/{id}', [PhotoController::class, 'updatePhoto']);
+
+Route::delete('/photos/{id}', [PhotoController::class, 'deletePhoto']);
+
+});
 
 /* 
 *
@@ -27,9 +75,6 @@ Route::get('/user', function (Request $request) {
 */
 // Récupération des présences pour une section pour une date donnée
 Route::get('/attendances/section/{section_id}/date/{date}', [AttendanceController::class, 'getSectionAttendances']);
-
-// Mise à jour ou création d'une présence
-Route::post('/attendances', [AttendanceController::class, 'storeOrUpdateAttendance']);
 
 
 /*
@@ -43,8 +88,9 @@ Route::get('/meals/section/{section_id}/date/{date}', [MealController::class, 'g
 // Dans web.php ou api.php selon votre configuration
 Route::get('/meal-types', [MealController::class, 'getAllMealTypes']);
 
-// Mise à jour ou création d'un repas
-Route::post('/meals', [MealController::class, 'storeOrUpdateMeal']);
+
+
+Route::get('/meals/{mealId}', [MealController::class, 'getMeal']);
 
 
 /*
@@ -55,8 +101,10 @@ Route::post('/meals', [MealController::class, 'storeOrUpdateMeal']);
 // Route pour récupérer les changements de couches des enfants par section et date
 Route::get('/diaper-changes/section/{section_id}/date/{date}', [DiaperChangesController::class, 'getDiaperChangesBySectionAndDate']);
 
-// Route pour mettre à jour ou créer un changement de couche
-Route::post('/diaper-changes', [DiaperChangesController::class, 'storeOrUpdateDiaperChange']);
+
+
+Route::get('/diaper-changes/{id}', [DiaperChangesController::class, 'getDiaperChange']);
+
 
 /*
 *
@@ -67,16 +115,11 @@ Route::post('/diaper-changes', [DiaperChangesController::class, 'storeOrUpdateDi
 // Route pour obtenir les activités des enfants par section et date
 Route::get('/activities/section/{section_id}/date/{date}', [ActivityController::class, 'getActivitiesBySectionAndDate']);
 
-// Route pour enregistrer ou mettre à jour une activité pour un enfant
-Route::post('/activities', [ActivityController::class, 'storeOrUpdateActivity']);
-
-// Route pour enregistrer une activité pour tous les enfants présents d'une section pour une date donnée
-Route::post('/activities/section/{section_id}/date/{date}', [ActivityController::class, 'storeActivityForPresentChildren']);
-
 
 //route pour charger les descriptions des activités
-
 Route::get('/activity-types', [ActivityController::class, 'getAllActivityTypes']);
+
+
 
 /**
  * 
@@ -90,8 +133,7 @@ Route::get('/naps/section/{sectionId}/date/{date}', [NapController::class, 'getN
 //naps details
 Route::get('/naps/{napId}', [NapController::class, 'getNap'])->name('naps.get');
 
-Route::post('/naps', [NapController::class, 'storeNap'])->name('naps.store');
-Route::put('/naps/{napId}', [NapController::class, 'updateNap'])->name('naps.update');
+
 
 
 
@@ -107,12 +149,7 @@ Route::put('/naps/{napId}', [NapController::class, 'updateNap'])->name('naps.upd
 // Route pour obtenir les photos des enfants par section et date
 Route::get('/photos/section/{section_id}/date/{date}', [PhotoController::class, 'getPhotosBySectionAndDate']);
 
-// Route pour enregistrer ou mettre à jour une photo
-Route::post('/photos', [PhotoController::class, 'storeOrUpdatePhoto']);
-
-
-
-
+Route::get('/photos/{id}', [PhotoController::class, 'getPhoto']);
 /**
  * 
  * ChildController
@@ -143,14 +180,10 @@ Route::get('/events/available/{userId}', [\App\Http\Controllers\Api\EventControl
  * 
  */
 
-
 Route::get('/tutor/payments', [PaymentController::class, 'index'])->name('tutor.payments');
 Route::post('/tutor/payments/{payment}/pay', [PaymentController::class, 'pay'])->name('tutor.payments.pay');
 Route::get('/tutor/payments/{payment}/success', [PaymentController::class, 'success'])->name('tutor.payments.success');
 Route::get('/tutor/payments/{payment}/cancel', [PaymentController::class, 'cancel'])->name('tutor.payments.cancel');
-
-
-
 
 /**
  * 
@@ -162,3 +195,4 @@ Route::get('/tutor/payments/{payment}/cancel', [PaymentController::class, 'cance
 //  Route::get('/children/user/{userId}', [\App\Http\Controllers\Api\ChildController::class, 'getChildrenByUser'])->name('children.get_by_user');
 
 Route::get('/children/user/{userId}/daily-journal/{date}', [DailyJournalController::class, 'showByUser']);
+ 

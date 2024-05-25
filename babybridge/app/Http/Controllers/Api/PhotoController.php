@@ -18,7 +18,7 @@ class PhotoController extends Controller
     {
         $section = Section::with(['childSections.child.photos' => function ($query) use ($date) {
             $query->whereDate('taken_at', $date);
-        }])->findOrFail($sectionId);
+        }])->findOrFail($sectionId); // Récupère les photos des enfants de la section à la date donnée
 
         $photos = $section->childSections->flatMap(function ($childSection) {
             return $childSection->child->photos;

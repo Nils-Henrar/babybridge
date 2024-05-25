@@ -24,7 +24,7 @@ class ChildController extends Controller
 
         $children = $section->currentChildren->map(function ($childSection) {
             return $childSection->child;
-        });
+        }); // Récupère les enfants qui sont actuellement dans la section
 
         return response()->json($children);
     }
@@ -46,11 +46,11 @@ class ChildController extends Controller
             $section = Section::with(['childSections.child' => function ($query) use ($date) {
                 $query->whereHas('attendances', function ($q) use ($date) {
                     $q->whereDate('attendance_date', '=', $date);
-                });
+                }); 
             }])->findOrFail($sectionId);
 
             $children = $section->childSections->map(function ($cs) {
-                return $cs->child;
+                return $cs->child; 
             });
 
             return response()->json($children);
@@ -67,7 +67,7 @@ class ChildController extends Controller
     public function getChildrenByUser($userId)
     {
         $children = ChildTutor::where('user_id', $userId)->with('child')->get()->pluck('child');
-        
+        // Récupère les enfants associés à un utilisateur
         return response()->json($children);
     }
     

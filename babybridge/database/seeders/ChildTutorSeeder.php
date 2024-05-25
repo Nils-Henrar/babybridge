@@ -64,6 +64,12 @@ class ChildTutorSeeder extends Seeder
                 'child_firstname' => 'Arthur',
                 'child_lastname' => 'Roux',
             ],
+            
+            [
+                'user_login' => 'thomas12',
+                'child_firstname' => 'Chloé',
+                'child_lastname' => 'Girard',
+            ]
         ];
 
         // Insert the data in the table

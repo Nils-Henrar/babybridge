@@ -39,6 +39,7 @@
                     <th>Évenement</th>
                     <th>Date</th>
                     <th>Description</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
 

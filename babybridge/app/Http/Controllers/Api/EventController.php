@@ -24,7 +24,7 @@ class EventController extends Controller
         $sectionIds = ChildSection::whereIn('child_id', $childrenIds)->pluck('section_id');
         $events = Event::whereHas('sections', function ($query) use ($sectionIds) {
             $query->whereIn('section_id', $sectionIds);
-        })->get();
+        })->get(); // Récupère les événements disponibles pour les sections des enfants dont l'utilisateur est le tuteur
 
         return response()->json($events);
     }

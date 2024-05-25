@@ -16,7 +16,7 @@ class NapController extends Controller
     {
         $section = Section::with(['childSections.child.naps' => function ($query) use ($date) {
             $query->whereDate('started_at', '=', $date);
-        }])->findOrFail($sectionId);
+        }])->findOrFail($sectionId); // Récupère les siestes des enfants de la section à la date donnée
 
         $naps = $section->childSections->flatMap(function ($childSection) {
             return $childSection->child->naps;

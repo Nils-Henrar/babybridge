@@ -27,12 +27,12 @@ class Worker extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function currentSection()
+    public function currentSection() // Récupère la section actuelle du travailleur
     {
         return $this->hasOne(SectionWorker::class)->where('to', null);
     }
 
-    public function getCurrentChildren()
+    public function getCurrentChildren() // Récupère les enfants de la section actuelle du travailleur
     {
         $section = $this->currentSection->section ?? null;
 

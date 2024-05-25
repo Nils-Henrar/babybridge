@@ -15,7 +15,7 @@ class PaymentController extends Controller
         $userId = $request->user()->id;
         $payments = Payment::whereHas('tutorChild', function ($query) use ($userId) {
             $query->where('user_id', $userId);
-        })->with('event')->where('status', 'pending')->get();
+        })->with('event')->where('status', 'pending')->get(); // Récupère les paiements en attente pour les enfants dont l'utilisateur est le tuteur
 
         return view('tutor.payments.index', ['payments' => $payments]);
     }

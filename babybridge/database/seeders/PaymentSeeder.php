@@ -152,6 +152,24 @@ class PaymentSeeder extends Seeder
 
             ],
 
+            [
+                'user_login' => 'thomas12',
+                'child_firstname' => 'Chloé',
+                'child_lastname' => 'Girard',
+                'event_slug' => 'bienvenue-au-cirque',
+                'status' => 'pending',
+                'currency' => 'eur',
+            ],
+
+            [
+                'user_login' => 'lucie34',
+                'child_firstname' => 'Arthur',
+                'child_lastname' => 'Roux',
+                'event_slug' => 'natation-pour-les-petits',
+                'status' => 'pending',
+                'currency' => 'eur',
+            ]
+
 
         ];
 

@@ -6,17 +6,13 @@
 
 @section('content_header_subtitle', 'Daily Journal')
 
-
 @section('extra-css')
-
 <style>
     .journal-entry {
         margin-bottom: 10px;
         padding: 10px;
-        border: 1px solid #ccc;
         border-radius: 10px;
-        background-color: #f9f9f9;
-    }
+    } 
 
     .entry-time {
         font-size: 0.9em;
@@ -28,29 +24,37 @@
         font-size: 1.1em;
         color: #333;
     }
-</style>
 
+    .separator {
+        height: 10px;
+        background-color: #176FA1;
+        margin: 10px 0;
+        border-radius: 5px;
+    }
+</style>
 @endsection
 
 @section('content_body')
 <div class="container">
-    <!-- et si il sont deux sinon  , et le dernier en et -->
     <h3>Journal de bord de
         @foreach ($children as $key => $child)
         <strong>{{ $child->firstname }}</strong>
         @if ($loop->iteration < $loop->count - 1)
             {{ ',' }}
-            @elseif ($loop->iteration == $loop->count - 1)
+        @elseif ($loop->iteration == $loop->count - 1)
             {{ ' et' }}
-            @endif
-            @endforeach
-            <input type="text" id="date-picker" class="form-control">
-
-            <div id="daily-journal">
-                <!-- Les informations journalières seront chargées ici -->
-            </div>
+        @endif
+        @endforeach
+    </h3>
+    <div class="date-picker-container" style="text-align: center; margin-top: 20px;">
+        <button id="prev-day"><i class="fas fa-arrow-left"></i></button>
+        <input type="text" id="date-picker" class="form-control" style="display: inline-block; width: auto;">
+        <button id="next-day"><i class="fas fa-arrow-right"></i></button>
+    </div>
+    <div id="daily-journal">
+        <!-- Les informations journalières seront chargées ici -->
+    </div>
 </div>
-
 @endsection
 
 @push('scripts')
@@ -64,6 +68,9 @@
                 loadJournalForDate(dateStr);
             }
         });
+
+        // Charger le journal pour la date du jour au lancement de la page
+        loadJournalForDate(datePicker.input.value);
 
         function loadJournalForDate(date) {
             const userId = '{{ Auth::id() }}';
@@ -79,7 +86,7 @@
             const container = document.getElementById('daily-journal');
             container.innerHTML = ''; // Clear previous entries
 
-            data.forEach(entry => {
+            data.forEach((entry, index) => {
                 const box = document.createElement('div');
                 box.className = 'journal-entry';
                 box.innerHTML = `
@@ -89,6 +96,13 @@
                 </div>
             `;
                 container.appendChild(box);
+
+                // Add separator div between entries
+                if (index < data.length - 1) {
+                    const separator = document.createElement('div');
+                    separator.className = 'separator';
+                    container.appendChild(separator);
+                }
             });
         }
     });

@@ -17,7 +17,7 @@ class MealController extends Controller
         $section = Section::with(['childSections.child.childMeals' => function ($query) use ($date) {
             // Assurez-vous que la date est correctement formatée et comparée
             $query->whereDate('meal_time', '=', $date)->with('meal');
-        }])->findOrFail($sectionId);
+        }])->findOrFail($sectionId); // Récupère les repas des enfants de la section à la date donnée
     
         // Flatten the results to get a simple array of meals
         $meals = $section->childSections->map(function ($childSection) {

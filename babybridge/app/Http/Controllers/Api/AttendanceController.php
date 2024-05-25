@@ -22,8 +22,7 @@ class AttendanceController extends Controller
 
         $attendances = Attendance::whereDate('attendance_date', $date)
                                 ->whereIn('child_id', $section->childSections->pluck('child_id'))
-                                ->get();
-
+                                ->get(); // récupère les présences des enfants de la section à la date donnée
         return response()->json($attendances);
     }
 

@@ -39,22 +39,22 @@ class Section extends Model
     }
 
 
-    public function countChildren()
+    public function countChildren()// Récupère le nombre d'enfants dans la section actuelle
     {
         return $this->childSections->where('to', null)->count();
     }
 
-    public function countWorkers()
+    public function countWorkers() // Récupère le nombre de travailleurs dans la section actuelle
     {
         return $this->sectionWorkers->where('to', null)->count();
     }
 
-    public function currentChildren()
+    public function currentChildren() // Récupère les enfants dans la section actuelle
     {
         return $this->hasMany(ChildSection::class)->where('to', null);
     }
 
-    public function currentWorkers()
+    public function currentWorkers() // Récupère les travailleurs dans la section actuelle
     {
         
         return $this->hasMany(SectionWorker::class)->where('to', null);
@@ -66,12 +66,12 @@ class Section extends Model
     // }
 
     // Dans Section.php
-    public function currentType()
+    public function currentType() // Récupère le type de section actuel
     {
         return $this->hasOne(SectionType::class)->whereNull('to')->with('type');
     }
 
-    public static function getSortedSections()
+    public static function getSortedSections() // Récupère les sections triées par type
     {
         return Section::with('currentType.type')->get()->sortBy(function ($section) {
             return optional($section->currentType)->type->name ?? 'N/A';

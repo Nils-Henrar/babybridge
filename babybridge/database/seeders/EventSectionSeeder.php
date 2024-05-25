@@ -48,7 +48,7 @@ class EventSectionSeeder extends Seeder
             ],
 
             [
-                'slug_section' => 'les-tulipes',
+                'slug_section' => 'les-mimosas',
                 'slug_event' => 'la-ferme-en-folie',
             ],
 
@@ -58,7 +58,7 @@ class EventSectionSeeder extends Seeder
             ],
 
             [
-                'slug_section' => 'les-roses',
+                'slug_section' => 'les-mimosas',
                 'slug_event' => 'spectacle-de-marionnettes',
             ],
 
@@ -68,7 +68,7 @@ class EventSectionSeeder extends Seeder
             ],
 
             [
-                'slug_section' => 'les-lilas',
+                'slug_section' => 'les-mimosas',
                 'slug_event' => 'natation-pour-les-petits',
             ],
 
@@ -78,7 +78,7 @@ class EventSectionSeeder extends Seeder
             ],
 
             [
-                'slug_section' => 'les-tulipes',
+                'slug_section' => 'les-mimosas',
                 'slug_event' => 'spectacle-de-magie',
             ],
 
@@ -88,7 +88,7 @@ class EventSectionSeeder extends Seeder
             ],
 
             [
-                'slug_section' => 'les-roses',
+                'slug_section' => 'les-mimosas',
                 'slug_event' => 'bienvenue-au-cirque',
             ],
 

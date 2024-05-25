@@ -16,7 +16,7 @@ class DiaperChangesController extends Controller
     {
         $section = Section::with(['childSections.child.diaperChanges' => function ($query) use ($date) {
             $query->whereDate('happened_at', $date);
-        }])->findOrFail($sectionId);
+        }])->findOrFail($sectionId); // Récupère les changements de couches des enfants de la section à la date donnée
 
         $diaperChanges = $section->childSections->flatMap(function ($childSection) {
             return $childSection->child->diaperChanges;

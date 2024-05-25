@@ -14,7 +14,7 @@ class DailyJournalController extends Controller
 
     public function showByUser($userId, $date)
     {
-        $childrenIds = ChildTutor::where('user_id', $userId)->pluck('child_id');
+        $childrenIds = ChildTutor::where('user_id', $userId)->pluck('child_id'); // Récupère les IDs des enfants dont l'utilisateur est le tuteur
         Log::info('Children IDs: ' . $childrenIds);
         $entries = collect();
 
@@ -49,7 +49,7 @@ class DailyJournalController extends Controller
                 'diaperChanges' => function ($query) use ($date) {
                     $query->whereDate('happened_at', '=', $date);
                 }
-            ])->first();
+            ])->first(); // Récupère toute les données de l'enfant à la date donnée
     }
 
     protected function formatChildEntries($child, $date)
@@ -59,7 +59,7 @@ class DailyJournalController extends Controller
 
         foreach ($relations as $relation) {
             $child->$relation->each(function ($item) use ($entries, $date, $relation) {
-                $field = $this->getDateFieldForRelation($relation);
+                $field = $this->getDateFieldForRelation($relation); 
                 if (Carbon::parse($item->$field)->format('Y-m-d') == $date) {
                     $entries->push($item->formatForJournal());
                 }
@@ -85,6 +85,6 @@ class DailyJournalController extends Controller
                 return 'happened_at';
             default:
                 throw new \Exception("Invalid relation: $relation");
-        }
+        } 
     }
 }

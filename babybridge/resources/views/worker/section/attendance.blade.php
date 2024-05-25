@@ -142,10 +142,10 @@
         }
     }
 
-    document.addEventListener("DOMContentLoaded", function() {
-        const token = `{{ session('authToken') }}`; // Récupérer le token stocké dans la session
+    document.addEventListener("DOMContentLoaded", function() { 
+        const token = `{{ session('authToken') }}`; // Récupére le token stocké dans la session
         if (token) {
-            sessionStorage.setItem('authToken', token);
+            sessionStorage.setItem('authToken', token); // Stocker le token dans le sessionStorage
             console.log('Token stored in session storage');
         }else{
             console.log('No token found');
@@ -177,7 +177,7 @@
         loadChildrenAndAttendances(datePickerElement.value);
     });
 
-    function displayChildrenWithAttendances(children, attendances) {
+function displayChildrenWithAttendances(children, attendances) {
     let container = document.getElementById('attendance-container');
     container.innerHTML = '';
 
