@@ -20,10 +20,11 @@
 
         {{-- Logo --}}
         <div class="{{ $auth_type ?? 'login' }}-logo">
-            <a href="{{ $dashboard_url }}">
+           {{-- <a href="{{ $dashboard_url }}"> --}}
 
                 {{-- Logo Image --}}
                 @if (config('adminlte.auth_logo.enabled', false))
+                <a href="{{ $dashboard_url }}">
                     <img src="{{ asset(config('adminlte.auth_logo.img.path')) }}"
                          alt="{{ config('adminlte.auth_logo.img.alt') }}"
                          @if (config('adminlte.auth_logo.img.class', null))
@@ -34,11 +35,13 @@
                          @endif
                          @if (config('adminlte.auth_logo.img.height', null))
                             height="{{ config('adminlte.auth_logo.img.height') }}"
-                         @endif>
+                         @endif
+                         style="left: 20%; transform: translateX(-20%);"
                 @else
                     <img src="{{ asset(config('adminlte.logo_img')) }}"
                          alt="{{ config('adminlte.logo_img_alt') }}" height="50">
                 @endif
+                </a>
 
                 {{-- Logo Label --}}
                 {!! config('adminlte.logo', '<b>Admin</b>LTE') !!}
