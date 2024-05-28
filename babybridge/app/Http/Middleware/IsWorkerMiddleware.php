@@ -18,9 +18,6 @@ class IsWorkerMiddleware
     public function handle(Request $request, Closure $next): Response
     {
 
-        if ($request->is('worker') || $request->is('worker/*')) { //permet de vérifier si la requête est pour la page worker ou une sous-page worker
-            Log::info('IsWorkerMiddleware: checking if user is worker');
-
             if (!Auth::check()) {
 
                 Log::info('IsWorkerMiddleware: user is not logged in');
@@ -34,7 +31,6 @@ class IsWorkerMiddleware
 
                 return redirect()->route('home')->with('error', 'You do not have permission to access the page');
             }
-        }
 
         Log::info('IsWorkerMiddleware: user is worker');
 

@@ -11,8 +11,11 @@
     <div class="card mb-3">
         <div class="card-header">
             <strong>Informations personnelles</strong>
+            
+
         </div>
         <div class="card-body">
+        <img src="{{ asset('storage/'.$child->photo_path) }}" class="img-fluid rounded-circle" alt="Photo de profil de {{ $child->firstname }}" style="width: 200px; height: 200px; object-fit: cover; float: right;">
             <p><strong>Nom :</strong> {{ $child->firstname }} {{ $child->lastname }}</p>
             <p><strong>Date de naissance :</strong> {{ $child->birthdateForm }}</p>
             <p><strong>Genre :</strong> {{ $child->gender }}</p>
@@ -28,6 +31,9 @@
                     @endif
                 @endforeach
             </p>
+
+            <!-- ajouter la photo du profile de l'enfant a droite de la box -->
+
         </div>
     </div>
 
@@ -40,7 +46,7 @@
                 @foreach ($child->photos as $photo)
                     <div class="col-md-3 mb-3">
                         <!-- taille identique pour toutes les images -->
-                        <img src="{{ asset('storage/'.$photo->path) }}" class="img-fluid photo-thumbnail" data-photo="{{ asset('storage/'.$photo->path) }}" data-taken-at="{{ $photo->taken_at }}" alt="Photo" style="height: 200px; width: 100%; object-fit: cover;">
+                        <img src="{{ asset('storage/photos/'.$child->fullName.'/'.$photo->path) }}" class="img-fluid photo-thumbnail" data-photo="{{ asset('storage/photos/'.$child->fullName.'/'.$photo->path) }}" data-taken-at="{{ $photo->taken_at }}" alt="Photo" style="height: 200px; width: 100%; object-fit: cover;">
                     </div>
                 @endforeach
             </div>

@@ -8,12 +8,14 @@ use App\Models\Attendance;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Log;
 use App\Models\Section;
+use Illuminate\Support\Facades\Auth;
 
 class AttendanceController extends Controller
 {
     public function getSectionAttendances($sectionId, $date)
 
     {
+
         $section = Section::with(['childSections.child'])->find($sectionId);
 
         if (!$section) {

@@ -88,7 +88,16 @@ class User extends Authenticatable
 
     public function adminlte_profile_url()
     {
-        return 'profile/username';
+        $user = $this->roles()->first()->role;
+        
+        if ($user == 'worker') {
+            return route('worker.profile');
+        } elseif ($user == 'tutor') {
+            return route('tutor.profile');
+        } else{
+        return route('home');
+
+        }
     }
 
     public function getFullNameAttribute()
@@ -97,7 +106,7 @@ class User extends Authenticatable
     }
 
 
-    public function assignRole($role)
+    public function assignRole($role) // Ajoute un rôle à un utilisateur
     {
         $roleId = Role::where('role', $role)->first()->id;
 

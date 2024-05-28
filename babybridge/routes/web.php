@@ -119,7 +119,7 @@ Route::middleware([\App\Http\Middleware\IsWorkerMiddleware::class])->group(funct
 Route::middleware([\App\Http\Middleware\IsTutorMiddleware::class])->group(function () {
 
     //journal 
-    Route::get('tutor/child/daily-journal', [ChildController::class, 'dailyJournal'])->name('tutor.child.daily-journal');
+    Route::get('tutor/children/daily-journal', [ChildController::class, 'dailyJournal'])->name('tutor.children.daily-journal');
 
 
     //payment 

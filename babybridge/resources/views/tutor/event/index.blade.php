@@ -54,7 +54,7 @@
                 box.className = 'event-entry';
                 box.innerHTML = `
                     <div class="event-details">
-                        <strong>${event.title}</strong> - ${new Date(event.schedule).toLocaleDateString()}
+                        <strong>${event.title}</strong> - ${new Date(event.schedule).toLocaleDateString()} 
                         <input type="checkbox" class="event-checkbox" value="${event.id}">
                     </div>
                 `;

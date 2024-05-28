@@ -18,8 +18,6 @@ class IsTutorMiddleware
     public function handle(Request $request, Closure $next): Response
     {
 
-        if ($request->is('tutor') || $request->is('tutor/*')) { //permet de vérifier si la requête est pour la page tutor ou une sous-page tutor
-
             Log::info('IsTutorMiddleware: checking if user is tutor');
 
             if (!Auth::check()) {
@@ -35,7 +33,6 @@ class IsTutorMiddleware
 
                 return redirect()->route('home')->with('error', 'You do not have permission to access the page');
             }
-        }
 
         Log::info('IsTutorMiddleware: user is tutor');
 

@@ -30,8 +30,8 @@ class HomeController extends Controller
             return redirect()->route('worker.section.children');
         } elseif ($user->roles->contains('role', 'admin')) {
             return redirect()->route('admin.user.index');
-        } elseif ($user->roles->contains('role', 'parent')) {
-            return redirect()->route('tutor.daily_journal');
+        } elseif ($user->roles->contains('role', 'tutor')) {
+            return redirect()->route('tutor.children.daily-journal');
         }
     }
 }

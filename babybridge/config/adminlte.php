@@ -413,7 +413,7 @@ return [
         [
             'text' => 'Enfants',
             'url' => '/worker/section/children',
-            'icon' => 'fa-solid fa-children',
+            'icon' => 'fas fa-fw fa-users',
             'can' => 'worker',
             'icon_color' => 'yellow',
         ],
@@ -448,7 +448,8 @@ return [
         [
             'text' => 'Activités',
             'url' => '/worker/section/activity',
-            'icon' => 'fa-solid fa-puzzle-piece',
+            // puzzle-piece
+            'icon' => 'fas fa-fw fa-puzzle-piece',
             'can' => 'worker',
             'icon_color' => 'orange',
         ],
@@ -475,7 +476,7 @@ return [
 
         [
             'text' => 'Journal de bord',
-            'url' => '/tutor/child/daily-journal',
+            'url' => '/tutor/children/daily-journal',
             'icon' => 'fas fa-fw fa-book',
             'can' => 'tutor',
         ],
