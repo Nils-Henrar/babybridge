@@ -17,7 +17,7 @@
     </div>
     <!-- /.card-header -->
     <!-- form start -->
-    <form method="POST" action="{{ route('admin.user.store') }}">
+    <form method="POST" action="{{ route('admin.user.invite') }}">
         @csrf
         <div class="card-body">
             <div class="form-group
@@ -109,31 +109,17 @@
                 <span class="help-block">{{ $message }}</span>
                 @enderror
             </div>
-            <div class="form-group
-            @error('roles')
-            has-error
-            @enderror">
+            <div class="form-group @error('roles') has-error @enderror">
                 <label for="roles">Rôles</label>
-                <!-- checkbox -->
                 @foreach($roles as $role)
-                <div class="form-check
-                @error('roles')
-                has-error
-                @enderror">
+                <div class="form-check @error('roles') has-error @enderror">
                     <input class="form-check-input" type="checkbox" name="roles[]" value="{{ $role->id }}" id="role_{{ $role->id }}" @if(is_array(old('roles')) && in_array($role->id, old('roles'))) checked @endif>
-                    <label class="form-check
-                    @error('roles')
-                    has-error
-                    @enderror" for="role_{{ $role->id }}">{{ $role->role }}</label>
+                    <label class="form-check-label" for="role_{{ $role->id }}">{{ $role->role }}</label>
                 </div>
                 @endforeach
                 @error('roles')
-                <span class="help-block
-                @error('roles')
-                has-error
-                @enderror">{{ $message }}</span>
+                <span class="help-block">{{ $message }}</span>
                 @enderror
-
             </div>
         </div>
         <!-- /.card-body -->

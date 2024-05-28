@@ -38,7 +38,7 @@ Route::middleware([\App\Http\Middleware\IsAdminMiddleware::class])->group(functi
     //User routes
     Route::get('admin/user', [UserController::class, 'index'])->name('admin.user.index');
     Route::get('admin/user/create', [UserController::class, 'create'])->name('admin.user.create');
-    Route::post('admin/user', [UserController::class, 'store'])->name('admin.user.store');
+    Route::post('admin/user', [UserController::class, 'invite'])->name('admin.user.invite');
     Route::get('admin/user/{id}', [UserController::class, 'show'])->name('admin.user.show');
     Route::get('admin/user/{id}/edit', [UserController::class, 'edit'])->name('admin.user.edit');
     Route::put('admin/user/{id}', [UserController::class, 'update'])->name('admin.user.update');
@@ -104,7 +104,7 @@ Route::middleware([\App\Http\Middleware\IsWorkerMiddleware::class])->group(funct
     Route::get('worker/section/nap', [SectionController::class, 'createNap'])->name('worker.section.nap');
 
     //User routes
-    
+
     Route::get('worker/profile', [UserController::class, 'workerProfile'])->name('worker.profile');
 
 
@@ -138,9 +138,12 @@ Route::middleware([\App\Http\Middleware\IsTutorMiddleware::class])->group(functi
     Route::get('/tutor/profile', [UserController::class, 'tutorProfile'])->name('tutor.profile');
 
     Route::get('/tutor/child/{childId}', [ChildController::class, 'profileForTutor'])->name('tutor.child.profile');
-
-    
 });
+
+
+Route::get('/register/{token}', [UserController::class, 'showRegistrationForm'])->name('register.form');
+Route::post('/register/complete', [UserController::class, 'completeRegistration'])->name('register.complete');
+
 
 
 
@@ -150,10 +153,10 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::get('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
+    Route::get('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
 });
 
 // / ou /home
-Route::get('/' , function (){
+Route::get('/', function () {
     return view('PrimeCare.index');
 });

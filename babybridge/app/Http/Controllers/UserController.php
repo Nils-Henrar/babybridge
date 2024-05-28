@@ -8,6 +8,9 @@ use App\Http\Requests\User\UpdateUserRequest;
 use App\Models\User;
 use App\Models\Role;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
+use Carbon\Carbon;
 
 class UserController extends Controller
 {
@@ -42,36 +45,82 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreUserRequest $request)
+    public function invite(StoreUserRequest $request)
     {
-        // validate the request
-
         $data = $request->validated();
+        $token = Str::random(60);
+
+        DB::table('invitation_tokens')->insert([
+            'email' => $data['email'],
+            'token' => $token,
+            'firstname' => $data['firstname'],
+            'lastname' => $data['lastname'],
+            'language' => $data['language'],
+            'phone' => $data['phone'],
+            'address' => $data['address'],
+            'postal_code' => $data['postal_code'],
+            'city' => $data['city'],
+            'roles' => json_encode($data['roles']),
+            'expires_at' => Carbon::now()->addHours(24), // Token expire in 24 hours
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
+        ]);
+
+        $link = route('register.form', ['token' => $token]);
+        Mail::raw("Veuillez compléter votre inscription en suivant ce lien : $link", function ($message) use ($data) {
+            $message->to($data['email'])->subject('Complétez votre inscription');
+        });
+
+        return redirect()->route('admin.user.index')->with('success', 'L\'invitation a été envoyée avec succès');
+    }
+
+    public function showRegistrationForm($token)
+    {
+        $invitation = DB::table('invitation_tokens')->where('token', $token)->first();
+
+        if (!$invitation || Carbon::parse($invitation->expires_at)->isPast()) {
+            return redirect()->route('login')->with('error', 'Lien d\'invitation invalide ou expiré.');
+        }
+
+        return view('auth.register', ['token' => $token, 'email' => $invitation->email, 'firstname' => $invitation->firstname, 'lastname' => $invitation->lastname]);
+    }
+
+    public function completeRegistration(Request $request)
+    {
+        $request->validate([
+            'token' => 'required',
+            'login' => 'required|unique:users,login',
+            'password' => 'required|confirmed|min:8',
+        ]);
+
+        $invitation = DB::table('invitation_tokens')->where('token', $request->token)->first();
+
+        if (!$invitation || Carbon::parse($invitation->expires_at)->isPast()) {
+            return redirect()->route('login')->with('error', 'Lien d\'invitation invalide ou expiré.');
+        }
 
         $user = new User();
-
-        $user->firstname = $data['firstname'];
-        $user->lastname = $data['lastname'];
-        $user->email = $data['email'];
-        $user->langue = $data['language'];
-        $user->phone = $data['phone'];
-        $user->address = $data['address'];
-        $user->postal_code = $data['postal_code'];
-        $user->city = $data['city'];
-
-        $identifiers = $user->sendIdentifiersByEmail($user->firstname, $user->lastname);
-
-        $user->login = $identifiers['login'];
-        $user->password = bcrypt($identifiers['password']);
-
+        $user->firstname = $invitation->firstname;
+        $user->lastname = $invitation->lastname;
+        $user->email = $invitation->email;
+        $user->login = $request->login;
+        $user->password = bcrypt($request->password);
+        $user->phone = $invitation->phone;
+        $user->address = $invitation->address;
+        $user->postal_code = $invitation->postal_code;
+        $user->city = $invitation->city;
+        $user->langue = $invitation->language;
         $user->save();
 
-        $user->roles()->attach($data['roles']);
+        // Assign roles to the user
+        $roles = json_decode($invitation->roles, true);
+        $user->roles()->attach($roles);
 
+        DB::table('invitation_tokens')->where('token', $request->token)->delete();
 
-
-        return redirect()->route('admin.user.index')->with('success', 'L\'utilisateur a été créé avec succès');
+        return redirect()->route('login')->with('success', 'Inscription complétée avec succès.');
     }
+
 
     /**
      * Display the specified resource.
@@ -140,13 +189,13 @@ class UserController extends Controller
         DB::statement('SET FOREIGN_KEY_CHECKS=0');
 
         $user = User::find($id);
-        
-        if($user->roles->contains('role', 'worker')) {
+
+        if ($user->roles->contains('role', 'worker')) {
             $user->worker->sectionWorkers()->delete();
             $user->worker()->delete();
         }
-    
-        if($user->roles->contains('role', 'tutor')) {
+
+        if ($user->roles->contains('role', 'tutor')) {
             $user->tutor()->delete();
         }
 
@@ -154,7 +203,7 @@ class UserController extends Controller
         $user->roles()->detach();
         // Supprime l'utilisateur lui-même
         $user->delete();
-        
+
         DB::statement('SET FOREIGN_KEY_CHECKS=1');
         return redirect()->route('admin.user.index')->with('success', 'L\'utilisateur a été supprimé avec succès');
     }

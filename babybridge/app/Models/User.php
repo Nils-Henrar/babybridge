@@ -89,14 +89,13 @@ class User extends Authenticatable
     public function adminlte_profile_url()
     {
         $user = $this->roles()->first()->role;
-        
+
         if ($user == 'worker') {
             return route('worker.profile');
         } elseif ($user == 'tutor') {
             return route('tutor.profile');
-        } else{
-        return route('home');
-
+        } else {
+            return route('home');
         }
     }
 
@@ -117,12 +116,10 @@ class User extends Authenticatable
     {
         // Générez le login
         do {
-            
+
             $login = mb_substr($firstname, 0, 2, 'UTF-8') . mb_substr($lastname, 0, 2, 'UTF-8') . rand(10, 999);
 
             $login = preg_replace("/[^A-Za-z0-9]/", '', $login);
-
-
         } while (User::where('login', $login)->exists());
 
         // Générez le mot de passe
