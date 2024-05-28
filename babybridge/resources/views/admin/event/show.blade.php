@@ -60,8 +60,14 @@
                             <tr>
                                 <td>{{ $childSection->child->id }}</td>
                                 <td>{{ $childSection->child->lastname }}</td>
-                                <td>{{ $childSection->child->firstname }}</td>
-                                <td>{{ $childSection->child->payments->where('event_id', $event->id)->first()->status }}
+                                <td>{{ $childSection->child->firstname }}</td>                
+                                @php
+                                    $payments = $childSection->child->payments;
+
+                                    $paymentStatus = $payments->isNotEmpty() ? $payments->pluck('status')->unique()->join(', ') : 'Aucun paiement trouvé';
+                                @endphp
+                                <td>
+                                    {{ $paymentStatus }}
                                 </td>
                             </tr>
 
