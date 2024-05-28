@@ -26,7 +26,7 @@ class PhotoSeeder extends Seeder
                 'child_lastname' => 'Lemoine',
                 'description' => 'Hugo en train de peindre',
                 'taken_at' => '2024-03-22 11:00:00',
-                'path' => 'photos/hugo_peinture.jpg',
+                'path' => 'hugo_peinture.png',
             ],
 
             [
@@ -34,7 +34,7 @@ class PhotoSeeder extends Seeder
                 'child_lastname' => 'Dupont',
                 'description' => 'Léa aime la construction',
                 'taken_at' => '2024-03-22 11:00:00',
-                'path' => 'photos/lea_construction.jpg',
+                'path' => 'lea_construction.jpg',
             ],
 
             [
@@ -42,7 +42,7 @@ class PhotoSeeder extends Seeder
                 'child_lastname' => 'Durand',
                 'description' => 'Lucas joue avec les cubes',
                 'taken_at' => '2024-03-22 11:00:00',
-                'path' => 'photos/lucas_cubes.jpg',
+                'path' => 'lucas_cubes.jpg',
             ],
 
             [
@@ -50,7 +50,7 @@ class PhotoSeeder extends Seeder
                 'child_lastname' => 'Leroy',
                 'description' => 'Jules et son doudou',
                 'taken_at' => '2024-03-22 11:00:00',
-                'path' => 'photos/jules_doudou.jpg',
+                'path' => 'jules_doudou.jpg',
             ],
 
             [
@@ -58,7 +58,15 @@ class PhotoSeeder extends Seeder
                 'child_lastname' => 'Lemoine',
                 'description' => 'Hugo et son doudou',
                 'taken_at' => '2024-03-22 11:00:00',
-                'path' => 'photos/hugo_doudou.jpg',
+                'path' => 'hugo_doudou.jpg',
+            ],
+
+            [
+                'child_firstname' => 'Hugo',
+                'child_lastname' => 'Lemoine',
+                'description' => 'Hugo et son doudou',
+                'taken_at' => '2024-03-22 10:30:00',
+                'path' => 'hugo_fatigue.jpeg',
             ],
 
         ];

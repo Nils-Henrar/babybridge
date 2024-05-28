@@ -33,6 +33,72 @@ class PaymentSeeder extends Seeder
             ],
 
             [
+                'user_login' => 'marc23',
+                'child_firstname' => 'Astrid',
+                'child_lastname' => 'Lemoine',
+                'event_slug' => 'spectacle-de-magie',
+                'status' => 'pending',
+                'currency' => 'eur',
+            ],
+
+            [
+                'user_login' => 'sylvie78',
+                'child_firstname' => 'Astrid',
+                'child_lastname' => 'Lemoine',
+                'event_slug' => 'spectacle-de-marionnettes',
+                'status' => 'pending',
+                'currency' => 'eur',
+            ],
+
+            [
+                'user_login' => 'sylvie78',
+                'child_firstname' => 'Hugo',
+                'child_lastname' => 'Lemoine',
+                'event_slug' => 'la-ferme-en-folie',
+                'status' => 'pending',
+                'currency' => 'eur',
+
+            ],
+
+            [
+                'user_login' => 'marc23',
+                'child_firstname' => 'Léa',
+                'child_lastname' => 'Dupont',
+                'event_slug' => 'spectacle-de-magie',
+                'status' => 'pending',
+                'currency' => 'eur',
+            ],
+
+            [
+                'user_login' => 'marc23',
+                'child_firstname' => 'Léa',
+                'child_lastname' => 'Dupont',
+                'event_slug' => 'spectacle-de-marionnettes',
+                'status' => 'pending',
+                'currency' => 'eur',
+            ],
+
+            
+            [
+                'user_login' => 'marc23',
+                'child_firstname' => 'Léa',
+                'child_lastname' => 'Dupont',
+                'event_slug' => 'la-ferme-en-folie',
+                'status' => 'pending',
+                'currency' => 'eur',
+            ],
+
+            [
+                'user_login' => 'julie56',
+                'child_firstname' => 'Léa',
+                'child_lastname' => 'Dupont',
+                'event_slug' => 'spectacle-de-marionnettes',
+                'status' => 'pending',
+                'currency' => 'eur',
+            ],
+            
+
+            [
                 'user_login' => 'Julie56',
                 'child_firstname' => 'Léa',
                 'child_lastname' => 'Dupont',

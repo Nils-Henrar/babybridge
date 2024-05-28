@@ -30,7 +30,31 @@ class ChildTutorSeeder extends Seeder
             ],
 
             [
+                'user_login' => 'marc23',
+                'child_firstname' => 'Astrid',
+                'child_lastname' => 'Lemoine',
+            ],
+
+            [
+                'user_login' => 'sylvie78',
+                'child_firstname' => 'Astrid',
+                'child_lastname' => 'Lemoine',
+            ],
+
+            [
+                'user_login' => 'sylvie78',
+                'child_firstname' => 'Hugo',
+                'child_lastname' => 'Lemoine',
+            ],
+
+            [
                 'user_login' => 'julie56',
+                'child_firstname' => 'Léa',
+                'child_lastname' => 'Dupont',
+            ],
+
+            [
+                'user_login' => 'marc23',
                 'child_firstname' => 'Léa',
                 'child_lastname' => 'Dupont',
             ],

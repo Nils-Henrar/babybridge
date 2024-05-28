@@ -33,11 +33,6 @@ class EventSectionSeeder extends Seeder
             ],
 
             [
-                'slug_section' => 'les-tulipes',
-                'slug_event' => 'spectacle-de-marionnettes',
-            ],
-
-            [
                 'slug_section' => 'les-lilas',
                 'slug_event' => 'bienvenue-au-cirque',
             ],
@@ -62,10 +57,6 @@ class EventSectionSeeder extends Seeder
                 'slug_event' => 'spectacle-de-marionnettes',
             ],
 
-            [
-                'slug_section' => 'les-tulipes',
-                'slug_event' => 'bienvenue-au-cirque',
-            ],
 
             [
                 'slug_section' => 'les-mimosas',
@@ -92,10 +83,6 @@ class EventSectionSeeder extends Seeder
                 'slug_event' => 'bienvenue-au-cirque',
             ],
 
-            [
-                'slug_section' => 'les-tulipes',
-                'slug_event' => 'natation-pour-les-petits',
-            ],
         ];
 
         // Insert the data in the table

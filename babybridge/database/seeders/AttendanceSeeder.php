@@ -35,6 +35,15 @@ class AttendanceSeeder extends Seeder
             ],
 
             [
+                'child_firstname' => 'Astrid',
+                'child_lastname' => 'Lemoine',
+                'attendance_date' => '2024-03-22',
+                'arrival_time' => '08:00',
+                'departure_time' => '17:00',
+                'notes' => null,
+            ],
+
+            [
                 'child_firstname' => 'Léa',
                 'child_lastname' => 'Dupont',
                 'attendance_date' => '2024-03-22',

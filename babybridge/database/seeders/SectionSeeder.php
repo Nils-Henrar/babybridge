@@ -73,64 +73,11 @@ class SectionSeeder extends Seeder
             ],
 
             [
-                'name' => 'Les myosotis',
-                'slug' => null,
-                'created_at' => '2024-03-22 15:55:52'
-            ],
-
-            [
-                'name' => 'Les orchidées',
-                'slug' => null,
-                'created_at' => '2024-03-22 15:55:52'
-            ],
-
-            [
-                'name' => 'Les hortensias',
-                'slug' => null,
-                'created_at' => '2024-03-22 15:55:52'
-            ],
-
-            [
                 'name' => 'Les mimosas',
                 'slug' => null,
                 'created_at' => '2024-03-22 15:55:52'
             ],
 
-            [
-                'name' => 'Les camélias',
-                'slug' => null,
-                'created_at' => '2024-03-22 15:55:52'
-            ],
-
-            [
-                'name' => 'Les azalées',
-                'slug' => null,
-                'created_at' => '2024-03-22 15:55:52'
-            ],
-
-            [
-                'name' => 'Les glycines',
-                'slug' => null,
-                'created_at' => '2024-03-22 15:55:52'
-            ],
-
-            [
-                'name' => 'Les hibiscus',
-                'slug' => null,
-                'created_at' => '2024-03-22 15:55:52'
-            ],
-
-            [
-                'name' => 'Les pivoines',
-                'slug' => null,
-                'created_at' => '2024-03-22 15:55:52'
-            ],
-
-            [
-                'name' => 'Les tulipes',
-                'slug' => null,
-                'created_at' => '2024-03-22 15:55:52'
-            ]
         ];
 
 

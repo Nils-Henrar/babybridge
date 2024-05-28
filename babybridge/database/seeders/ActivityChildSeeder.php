@@ -82,6 +82,14 @@ class ActivityChildSeeder extends Seeder
             ],
 
             [
+                'child_firstname' => 'Léa',
+                'child_lastname' => 'Dupont',
+                'activity_description' => 'Pâte à modeler',
+                //datetime
+                'performed_at' => '2024-03-22 14:00:00',
+            ],
+
+            [
                 'child_firstname' => 'Lucas',
                 'child_lastname' => 'Durand',
                 'activity_description' => 'Lecture',
@@ -127,6 +135,22 @@ class ActivityChildSeeder extends Seeder
                 'activity_description' => 'Musique',
                 //datetime
                 'performed_at' => '2024-03-22 14:00:00',
+            ],
+
+            [
+                'child_firstname' => 'Astrid',
+                'child_lastname' => 'Lemoine',
+                'activity_description' => 'Musique',
+                //datetime
+                'performed_at' => '2024-03-22 16:00:00',
+            ],
+
+            [
+                'child_firstname' => 'Astrid',
+                'child_lastname' => 'Lemoine',
+                'activity_description' => 'Peinture',
+                //datetime
+                'performed_at' => '2024-03-22 12:00:00',
             ]
 
         ];

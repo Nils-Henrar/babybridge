@@ -97,6 +97,15 @@ class ChildSeeder extends Seeder
                 'photo_path' => 'profile/Arthur Roux/arthur-roux.jpg',
             ],
 
+            [
+                'firstname' => 'Astrid',
+                'lastname' => 'Lemoine',
+                'gender' => 'F',
+                'birthdate' => '2023-03-22',
+                'special_infos' => 'Allergie aux fruits de mer',
+                'photo_path' => 'profile/Astrid Lemoine/astrid-lemoine.jpg',
+            ],
+
         ];
 
         // Insert the data in the children table

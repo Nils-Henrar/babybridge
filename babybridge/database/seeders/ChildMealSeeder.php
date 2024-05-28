@@ -36,6 +36,15 @@ class ChildMealSeeder extends Seeder
             ],
 
             [
+                'child_firstname' => 'Astrid',
+                'child_lastname' => 'Lemoine',
+                'meal_time' => '2024-03-22 10:00:00',
+                'meal_type' => 'feeding bottle',
+                'quantity' => 'full',
+                'notes' => null,
+            ],
+
+            [
                 'child_firstname' => 'Léa',
                 'child_lastname' => 'Dupont',
                 'meal_time' => '2024-03-22 10:00:00',

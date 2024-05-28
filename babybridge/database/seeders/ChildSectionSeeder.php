@@ -87,6 +87,14 @@ class ChildSectionSeeder extends Seeder
                 'to' => null,
             ],
 
+            [
+                'child_firstname' => 'Astrid',
+                'child_lastname' => 'Lemoine',
+                'section_slug' => 'Les-mimosas',
+                'from' => '2023-01-22 16:00:00',
+                'to' => null,
+            ]
+
         ];
 
         // Insert the data in the table
