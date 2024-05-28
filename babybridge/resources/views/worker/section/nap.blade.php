@@ -184,15 +184,9 @@
 
 @push('scripts')
 <script>
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", async function() {
+    await getCsrfToken(); // Initialiser la protection CSRF
 
-    const token = `{{ session('authToken') }}`; // Récupérer le token stocké dans la session
-    if (token) {
-        sessionStorage.setItem('authToken', token);
-        console.log('Token stored in session storage');
-    }else{
-        console.log('No token found');
-    }
     const datePickerElement = document.getElementById('date-picker');
     const datePicker = flatpickr(datePickerElement, {
         defaultDate: "today",
@@ -219,6 +213,12 @@ document.addEventListener("DOMContentLoaded", function() {
     loadNapsForDate(datePickerElement.value);
 });
 
+async function getCsrfToken() {
+    await fetch('/sanctum/csrf-cookie', {
+        credentials: 'include' // Important pour envoyer les cookies
+    });
+}
+
 async function selectAllChildren() {
     const checkboxes = document.querySelectorAll('.child-checkbox');
     const allChecked = Array.from(checkboxes).every(checkbox => checkbox.checked);
@@ -234,9 +234,20 @@ async function loadNapsForDate(date) {
     document.getElementById('loading').style.display = 'flex';
     let sectionId = '{{ Auth::user()->worker->currentSection->section->id }}';
     try {
-        const childrenResponse = await fetch(`/api/children/section/${sectionId}/date/${date}`);
+        const childrenResponse = await fetch(`/api/children/section/${sectionId}/date/${date}`, {
+            credentials: 'include',
+            headers: {
+                'Accept': 'application/json',
+            }
+        });
         const childrenData = await childrenResponse.json();
-        const napsResponse = await fetch(`/api/naps/section/${sectionId}/date/${date}`);
+
+        const napsResponse = await fetch(`/api/naps/section/${sectionId}/date/${date}`, {
+            credentials: 'include',
+            headers: {
+                'Accept': 'application/json',
+            }
+        });
         const napsData = await napsResponse.json();
         displayChildrenWithNaps(childrenData, napsData);
         document.getElementById('loading').style.display = 'none';
@@ -310,7 +321,12 @@ async function openNapModal(napId = null) {
         document.getElementById('napId').value = ''; 
     } else {
         try {
-            const response = await fetch(`/api/naps/${napId}`);
+            const response = await fetch(`/api/naps/${napId}`, {
+                credentials: 'include',
+                headers: {
+                    'Accept': 'application/json',
+                }
+            });
             if (!response.ok) {
                 throw new Error('Failed to load nap details');
             }
@@ -339,7 +355,6 @@ async function submitNapForm() {
 
     const startedAt = document.getElementById('started_at').value;
     const endedAt = document.getElementById('ended_at').value;
-    const token = sessionStorage.getItem('authToken'); // Récupérer le token stocké dans la session
 
     let data = {
         started_at: `${document.getElementById('date-picker').value} ${startedAt}:00`,
@@ -348,9 +363,7 @@ async function submitNapForm() {
         notes: document.getElementById('notes').value,
     };
 
-    if (isUpdating) {
-        data.nap_id = napId;
-    } else {
+    if (!isUpdating) {
         const selectedChildren = Array.from(document.querySelectorAll('.child-checkbox:checked')).map(checkbox => checkbox.value);
         data.child_ids = selectedChildren;
     }
@@ -360,11 +373,11 @@ async function submitNapForm() {
     try {
         const response = await fetch(url, {
             method: method,
+            credentials: 'include',
             headers: {
                 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
                 'Content-Type': 'application/json',
                 'Accept': 'application/json',
-                'Authorization': `Bearer ${token}` // Ajouter le token dans l'en-tête de la requête
             },
             body: jsonData
         });
@@ -390,14 +403,13 @@ async function deleteNap(napId) {
         return;
     }
 
-    const token = sessionStorage.getItem('authToken'); // Récupérer le token stocké
-
     try {
         const response = await fetch(`/api/naps/${napId}`, {
             method: 'DELETE',
+            credentials: 'include',
             headers: {
                 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
-                'Authorization': `Bearer ${token}`, // Ajouter le token dans l'en-tête de la requête
+                'Accept': 'application/json',
             }
         });
 
@@ -416,8 +428,7 @@ async function deleteNap(napId) {
         alert('Erreur lors de la suppression de la sieste');
     }
 }
-
-
-
 </script>
+
+
 @endpush

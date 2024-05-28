@@ -116,14 +116,9 @@
 
 @push('scripts')
 <script>
-document.addEventListener("DOMContentLoaded", function() {
-    const token = `{{ session('authToken') }}`; // Récupérer le token stocké dans la session
-    if (token) {
-        sessionStorage.setItem('authToken', token);
-        console.log('Token stored in session storage');
-    }else{
-        console.log('No token found');
-    }
+document.addEventListener("DOMContentLoaded", async function() {
+    await getCsrfToken(); // Initialiser la protection CSRF
+
     const datePickerElement = document.getElementById('date-picker');
     const datePicker = flatpickr(datePickerElement, {
         defaultDate: "today",
@@ -150,14 +145,30 @@ document.addEventListener("DOMContentLoaded", function() {
     loadPhotosForDate(datePickerElement.value); // Initialement charger les photos pour la date actuelle
 });
 
+async function getCsrfToken() {
+    await fetch('/sanctum/csrf-cookie', {
+        credentials: 'include' // Important pour envoyer les cookies
+    });
+}
+
 async function loadPhotosForDate(date) {
     document.getElementById('loading').style.display = 'flex'; // Afficher le loader
     const sectionId = '{{ Auth::user()->worker->currentSection->section->id }}';
     try {
-        const childrenResponse = await fetch(`/api/children/section/${sectionId}/date/${date}`);
+        const childrenResponse = await fetch(`/api/children/section/${sectionId}/date/${date}`, {
+            credentials: 'include',
+            headers: {
+                'Accept': 'application/json',
+            }
+        });
         const childrenData = await childrenResponse.json();
 
-        const photoResponse = await fetch(`/api/photos/section/${sectionId}/date/${date}`);
+        const photoResponse = await fetch(`/api/photos/section/${sectionId}/date/${date}`, {
+            credentials: 'include',
+            headers: {
+                'Accept': 'application/json',
+            }
+        });
         const photos = await photoResponse.json();
         displayChildrenWithPhotos(childrenData, photos);
         document.getElementById('loading').style.display = 'none'; // Masquer le loader
@@ -217,7 +228,6 @@ async function submitPhotoForm() {
     formData.set('taken_at', takenAt);
 
     const photoId = document.getElementById('photoId').value;
-    const token = sessionStorage.getItem('authToken'); // Récupérer le token stocké dans la session
 
     const url = photoId ? `/api/photos/${photoId}` : '/api/photos';
     const method = photoId ? 'PUT' : 'POST';
@@ -225,9 +235,9 @@ async function submitPhotoForm() {
     try {
         const response = await fetch(url, {
             method: method,
+            credentials: 'include',
             headers: {
-                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
-                'Authorization': `Bearer ${token}` // Ajouter le token dans les headers
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
             },
             body: formData
         });
@@ -260,7 +270,12 @@ function openPhotoModal(childId, photoId = null) {
     document.getElementById('image_preview').style.display = 'none';
 
     if (photoId) {
-        fetch(`/api/photos/${photoId}`)
+        fetch(`/api/photos/${photoId}`, {
+            credentials: 'include',
+            headers: {
+                'Accept': 'application/json'
+            }
+        })
             .then(response => response.json())
             .then(data => {
                 document.getElementById('photoId').value = data.id;
@@ -285,14 +300,13 @@ function openPhotoModal(childId, photoId = null) {
 async function deletePhoto(photoId) {
     if (!confirm('Êtes-vous sûr de vouloir supprimer cette photo?')) return;
 
-    const token = sessionStorage.getItem('authToken'); // Récupérer le token stocké dans la session
-
     try {
         const response = await fetch(`/api/photos/${photoId}`, {
             method: 'DELETE',
+            credentials: 'include',
             headers: {
                 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
-                'Authorization': `Bearer ${token}` // Ajouter le token dans les headers
+                'Accept': 'application/json'
             }
         });
 
@@ -327,6 +341,6 @@ function previewImage() {
         preview.style.display = 'none'; // Cacher l'image si aucun fichier n'est sélectionné
     }
 }
-
 </script>
+
 @endpush

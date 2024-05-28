@@ -17,17 +17,32 @@
 
 @push('scripts')
 <script>
-    document.addEventListener("DOMContentLoaded", function() {
+    document.addEventListener("DOMContentLoaded", async function() {
+
+        await getCsrfToken(); // Initialize CSRF protection
+        
         loadAvailableEvents();
 
-        function loadAvailableEvents() {
+        async function loadAvailableEvents() {
             const userId = '{{ Auth::id() }}';
-            fetch(`/api/events/available/${userId}`)
-                .then(response => response.json())
-                .then(data => {
-                    displayEvents(data);
-                })
-                .catch(error => console.error('Error loading events:', error));
+            try {
+                const response = await fetch(`/api/events/available/${userId}`, {
+                    credentials: 'include', // Include authentication cookies
+                    headers: {
+                        'Accept': 'application/json',
+                        'content-type': 'application/json'
+                    }
+                });
+                if (!response.ok) {
+                    throw new Error('Error loading events');
+                }
+                const data = await response.json();
+                displayEvents(data);
+            } catch (error) {
+                console.error('Error loading events:', error);
+            }
+                
+            
         }
 
         function displayEvents(events) {
@@ -47,7 +62,7 @@
             });
         }
 
-        window.submitPayment = function() {
+        window.submitPayment = async function() {
             const selectedEvents = Array.from(document.querySelectorAll('.event-checkbox:checked')).map(checkbox => checkbox.value);
             if (selectedEvents.length === 0) {
                 alert('Veuillez sélectionner au moins un événement.');
@@ -55,8 +70,10 @@
             }
 
             const userId = '{{ Auth::id() }}';
-            fetch('/api/payments', {
+            try {
+                const response = await fetch('/api/payments', {
                     method: 'POST',
+                    credentials: 'include', // Include authentication cookies
                     headers: {
                         'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
                         'Content-Type': 'application/json'
@@ -65,16 +82,17 @@
                         userId,
                         events: selectedEvents
                     })
-                })
-                .then(response => response.json())
-                .then(data => {
-                    alert('Paiement effectué avec succès!');
-                    loadAvailableEvents(); // Reload the events
-                })
-                .catch(error => {
-                    console.error('Error submitting payment:', error);
-                    alert('Erreur lors de l\'enregistrement du paiement');
                 });
+                if (!response.ok) {
+                    throw new Error('Error submitting payment');
+                }
+                const data = await response.json();
+                alert('Paiement effectué avec succès!');
+                loadAvailableEvents(); // Reload the events
+            } catch (error) {
+                console.error('Error submitting payment:', error);
+                alert('Erreur lors de l\'enregistrement du paiement');
+            }
         }
     });
 </script>

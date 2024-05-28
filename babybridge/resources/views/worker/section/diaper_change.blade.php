@@ -124,14 +124,10 @@
 
 @push('scripts')
 <script>
-document.addEventListener("DOMContentLoaded", function() {
-    const token = `{{ session('authToken') }}`; // Récupérer le token stocké dans la session
-    if (token) {
-        sessionStorage.setItem('authToken', token);
-        console.log('Token stored in session storage');
-    }else{
-        console.log('No token found');
-    }
+document.addEventListener("DOMContentLoaded", async function() {
+
+    await getCsrfToken(); // Initialiser la protection CSRF
+
     const datePickerElement = document.getElementById('date-picker');
     const datePicker = flatpickr(datePickerElement, {
         defaultDate: "today",
@@ -158,16 +154,32 @@ document.addEventListener("DOMContentLoaded", function() {
     loadDiaperChangesForDate(datePickerElement.value);
 });
 
+async function getCsrfToken() {
+    await fetch('/sanctum/csrf-cookie', {
+        credentials: 'include' // Important pour envoyer les cookies
+    });
+}
+
 async function loadDiaperChangesForDate(date) {
     document.getElementById('loading').style.display = 'flex'; // Afficher le loader
     const sectionId = '{{ Auth::user()->worker->currentSection->section->id }}';
 
     try {
         // Récupérer les données des enfants de la section
-        const childrenResponse = await fetch(`/api/children/section/${sectionId}/date/${date}`);
+        const childrenResponse = await fetch(`/api/children/section/${sectionId}/date/${date}`, {
+            credentials: 'include' ,
+            headers: {
+                'Accept': 'application/json'
+            }
+        });
         const childrenData = await childrenResponse.json();
 
-        const diaperResponse = await fetch(`/api/diaper-changes/section/${sectionId}/date/${date}`);
+        const diaperResponse = await fetch(`/api/diaper-changes/section/${sectionId}/date/${date}`, {
+            credentials: 'include' ,
+            headers: {
+                'Accept': 'application/json'
+            }
+        });
         const diaperChanges = await diaperResponse.json();
         displayChildrenWithDiaperChanges(childrenData,diaperChanges );
         document.getElementById('loading').style.display = 'none'; // Masquer le loader en cas d'erreur
@@ -244,10 +256,11 @@ async function submitDiaperChangeForm() {
     try {
         const response = await fetch(url, {
             method: method,
+            credentials: 'include',
             headers: {
                 'Content-Type': 'application/json',
                 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
-                'Authorization': `Bearer ${token}` // Ajouter le token d'authentification
+                'Accept': 'application/json',
             },
             body: JSON.stringify(data)
         });
@@ -278,7 +291,12 @@ async function openDiaperChangeModal(childId, changeId = null) {
 
     if (changeId) {
         try {
-            const response = await fetch(`/api/diaper-changes/${changeId}`);
+            const response = await fetch(`/api/diaper-changes/${changeId}`, {
+                credentials: 'include',
+                headers: {
+                    'Accept': 'application/json'
+                }
+            });
             if (!response.ok) {
                 throw new Error('Failed to load diaper change details');
             }
@@ -310,9 +328,10 @@ async function deleteDiaperChange(changeId) {
     try {
         const response = await fetch(`/api/diaper-changes/${changeId}`, {
             method: 'DELETE',
+            credentials: 'include',
             headers: {
                 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
-                'Authorization': `Bearer ${token}`, // Ajouter le token d'authentification
+                'Accept': 'application/json'
             }
         });
 

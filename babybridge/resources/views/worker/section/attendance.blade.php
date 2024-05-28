@@ -124,16 +124,55 @@
 </div>
 @endsection
 
+@section('content_body')
+<div class="container">
+    <div class="title-section">Section: {{ Auth::user()->worker->currentSection->section->name }}</div>
+    <div class="date-picker-container" style="text-align: center; margin-top: 20px;">
+        <button id="prev-day"><i class="fas fa-arrow-left"></i></button>
+        <input type="text" id="date-picker" class="form-control" style="display: inline-block; width: auto;">
+        <button id="next-day"><i class="fas fa-arrow-right"></i></button>
+    </div>
+    <div id="attendance-container" class="row">
+        <!-- Les boîtes seront ajoutées ici par JavaScript -->
+    </div>
+    <div id="loading" style="display: none; justify-content: center; align-items: center; height: 100vh;">
+        <div>Chargement en cours...</div>
+    </div>
+</div>
+@endsection
+
 @push('scripts')
 <script>
+    async function getCsrfToken() {
+        await fetch('/sanctum/csrf-cookie', {
+            credentials: 'include' // Important pour envoyer les cookies
+        });
+    }
+
     async function loadChildrenAndAttendances(date) {
         document.getElementById('loading').style.display = 'flex';
-        let sectionId = '{{ Auth::user()->worker->currentSection->section->id }}'
+        let sectionId = '{{ Auth::user()->worker->currentSection->section->id }}';
+
         try {
-            const childrenResponse = await fetch(`/api/children/section/${sectionId}`);
+            const childrenResponse = await fetch(`/api/children/section/${sectionId}`, {
+                credentials: 'include', // Include cookies with the request
+                headers: {
+                    'Content-Type': 'application/json',
+                    
+                    'Accept': 'application/json'
+                }
+            });
             const childrenData = await childrenResponse.json();
-            const attendancesResponse = await fetch(`/api/attendances/section/${sectionId}/date/${date}`);
+
+            const attendancesResponse = await fetch(`/api/attendances/section/${sectionId}/date/${date}`, {
+                credentials: 'include', // Include cookies with the request
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                }
+            });
             const attendancesData = await attendancesResponse.json();
+
             displayChildrenWithAttendances(childrenData, attendancesData);
             document.getElementById('loading').style.display = 'none';
         } catch (error) {
@@ -142,14 +181,8 @@
         }
     }
 
-    document.addEventListener("DOMContentLoaded", function() { 
-        const token = `{{ session('authToken') }}`; // Récupére le token stocké dans la session
-        if (token) {
-            sessionStorage.setItem('authToken', token); // Stocker le token dans le sessionStorage
-            console.log('Token stored in session storage');
-        }else{
-            console.log('No token found');
-        }
+    document.addEventListener("DOMContentLoaded", async function() { 
+        await getCsrfToken();
 
         const datePickerElement = document.getElementById('date-picker');
         const datePicker = flatpickr(datePickerElement, {
@@ -177,15 +210,15 @@
         loadChildrenAndAttendances(datePickerElement.value);
     });
 
-function displayChildrenWithAttendances(children, attendances) {
-    let container = document.getElementById('attendance-container');
-    container.innerHTML = '';
+    function displayChildrenWithAttendances(children, attendances) {
+        let container = document.getElementById('attendance-container');
+        container.innerHTML = '';
 
-    children.forEach(child => {
-        const attendance = attendances.find(a => a.child_id === child.id) || {};
-        const isPresent = !!attendance.arrival_time;
+        children.forEach(child => {
+            const attendance = attendances.find(a => a.child_id === child.id) || {};
+            const isPresent = !!attendance.arrival_time;
 
-        let boxHtml = `
+            let boxHtml = `
                 <div class="col-lg-12 col-6">
                     <div class="small-box">
                         <div class="attendance-inner">
@@ -194,7 +227,7 @@ function displayChildrenWithAttendances(children, attendances) {
                             </div>
                             <div class="child-info">
                                 <h3>${child.firstname}</h3>
-                                <p> ${child.lastname} </p>
+                                <p>${child.lastname}</p>
                             </div>
                             <div class="attendance-details">
                                 <button onclick="togglePresence(${child.id})" class="btn ${isPresent ? 'btn-danger' : 'btn-success'} presence-btn" data-child-id="${child.id}">
@@ -213,151 +246,143 @@ function displayChildrenWithAttendances(children, attendances) {
                         </div>
                     </div>
                 </div>
-                `;
+            `;
 
-        container.innerHTML += boxHtml;
-    });
+            container.innerHTML += boxHtml;
+        });
 
-    flatpickr(".timepicker", {
-        enableTime: true,
-        noCalendar: true,
-        dateFormat: "H:i",
-        time_24hr: true
-    });
-}
+        flatpickr(".timepicker", {
+            enableTime: true,
+            noCalendar: true,
+            dateFormat: "H:i",
+            time_24hr: true
+        });
+    }
 
+    async function togglePresence(childId) {
+        const presenceBtn = document.querySelector(`.presence-btn[data-child-id="${childId}"]`);
+        const arrivalInput = document.getElementById(`arrival-${childId}`);
+        const departureInput = document.getElementById(`departure-${childId}`);
+        const isPresent = presenceBtn.classList.contains('btn-danger');
+        const date = document.getElementById('date-picker').value;
 
-async function togglePresence(childId) {
-    const presenceBtn = document.querySelector(`.presence-btn[data-child-id="${childId}"]`);
-    const arrivalInput = document.getElementById(`arrival-${childId}`);
-    const departureInput = document.getElementById(`departure-${childId}`);
-    const isPresent = presenceBtn.classList.contains('btn-danger');
-    const date = document.getElementById('date-picker').value;
-    const token = sessionStorage.getItem('authToken'); // Récupérer le token stocké
+        if (isPresent) {
+            // Suppression de la présence
+            try {
+                const response = await fetch(`/api/attendances/${childId}/${date}`, {
+                    method: 'DELETE',
+                    credentials: 'include',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                    }
+                });
 
-    
-
-
-    if (isPresent) {
-        // Suppression de la présence
-        try {
-            const response = await fetch(`/api/attendances/${childId}/${date}`, {
-                method: 'DELETE',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'), 
-                    'authorization': `Bearer ${token}`, // Ajouter le token dans les headers
+                if (!response.ok) {
+                    throw new Error('Failed to delete attendance');
                 }
-            });
 
-            if (!response.ok) {
-                throw new Error('Failed to delete attendance');
+                arrivalInput.value = '';
+                departureInput.value = '';
+                arrivalInput.disabled = true;
+                departureInput.disabled = true;
+                presenceBtn.classList.remove('btn-danger');
+                presenceBtn.classList.add('btn-success');
+                presenceBtn.innerText = 'Présent';
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error deleting attendance');
             }
+        } else {
+            // Ajout de la présence
+            const now = new Date();
+            const hours = now.getHours().toString().padStart(2, '0');
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            const time = `${hours}:${minutes}`;
 
-            arrivalInput.value = '';
-            departureInput.value = '';
-            arrivalInput.disabled = true;
-            departureInput.disabled = true;
-            presenceBtn.classList.remove('btn-danger');
-            presenceBtn.classList.add('btn-success');
-            presenceBtn.innerText = 'Présent';
-        } catch (error) {
-            console.error('Error:', error);
-            alert('Error deleting attendance');
+            arrivalInput.value = time;
+            arrivalInput.disabled = false;
+            departureInput.disabled = false;
+
+            const data = {
+                child_id: childId,
+                arrival_time: time,
+                attendance_date: date
+            };
+
+            try {
+                const response = await fetch('/api/attendances', {
+                    method: 'POST',
+                    credentials: 'include',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to add attendance');
+                }
+
+                presenceBtn.classList.remove('btn-success');
+                presenceBtn.classList.add('btn-danger');
+                presenceBtn.innerText = 'Absent';
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error adding attendance');
+            }
         }
-    } else {
-        // Ajout de la présence
-        const now = new Date();
-        const hours = now.getHours().toString().padStart(2, '0');
-        const minutes = now.getMinutes().toString().padStart(2, '0');
-        const time = `${hours}:${minutes}`;
+    }
 
-        arrivalInput.value = time;
-        arrivalInput.disabled = false;
-        departureInput.disabled = false;
+    async function updateAttendance(childId, time = null, type = 'arrival') {
+        const datePicker = document.getElementById('date-picker');
+        const attendanceDate = datePicker.value;
+
+        let arrivalTime, departureTime;
+        if (type === 'arrival') {
+            arrivalTime = time || document.getElementById(`arrival-${childId}`).value;
+            departureTime = document.getElementById(`departure-${childId}`).value;
+        } else {
+            arrivalTime = document.getElementById(`arrival-${childId}`).value;
+            departureTime = time || document.getElementById(`departure-${childId}`).value;
+        }
+
+        console.log(`Updating attendance for child ${childId}`);
+        console.log(`Arrival time: ${arrivalTime}`);
+        console.log(`Departure time: ${departureTime}`);
+        console.log(`Attendance date: ${attendanceDate}`);
+
+        if (!arrivalTime) {
+            alert('Arrival time must be set.');
+            return;
+        }
 
         const data = {
             child_id: childId,
-            arrival_time: time,
-            attendance_date: date
+            arrival_time: arrivalTime,
+            departure_time: departureTime,
+            attendance_date: attendanceDate
         };
 
         try {
             const response = await fetch('/api/attendances', {
                 method: 'POST',
+                credentials: 'include',
                 headers: {
                     'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
-                    'authorization': `Bearer ${token}`, // Ajouter le token dans les headers
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
                 },
                 body: JSON.stringify(data)
             });
-
             if (!response.ok) {
-                throw new Error('Failed to add attendance');
+                throw new Error('Failed to update attendance');
             }
-
-            presenceBtn.classList.remove('btn-success');
-            presenceBtn.classList.add('btn-danger');
-            presenceBtn.innerText = 'Absent';
+            loadChildrenAndAttendances(attendanceDate); // Reload data after updating
         } catch (error) {
             console.error('Error:', error);
-            alert('Error adding attendance');
+            alert('Error updating attendance');
         }
     }
-}
-
-async function updateAttendance(childId, time = null, type = 'arrival') {
-    const datePicker = document.getElementById('date-picker');
-    const attendanceDate = datePicker.value;
-    const token = localStorage.getItem('authToken'); // Récupérer le token stocké dans le localStorage
-
-    let arrivalTime, departureTime;
-    if (type === 'arrival') {
-        arrivalTime = time || document.getElementById(`arrival-${childId}`).value;
-        departureTime = document.getElementById(`departure-${childId}`).value;
-    } else {
-        arrivalTime = document.getElementById(`arrival-${childId}`).value;
-        departureTime = time || document.getElementById(`departure-${childId}`).value;
-    }
-
-    console.log(`Updating attendance for child ${childId}`);
-    console.log(`Arrival time: ${arrivalTime}`);
-    console.log(`Departure time: ${departureTime}`);
-    console.log(`Attendance date: ${attendanceDate}`);
-
-    if (!arrivalTime) {
-        alert('Arrival time must be set.');
-        return;
-    }
-
-    const data = {
-        child_id: childId,
-        arrival_time: arrivalTime,
-        departure_time: departureTime,
-        attendance_date: attendanceDate
-    };
-
-    try {
-        const response = await fetch('/api/attendances', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
-                'Authorization': `Bearer ${token}`,
-            },
-            body: JSON.stringify(data)
-        });
-        if (!response.ok) {
-            throw new Error('Failed to update attendance');
-        }
-        loadChildrenAndAttendances(attendanceDate); // Reload data after updating
-    } catch (error) {
-        console.error('Error:', error);
-        alert('Error updating attendance');
-    }
-}
-
-
 </script>
 @endpush

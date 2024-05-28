@@ -176,15 +176,9 @@
 
 @push('scripts')
 <script>
+document.addEventListener("DOMContentLoaded", async function() {
+    await getCsrfToken(); // Initialiser la protection CSRF
 
-document.addEventListener("DOMContentLoaded", function() {
-    const token = `{{ session('authToken') }}`; // Récupérer le token stocké dans la session
-    if (token) {
-        sessionStorage.setItem('authToken', token);
-        console.log('Token stored in session storage');
-    }else{
-        console.log('No token found');
-    }
     const datePickerElement = document.getElementById('date-picker');
     const datePicker = flatpickr(datePickerElement, {
         defaultDate: "today",
@@ -209,9 +203,15 @@ document.addEventListener("DOMContentLoaded", function() {
         loadChildrenAndMeals(datePickerElement.value);
     });
 
-    loadChildrenAndMeals(datePickerElement.value);// Charge initialement les repas pour la date courante
+    loadChildrenAndMeals(datePickerElement.value); // Charge initialement les repas pour la date courante
     loadMealTypes(); // Appel pour charger les types de repas dans le formulaire modal
 });
+
+async function getCsrfToken() {
+    await fetch('/sanctum/csrf-cookie', {
+        credentials: 'include' // Important pour envoyer les cookies
+    });
+}
 
 async function loadChildrenAndMeals(date) {
     document.getElementById('loading').style.display = 'flex'; // Afficher le loader
@@ -219,11 +219,21 @@ async function loadChildrenAndMeals(date) {
 
     try {
         // Récupérer les données des enfants de la section
-        const childrenResponse = await fetch(`/api/children/section/${sectionId}/date/${date}`);
+        const childrenResponse = await fetch(`/api/children/section/${sectionId}/date/${date}`, {
+            credentials: 'include',
+            headers: {
+                'Accept': 'application/json',
+            }
+        });
         const childrenData = await childrenResponse.json();
 
         // Récupérer les repas des enfants pour la section et la date spécifiées
-        const mealsResponse = await fetch(`/api/meals/section/${sectionId}/date/${date}`);
+        const mealsResponse = await fetch(`/api/meals/section/${sectionId}/date/${date}`, {
+            credentials: 'include',
+            headers: {
+                'Accept': 'application/json',
+            }
+        });
         const mealsData = await mealsResponse.json();
         displayChildrenWithMeals(childrenData, mealsData);
         document.getElementById('loading').style.display = 'none'; // Masquer le loader
@@ -232,7 +242,6 @@ async function loadChildrenAndMeals(date) {
         document.getElementById('loading').style.display = 'none'; // Masquer le loader en cas d'erreur
     }
 }
-
 
 function displayChildrenWithMeals(children, meals) {
     let container = document.getElementById('meal-container');
@@ -291,29 +300,31 @@ function displayChildrenWithMeals(children, meals) {
     container.insertAdjacentHTML('afterbegin', addButtonHtml);
 }
 
-
-
 function loadMealTypes() {
-    fetch('/api/meal-types')
-        .then(response => response.json())
-        .then(data => {
-            const select = document.getElementById('meal_type');
-            select.innerHTML = ''; // Effacer les options existantes
-            // "sélectionnez le type de repas" comme option par défaut
-            const defaultOption = document.createElement('option');
-            defaultOption.value = '';
-            defaultOption.textContent = 'Sélectionnez le type de repas';
-            select.appendChild(defaultOption);
-            data.forEach(meal => {
-                const option = document.createElement('option');
-                option.value = meal.id;
-                option.textContent = meal.type;
-                select.appendChild(option);
-            });
-        })
-        .catch(error => console.error('Error loading meal types:', error));
+    fetch('/api/meal-types', {
+        credentials: 'include',
+        headers: {
+            'Accept': 'application/json',
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        const select = document.getElementById('meal_type');
+        select.innerHTML = ''; // Effacer les options existantes
+        // "sélectionnez le type de repas" comme option par défaut
+        const defaultOption = document.createElement('option');
+        defaultOption.value = '';
+        defaultOption.textContent = 'Sélectionnez le type de repas';
+        select.appendChild(defaultOption);
+        data.forEach(meal => {
+            const option = document.createElement('option');
+            option.value = meal.id;
+            option.textContent = meal.type;
+            select.appendChild(option);
+        });
+    })
+    .catch(error => console.error('Error loading meal types:', error));
 }
-
 
 async function submitMealForm() {
     const mealId = document.getElementById('mealId').value;
@@ -323,10 +334,9 @@ async function submitMealForm() {
     const notes = document.getElementById('notes').value;
     const mealDate = document.getElementById('date-picker').value;
     const selectedChildIds = Array.from(document.querySelectorAll('.child-checkbox:checked')).map(checkbox => checkbox.value);
-    const token = sessionStorage.getItem('authToken'); // Récupérer le token stocké dans la session
 
     const data = {
-        child_ids : selectedChildIds,
+        child_ids: selectedChildIds,
         meal_id: mealType,
         meal_time: `${mealDate} ${mealTime}:00`,
         quantity: quantity,
@@ -341,11 +351,11 @@ async function submitMealForm() {
     try {
         const response = await fetch(url, {
             method: method,
+            credentials: 'include',
             headers: {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json',
-                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
-                'Authorization': `Bearer ${token}` // Ajouter le token d'authentification
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
             },
             body: JSON.stringify(data)
         });
@@ -366,8 +376,6 @@ async function submitMealForm() {
         alert('Erreur lors de l\'enregistrement du repas.');
     }
 }
-
-
 
 function adjustQuantityInput() {
     const mealTypeSelect = document.getElementById('meal_type');
@@ -440,15 +448,14 @@ async function deleteMeal(mealId) {
     if (!confirm('Êtes-vous sûr de vouloir supprimer ce repas?')) {
         return;
     }
-    const token = sessionStorage.getItem('authToken'); // Récupérer le token stocké dans la session
 
     try {
         const response = await fetch(`/api/meals/${mealId}`, {
             method: 'DELETE',
+            credentials: 'include',
             headers: {
                 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
-                'Authorization': `Bearer ${token}`, // Ajouter le token d'authentification
-
+                'Accept': 'application/json'
             }
         });
 
@@ -468,18 +475,13 @@ async function deleteMeal(mealId) {
     }
 }
 
-
-
-
-
-
 async function openMealModal(mealId = null) {
     const modal = $('#mealModal');
     const form = document.getElementById('mealForm');
 
-    if(!mealId) {
+    if (!mealId) {
         const selectedChildIds = Array.from(document.querySelectorAll('.child-checkbox:checked')).map(checkbox => checkbox.value);
-        if(selectedChildIds.length === 0) {
+        if (selectedChildIds.length === 0) {
             alert('Veuillez sélectionner au moins un enfant pour ajouter un repas.');
             return;
         }
@@ -490,10 +492,15 @@ async function openMealModal(mealId = null) {
         document.getElementById('meal_type').value = '';
         document.getElementById('quantity').value = '';
         document.getElementById('notes').value = '';
-
     } else {
         try {
-            const response = await fetch(`/api/meals/${mealId}`);
+            const response = await fetch(`/api/meals/${mealId}`, {
+                credentials: 'include',
+                headers: {
+                    'Accept': 'application/json'
+                }
+            });
+
             if (!response.ok) {
                 throw new Error('Failed to load meal details');
             }
@@ -512,7 +519,6 @@ async function openMealModal(mealId = null) {
     }
     $('#mealModal').modal('show');
 }
-
-
 </script>
+
 @endpush

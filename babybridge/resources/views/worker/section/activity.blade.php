@@ -183,14 +183,9 @@ color: #333;
 
 @push('scripts')
 <script>
-document.addEventListener("DOMContentLoaded", function() {
-    const token = `{{ session('authToken') }}`; // Récupérer le token stocké dans la session
-    if (token) {
-        sessionStorage.setItem('authToken', token); // Stocker le token dans sessionStorage
-        console.log('Token stored in session storage');
-    }else{
-        console.log('No token found');
-    }
+document.addEventListener("DOMContentLoaded", async function() {
+    await getCsrfToken(); // Initialiser la protection CSRF
+
     const datePickerElement = document.getElementById('date-picker');
     const datePicker = flatpickr(datePickerElement, {
         defaultDate: "today",
@@ -218,6 +213,12 @@ document.addEventListener("DOMContentLoaded", function() {
     loadActivityTypes();
 });
 
+async function getCsrfToken() {
+    await fetch('/sanctum/csrf-cookie', {
+        credentials: 'include' // Important pour envoyer les cookies
+    });
+}
+
 async function selectAllChildren() {
     const checkboxes = document.querySelectorAll('.child-checkbox');
     const allChecked = Array.from(checkboxes).every(checkbox => checkbox.checked);
@@ -233,9 +234,19 @@ async function loadChildrenAndActivities(date) {
     document.getElementById('loading').style.display = 'flex';
     let sectionId = '{{ Auth::user()->worker->currentSection->section->id }}';
     try {
-        const childrenResponse = await fetch(`/api/children/section/${sectionId}/date/${date}`);
+        const childrenResponse = await fetch(`/api/children/section/${sectionId}/date/${date}`, {
+            credentials: 'include',
+            headers: {
+                'Accept': 'application/json',
+            }
+        });
         const childrenData = await childrenResponse.json();
-        const activitiesResponse = await fetch(`/api/activities/section/${sectionId}/date/${date}`);
+        const activitiesResponse = await fetch(`/api/activities/section/${sectionId}/date/${date}`, {
+            credentials: 'include',
+            headers: {
+                'Accept': 'application/json',
+            }
+        });
         const activitiesData = await activitiesResponse.json();
         displayChildrenWithActivities(childrenData, activitiesData);
         document.getElementById('loading').style.display = 'none';
@@ -313,7 +324,12 @@ async function openActivityModal(activityId = null) {
         if (activityTimeInput) activityTimeInput.value = '';
     } else {
         try {
-            const response = await fetch(`/api/activities/${activityId}`);
+            const response = await fetch(`/api/activities/${activityId}`, {
+                credentials: 'include',
+                headers: {
+                    'Accept': 'application/json',
+                }
+            });
             if (!response.ok) {
                 throw new Error('Failed to load activity details');
             }
@@ -328,14 +344,12 @@ async function openActivityModal(activityId = null) {
         }
     }
     modal.modal('show');
-
 }
 
 async function submitActivityForm() {
     const form = document.getElementById('activityForm');
     const activityId = document.getElementById('activityId').value;
     const isUpdating = !!activityId;
-    const token = sessionStorage.getItem('authToken'); // Récupérer le token stocké
 
     const url = isUpdating ? `/api/activities/${activityId}` : '/api/activities';
     const method = isUpdating ? 'PUT' : 'POST';
@@ -361,13 +375,11 @@ async function submitActivityForm() {
     try {
         const response = await fetch(url, {
             method: method,
+            credentials: 'include',
             headers: {
                 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'), 
                 'Content-Type': 'application/json',
                 'Accept': 'application/json',
-                'authorization': `Bearer ${token}` 
-                
-
             },
             body: jsonData
         });
@@ -390,13 +402,14 @@ async function submitActivityForm() {
 
 async function deleteActivity(activityId) {
     if (!confirm('Êtes-vous sûr de vouloir supprimer cette activité?')) return;
-    const token = sessionStorage.getItem('authToken'); // Récupérer le token stocké
+
     try {
         const response = await fetch(`/api/activities/${activityId}`, {
             method: 'DELETE',
+            credentials: 'include',
             headers: {
                 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
-                'authorization': `Bearer ${token}`
+                'Accept': 'application/json',
             }
         });
 
@@ -415,22 +428,25 @@ async function deleteActivity(activityId) {
 }
 
 function loadActivityTypes() {
-    fetch('/api/activity-types')
-        .then(response => response.json())
-        .then(data => {
-            const selectElement = document.getElementById('activity_description');
-            selectElement.innerHTML = '<option value="">Sélectionnez le type d\'activité</option>';
-            data.forEach(activityType => {
-                const option = document.createElement('option');
-                option.value = activityType.id;
-                option.textContent = activityType.description;
-                selectElement.appendChild(option);
-            });
-        })
-        .catch(error => console.error('Error loading activity types:', error));
+    fetch('/api/activity-types', {
+        credentials: 'include',
+        headers: {
+            'Accept': 'application/json',
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        const selectElement = document.getElementById('activity_description');
+        selectElement.innerHTML = '<option value="">Sélectionnez le type d\'activité</option>';
+        data.forEach(activityType => {
+            const option = document.createElement('option');
+            option.value = activityType.id;
+            option.textContent = activityType.description;
+            selectElement.appendChild(option);
+        });
+    })
+    .catch(error => console.error('Error loading activity types:', error));
 }
-
-
-
 </script>
+
 @endpush

@@ -59,7 +59,9 @@
 
 @push('scripts')
 <script>
-    document.addEventListener("DOMContentLoaded", function() {
+    document.addEventListener("DOMContentLoaded", async function() {
+        await getCsrfToken(); // Initialiser la protection CSRF
+
         const datePicker = flatpickr("#date-picker", {
             enableTime: false,
             dateFormat: "Y-m-d",
@@ -71,40 +73,57 @@
 
         // Charger le journal pour la date du jour au lancement de la page
         loadJournalForDate(datePicker.input.value);
+    });
 
-        function loadJournalForDate(date) {
-            const userId = '{{ Auth::id() }}';
-            fetch(`/api/children/user/${userId}/daily-journal/${date}`)
-                .then(response => response.json())
-                .then(data => {
-                    displayJournal(data);
-                })
-                .catch(error => console.error('Error loading the daily journal:', error));
+    async function getCsrfToken() {
+        await fetch('/sanctum/csrf-cookie', {
+            credentials: 'include' // Important pour envoyer les cookies
+        });
+    }
+
+    async function loadJournalForDate(date) {
+        const userId = '{{ Auth::id() }}';
+        try {
+            const response = await fetch(`/api/children/user/${userId}/daily-journal/${date}`, {
+                credentials: 'include', // Inclure les cookies d'authentification
+                headers: {
+                    'Accept': 'application/json',
+                    'content-type': 'application/json'
+                }
+            });
+            if (!response.ok) {
+                throw new Error('Erreur lors du chargement du journal quotidien');
+            }
+            const data = await response.json();
+            displayJournal(data);
+        } catch (error) {
+            console.error('Error loading the daily journal:', error);
         }
+    }
 
-        function displayJournal(data) {
-            const container = document.getElementById('daily-journal');
-            container.innerHTML = ''; // Clear previous entries
+    function displayJournal(data) {
+        const container = document.getElementById('daily-journal');
+        container.innerHTML = ''; // Effacer les entrées précédentes
 
-            data.forEach((entry, index) => {
-                const box = document.createElement('div');
-                box.className = 'journal-entry';
-                box.innerHTML = `
+        data.forEach((entry, index) => {
+            const box = document.createElement('div');
+            box.className = 'journal-entry';
+            box.innerHTML = `
                 <div class="entry-time">${entry.time}</div>
                 <div class="entry-content">
                     <strong>${entry.child_name}</strong> - ${entry.description}
                 </div>
             `;
-                container.appendChild(box);
+            container.appendChild(box);
 
-                // Add separator div between entries
-                if (index < data.length - 1) {
-                    const separator = document.createElement('div');
-                    separator.className = 'separator';
-                    container.appendChild(separator);
-                }
-            });
-        }
-    });
+            // Ajouter un séparateur entre les entrées
+            if (index < data.length - 1) {
+                const separator = document.createElement('div');
+                separator.className = 'separator';
+                container.appendChild(separator);
+            }
+        });
+    }
 </script>
+
 @endpush
