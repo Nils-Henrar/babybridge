@@ -10,6 +10,7 @@ use App\Http\Controllers\EventController;
 use App\Http\Controllers\CalendarController;
 use App\Http\Controllers\PaymentController;
 
+use Illuminate\Http\Request;
 
 
 
@@ -145,7 +146,9 @@ Route::get('/register/{token}', [UserController::class, 'showRegistrationForm'])
 Route::post('/register/complete', [UserController::class, 'completeRegistration'])->name('register.complete');
 
 
-
+Route::get('/sanctum/csrf-cookie', function (Request $request) {
+    return response()->json(['csrf_token' => csrf_token()]);
+});
 
 Auth::routes();
 
