@@ -12,19 +12,15 @@ use App\Http\Controllers\Api\DailyJournalController;
 use App\Http\Controllers\Api\PaymentController;
 use App\Http\Middleware\IsWorkerMiddleware;
 use App\Http\Controllers\Auth\LoginController;
-use App\Http\Middleware\EnsureTokenIsValid;
 use App\Http\Middleware\IsTutorMiddleware;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('/login', [LoginController::class, 'login']); 
-Route::post('/logout', [LoginController::class, 'logout']);
+Route::post('/login', [LoginController::class, 'login']);
 
-
-
-Route::middleware(['auth:sanctum', IsWorkerMiddleware::class, EnsureTokenIsValid::class])->group(function () {
+Route::middleware(['auth:sanctum', IsWorkerMiddleware::class])->group(function () {
 
     Route::post('/attendances', [AttendanceController::class, 'storeOrUpdateAttendance']);
 
@@ -100,12 +96,7 @@ Route::middleware(['auth:sanctum', IsWorkerMiddleware::class, EnsureTokenIsValid
 
     // Route pour obtenir les enfants présents d'une section pour une date donnée 
     Route::get('/children/section/{section_id}/date/{date}', [\App\Http\Controllers\Api\ChildController::class, 'getChildrenBySectionAndDate'])->name('children.get_by_section_and_date');
-
-
 });
-
-
-
 
 
 /**
@@ -124,10 +115,9 @@ Route::get('/child/{child_id}', [\App\Http\Controllers\Api\ChildController::clas
 */
 Route::get('/events', [\App\Http\Controllers\Api\EventController::class, 'index']);
 
-Route::get('/events/available/{userId}', [\App\Http\Controllers\Api\EventController::class, 'getAvailableEvents'])->name('events.available');
 
 
-Route::middleware(['auth:sanctum', IsTutorMiddleware::class, EnsureTokenIsValid::class])->group(function () {
+Route::middleware(['auth:sanctum', IsTutorMiddleware::class])->group(function () {
     /**
      * 
      * PaymentController
@@ -142,6 +132,15 @@ Route::middleware(['auth:sanctum', IsTutorMiddleware::class, EnsureTokenIsValid:
      * DailyJournalController
      * 
      */
+
     Route::get('/children/user/{userId}/daily-journal/{date}', [DailyJournalController::class, 'showByUser']);
-    
+
+    /**
+     * 
+     * EventController
+     * 
+     */
+
+    Route::get('/events/available/{userId}', [\App\Http\Controllers\Api\EventController::class, 'getAvailableEvents'])->name('events.available');
+
 });
