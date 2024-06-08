@@ -258,7 +258,7 @@ function displayChildrenWithMeals(children, meals) {
             <i class="fas fa-solid ${meal.meal.type === 'feeding bottle' ? 'fa-bottle-water' : meal.meal.type === 'fruit' ? 'fa-apple-alt' : 'fa-carrot'} large-icon"></i>
             <div class="meal-time">${new Date(meal.meal_time).toLocaleTimeString()}</div>
             <div class="meal-quantity">${meal.quantity} ${meal.meal.type === 'feeding bottle' ? 'ml' : ''}</div>
-            <button class="btn btn-info btn-sm mt-2" onclick="openMealModal(${child.id}, ${meal.id})">Modifier</button>
+            <button class="btn btn-info btn-sm mt-2" onclick="openMealModal(${meal.id})">Modifier</button>
         </div>
 
         `).join('');
@@ -319,7 +319,24 @@ function loadMealTypes() {
         data.forEach(meal => {
             const option = document.createElement('option');
             option.value = meal.id;
-            option.textContent = meal.type;
+            
+            // Traduire les types de repas spécifiques
+            let translatedType;
+            switch (meal.type) {
+                case 'feeding bottle':
+                    translatedType = 'Biberon';
+                    break;
+                case 'vegetable':
+                    translatedType = 'Légume';
+                    break;
+                case 'fruit':
+                    translatedType = 'Fruit';
+                    break;
+                default:
+                    translatedType = meal.type; // Garder le type original si pas de traduction
+            }
+            
+            option.textContent = translatedType;
             select.appendChild(option);
         });
     })
@@ -445,9 +462,12 @@ function updateNotesBasedOnQuantity() {
 }
 
 async function deleteMeal(mealId) {
+    
     if (!confirm('Êtes-vous sûr de vouloir supprimer ce repas?')) {
         return;
     }
+
+    
 
     try {
         const response = await fetch(`/api/meals/${mealId}`, {
@@ -465,6 +485,7 @@ async function deleteMeal(mealId) {
 
         const result = await response.json();
         console.log('Meal deleted successfully:', result);
+        console.log('Deleting meal with ID:', mealId);
         alert('Repas supprimé avec succès');
 
         // Recharger les repas pour la date actuelle
@@ -492,6 +513,7 @@ async function openMealModal(mealId = null) {
         document.getElementById('meal_type').value = '';
         document.getElementById('quantity').value = '';
         document.getElementById('notes').value = '';
+        adjustQuantityInput(); // Appeler la fonction pour ajuster le champ de quantité
     } else {
         try {
             const response = await fetch(`/api/meals/${mealId}`, {
@@ -509,6 +531,7 @@ async function openMealModal(mealId = null) {
             document.getElementById('mealId').value = meal.id;
             document.getElementById('meal_time').value = meal.meal_time.substr(11, 5);
             document.getElementById('meal_type').value = meal.meal_id;
+            adjustQuantityInput(); // Appeler la fonction pour ajuster le champ de quantité en fonction du type de repas
             document.getElementById('quantity').value = meal.quantity;
             document.getElementById('notes').value = meal.notes;
         } catch (error) {
