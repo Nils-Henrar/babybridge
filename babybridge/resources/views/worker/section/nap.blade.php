@@ -348,7 +348,7 @@ async function openNapModal(napId = null) {
 async function submitNapForm() {
     const form = document.getElementById('napForm');
     const napId = document.getElementById('napId').value;
-    const isUpdating = !!napId;
+    const isUpdating = !!napId; // 
 
     const url = isUpdating ? `/api/naps/${napId}` : '/api/naps';
     const method = isUpdating ? 'PUT' : 'POST';
@@ -357,10 +357,12 @@ async function submitNapForm() {
     const endedAt = document.getElementById('ended_at').value;
 
     let data = {
+        nap_id: napId,
         started_at: `${document.getElementById('date-picker').value} ${startedAt}:00`,
         ended_at: endedAt ? `${document.getElementById('date-picker').value} ${endedAt}:00` : null,
         quality: document.getElementById('quality').value,
         notes: document.getElementById('notes').value,
+        
     };
 
     if (!isUpdating) {
