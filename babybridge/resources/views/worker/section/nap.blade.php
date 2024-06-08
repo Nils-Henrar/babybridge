@@ -269,7 +269,7 @@ function displayChildrenWithNaps(children, naps) {
             return `
                 <div class="nap-entry">
                     <i class="delete-icon fas fa-times-circle" onclick="deleteNap(${nap.id})"></i>
-                    <i class="fa-solid fa-cloud-moon nap-icon"></i>
+                    <i class="fas fa-solid fa-cloud-moon nap-icon"></i>
                     <div class="nap-time">${startTime}</div>
                     <div class="nap-duration">${duration}</div>
                     <button class="btn btn-info btn-sm mt-2" onclick="openNapModal(${nap.id})">Modifier</button>

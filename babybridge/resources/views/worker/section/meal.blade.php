@@ -255,7 +255,7 @@ function displayChildrenWithMeals(children, meals) {
         let mealsHtml = childMeals.map(meal => `
         <div class="meal-entry">
             <i class="delete-icon fas fa-times-circle" onclick="deleteMeal(${meal.id})"></i>
-            <i class="fa-solid ${meal.meal.type === 'feeding bottle' ? 'fa-bottle-water' : meal.meal.type === 'fruit' ? 'fa-apple-alt' : 'fa-carrot'} large-icon"></i>
+            <i class="fas fa-solid ${meal.meal.type === 'feeding bottle' ? 'fa-bottle-water' : meal.meal.type === 'fruit' ? 'fa-apple-alt' : 'fa-carrot'} large-icon"></i>
             <div class="meal-time">${new Date(meal.meal_time).toLocaleTimeString()}</div>
             <div class="meal-quantity">${meal.quantity} ${meal.meal.type === 'feeding bottle' ? 'ml' : ''}</div>
             <button class="btn btn-info btn-sm mt-2" onclick="openMealModal(${child.id}, ${meal.id})">Modifier</button>
