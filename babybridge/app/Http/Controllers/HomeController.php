@@ -13,7 +13,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth'); //
     }
 
     /**
@@ -21,8 +21,15 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
+    public function index(Request $request)
     {
+
+
+        if ($request->is('api/*')) {
+            return response()->json([
+                'message' => 'You are authenticated'
+            ]);
+        }
         $user = auth()->user();
 
 
