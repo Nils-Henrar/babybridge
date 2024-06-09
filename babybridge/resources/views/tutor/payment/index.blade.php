@@ -21,12 +21,11 @@
             <table class="table table-striped">
                 <thead>
                     <tr>
-                        <th>Event</th>
-                        <th>Child</th>
-                        <th>Amount</th>
-                        <th>Currency</th>
+                        <th>Événement</th>
+                        <th>Enfant</th>
+                        <th>Montant</th>
+                        <th>Devise</th>
                         <th>Status</th>
-                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -35,11 +34,11 @@
                         <td>{{ $payment->childTutor->child->firstname }}</td>
                         <td>{{ $payment->amount }}</td>
                         <td>{{ $payment->currency }}</td>
-                        <td>{{ $payment->status }}</td>
+                        <td>{{ $payment->status  ? 'En attente' : 'Payé' }}</td>
                         <td>
                             <form action="{{ route('tutor.payment.pay', $payment->id) }}" method="POST">
                                 @csrf
-                                <button type="submit" class="btn btn-primary">Pay</button>
+                                <button type="submit" class="btn btn-primary">Aller vers le payement</button>
                             </form>
                         </td>
                     </tr>
