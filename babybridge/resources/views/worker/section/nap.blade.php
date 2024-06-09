@@ -346,7 +346,6 @@ async function openNapModal(napId = null) {
 }
 
 async function submitNapForm() {
-    const form = document.getElementById('napForm');
     const napId = document.getElementById('napId').value;
     const isUpdating = !!napId; // 
 
