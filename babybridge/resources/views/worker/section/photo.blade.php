@@ -142,7 +142,7 @@ document.addEventListener("DOMContentLoaded", async function() {
         loadPhotosForDate(datePickerElement.value);
     });
 
-    loadPhotosForDate(datePickerElement.value); // Initialement charger les photos pour la date actuelle
+    loadPhotosForDate(datePickerElement.value); // Initialement charge les photos pour la date actuelle
 });
 
 async function getCsrfToken() {
@@ -171,10 +171,10 @@ async function loadPhotosForDate(date) {
         });
         const photos = await photoResponse.json();
         displayChildrenWithPhotos(childrenData, photos);
-        document.getElementById('loading').style.display = 'none'; // Masquer le loader
+        document.getElementById('loading').style.display = 'none'; // Masque le loader
     } catch (error) {
         console.error('Error:', error);
-        document.getElementById('loading').style.display = 'none'; // Masquer le loader
+        document.getElementById('loading').style.display = 'none'; // Masque le loader
     }
 }
 
@@ -280,7 +280,7 @@ function openPhotoModal(childId, photoId = null) {
             .then(data => {
                 document.getElementById('photoId').value = data.id;
                 document.getElementById('photo_description').value = data.description;
-                document.getElementById('taken_at').value = data.taken_at.substr(11, 5); // Extract only the time for the input
+                document.getElementById('taken_at').value = data.taken_at.substr(11, 5); // Extrait seulement le time
                 document.getElementById('image_preview').src = `/storage/${data.path}`;
                 document.getElementById('image_preview').style.display = 'block';
             })
@@ -331,14 +331,14 @@ function previewImage() {
 
     reader.onloadend = function() {
         preview.src = reader.result;
-        preview.style.display = 'block'; // Afficher l'image si un fichier est chargé
+        preview.style.display = 'block'; // Affiche l'image si un fichier est chargé
     }
 
     if (file) {
-        reader.readAsDataURL(file); // Lire le fichier sélectionné et déclencher l'event onloadend
+        reader.readAsDataURL(file); // Lit le fichier sélectionné et déclencher l'event onloadend
     } else {
         preview.src = "";
-        preview.style.display = 'none'; // Cacher l'image si aucun fichier n'est sélectionné
+        preview.style.display = 'none'; // Cache l'image si aucun fichier n'est sélectionné
     }
 }
 </script>

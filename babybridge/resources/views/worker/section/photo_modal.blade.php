@@ -18,7 +18,7 @@
                     <input type="text" class="form-control" id="photo_description" name="description">
                 </div>
                 <div class="form-group">
-                    <label for="taken_at">Date de la prise</label>
+                    <label for="taken_at">Heure de la prise</label>
                     <input type="time" class="form-control" id="taken_at" name="taken_at" required>
                 </div>
 
