@@ -30,7 +30,7 @@ class ChildMealSeeder extends Seeder
                 'child_lastname' => 'Lemoine',
                 'meal_time' => '2024-03-22 10:00:00',
                 'meal_type' => 'feeding bottle',
-                'quantity' => 'full',
+                'quantity' => '120',
                 'notes' => null,
 
             ],
@@ -40,7 +40,7 @@ class ChildMealSeeder extends Seeder
                 'child_lastname' => 'Lemoine',
                 'meal_time' => '2024-03-22 10:00:00',
                 'meal_type' => 'feeding bottle',
-                'quantity' => 'full',
+                'quantity' => '60',
                 'notes' => null,
             ],
 
@@ -49,7 +49,7 @@ class ChildMealSeeder extends Seeder
                 'child_lastname' => 'Dupont',
                 'meal_time' => '2024-03-22 10:00:00',
                 'meal_type' => 'feeding bottle',
-                'quantity' => 'half',
+                'quantity' => '80',
                 'notes' => 'Léa a bu 80 ml',
             ],
 
