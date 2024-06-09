@@ -26,7 +26,7 @@ class DailyJournalController extends Controller
             }
         }
 
-        $sortedEntries = $entries->sortBy('time');
+        $sortedEntries = $entries->sortBy('time', SORT_REGULAR, true);
         return response()->json($sortedEntries->values()->all());
     }
 
@@ -48,27 +48,37 @@ class DailyJournalController extends Controller
                 },
                 'diaperChanges' => function ($query) use ($date) {
                     $query->whereDate('happened_at', '=', $date);
+                },
+                'attendances' => function ($query) use ($date) {
+                    $query->whereDate('attendance_date', '=', $date);
                 }
-            ])->first(); // Récupère toute les données de l'enfant à la date donnée
-    }
+            ])->first();
+    }    
 
     protected function formatChildEntries($child, $date)
-    {
-        $entries = collect();
-        $relations = ['naps', 'childMeals', 'activityChildren', 'photos', 'diaperChanges'];
+{
+    $entries = collect();
+    $relations = ['naps', 'childMeals', 'activityChildren', 'photos', 'diaperChanges', 'attendances'];
 
-        foreach ($relations as $relation) {
-            $child->$relation->each(function ($item) use ($entries, $date, $relation) {
-                $field = $this->getDateFieldForRelation($relation); 
-                if (Carbon::parse($item->$field)->format('Y-m-d') == $date) {
-                    $entries->push($item->formatForJournal());
+    foreach ($relations as $relation) {
+        $child->$relation->each(function ($item) use ($entries, $date, $relation) {
+            $field = $this->getDateFieldForRelation($relation); 
+            if (Carbon::parse($item->$field)->format('Y-m-d') == $date) {
+                $formattedEntries = $item->formatForJournal();
+                if (is_array($formattedEntries)) {
+                    foreach ($formattedEntries as $entry) {
+                        $entries->push($entry);
+                    }
+                } else {
+                    $entries->push($formattedEntries);
                 }
-            });
-        }
-
-        Log::info('Entries: ' . $entries);
-        return $entries;
+            }
+        });
     }
+
+    Log::info('Entries: ' . $entries);
+    return $entries;
+}
 
     protected function getDateFieldForRelation($relation)
     {
@@ -83,8 +93,11 @@ class DailyJournalController extends Controller
                 return 'taken_at';
             case 'diaperChanges':
                 return 'happened_at';
+            case 'attendances':
+                return 'attendance_date';
             default:
                 throw new \Exception("Invalid relation: $relation");
         } 
     }
+
 }
