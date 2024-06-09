@@ -24,7 +24,7 @@
 
                 {{-- Logo Image --}}
                 @if (config('adminlte.auth_logo.enabled', false))
-                <a href="{{ $dashboard_url }}">
+                <a href="/">
                     <img src="{{ asset(config('adminlte.auth_logo.img.path')) }}"
                          alt="{{ config('adminlte.auth_logo.img.alt') }}"
                          @if (config('adminlte.auth_logo.img.class', null))
