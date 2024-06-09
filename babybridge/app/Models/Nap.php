@@ -42,11 +42,13 @@ class Nap extends Model
     {
 
         return [
+            [
             'type' => 'nap',
             'time' => Carbon::parse($this->started_at)->format('H:i'),
             'description' => $this->quality . ' nap from ' . Carbon::parse($this->started_at)->format('H:i') . ' to ' . ($this->ended_at ? Carbon::parse($this->ended_at)->format('H:i') : 'ongoing'),
             'description' => $this->child->firstname . ' a ' . ' dormi pendant ' . $this->duration(),
             'child_name' => $this->child->getFullNameAttribute(),
+            ],
         ];
     }
 }

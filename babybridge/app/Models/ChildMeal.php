@@ -32,13 +32,52 @@ class ChildMeal extends Model
         return $this->belongsTo(Meal::class);
     }
 
+    public function translateMealType($type)
+    {
+        switch ($type) {
+            case 'feeding bottle':
+                return 'biberon <i class="fas fa-bottle" style="color: blue;"></i>';
+            case 'fruit':
+                return '<i class="fas fa-apple-alt" style="color: red;"></i>';
+            case 'vegetable':
+                return '<i class="fas fa-carrot" style="color: orange;"></i>';
+            default:
+                return $type;
+        }
+    }
+
+    public function translateQuantity($quantity)
+    {
+        switch ($quantity) {
+            case 'full':
+                return 'a tout mangé';
+            case 'half':
+                return 'a mangé la moitié';
+            case 'quarter':
+                return 'a mangé le quart';
+            case 'refused':
+                return 'a refusé de manger';
+            default:
+                return $quantity;
+        }
+    }
+
     public function formatForJournal()
     {
+        $mealType = $this->translateMealType($this->meal->type);
+        $quantity = $this->translateQuantity($this->quantity);
+
+        $description = ($this->meal->type === 'feeding bottle')
+            ? "{$this->child->firstname} a bu {$this->quantity} ml de son {$mealType}"
+            : "{$this->child->firstname} {$quantity} de son repas {$mealType}";
+
         return [
+            [
             'type' => 'meal',
             'time' => Carbon::parse($this->meal_time)->format('H:i'),
-            'description' => $this->meal->type . ' - ' . $this->quantity,
+            'description' => $description,
             'child_name' => $this->child->getFullNameAttribute(),
+            ],
         ];
     }
 }

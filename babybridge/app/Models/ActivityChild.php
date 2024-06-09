@@ -33,10 +33,12 @@ class ActivityChild extends Model
     public function formatForJournal() 
     {
         return [
+            [
             'type' => 'activity',
             'time' => Carbon::parse($this->performed_at)->format('H:i'),
-            'description' => "{$this->child->getFullNameAttribute()} a participé à l'activité {$this->activity->description}.",
+            'description' => "{$this->child->firstname} a participé à l'activité <strong>{$this->activity->description}</strong>.",
             'child_name' => $this->child->getFullNameAttribute(),
+            ],
         ];
     }
 }

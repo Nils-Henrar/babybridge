@@ -333,7 +333,7 @@ function loadMealTypes() {
                     translatedType = 'Fruit';
                     break;
                 default:
-                    translatedType = meal.type; // Garder le type original si pas de traduction
+                    translatedType = meal.type; // Garde le type original si pas de traduction
             }
             
             option.textContent = translatedType;

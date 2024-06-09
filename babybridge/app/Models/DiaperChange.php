@@ -26,13 +26,31 @@ class DiaperChange extends Model
         return $this->belongsTo(Child::class);
     }
 
+    public function translatePoopConsistency($consistency)
+    {
+        switch ($consistency) {
+            case 'watery':
+                return 'liquides';
+            case 'soft':
+                return 'molles';
+            case 'normal':
+                return 'normales';
+            default:
+                return $consistency; // Return the original value if no translation is found
+        }
+    }
+
     public function formatForJournal()
     {
+        $translatedConsistency = $this->poop_consistency ? $this->translatePoopConsistency($this->poop_consistency) : '';
+
         return [
+            [
             'type' => 'diaper_change',
             'time' => Carbon::parse($this->happened_at)->format('H:i'),
-            'description' => "Changement de couche pour {$this->child->getFullNameAttribute()} ({$this->poop_consistency}).",
+            'description' => "Changement de couche pour {$this->child->firstname} (les selles sont <strong>{$translatedConsistency}</strong>).",
             'child_name' => $this->child->getFullNameAttribute(),
+            ],
         ];
     }
 }

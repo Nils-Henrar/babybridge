@@ -31,12 +31,30 @@ class Attendance extends Model
 
     public function formatForJournal()
     {
-        return [
+        $arrivalTime = Carbon::parse($this->arrival_time)->format('H:i');
+        $departureTime = $this->departure_time ? Carbon::parse($this->departure_time)->format('H:i') : null;
+
+        $entries = [];
+
+        // Si seulement l'heure d'arrivée est présente
+        $entries[] = [
             'type' => 'arrival',
-            'arrival_time' => Carbon::parse($this->arrival_time)->format('H:i'),
-            'departure_time' => Carbon::parse($this->departure_time)->format('H:i'),
-            'description' => "{$this->child->getFullNameAttribute()} est arrivé.",
+            'time' => $arrivalTime,
+            'description' => "{$this->child->firstname} est bien arrivé à {$arrivalTime}",
             'child_name' => $this->child->getFullNameAttribute(),
         ];
+
+        // Si l'heure de départ est également présente
+        if ($departureTime) {
+            $entries[] = [
+                'type' => 'departure',
+                'time' => $departureTime,
+                'description' => "{$this->child->firstname} est parti à {$departureTime}",
+                'child_name' => $this->child->getFullNameAttribute(),
+            ];
+        }
+
+        return $entries;
     }
+
 }
