@@ -78,6 +78,27 @@ class SectionTypeSeeder extends Seeder
                 'to' => null,
             ],
 
+            [
+                'section_slug' => 'les-jonquilles',
+                'type_name' => 'grands',
+                'from' => '2024-03-22 13:00:00',
+                'to' => null,
+            ],
+
+            [
+                'section_slug' => 'les-pâquerettes',
+                'type_name' => 'grands',
+                'from' => '2024-03-22 13:00:00',
+                'to' => null,
+            ],
+
+            [
+                'section_slug' => 'les-mimosas',
+                'type_name' => 'moyens',
+                'from' => '2024-03-22 13:00:00',
+                'to' => null,
+            ],
+
 
 
         ];

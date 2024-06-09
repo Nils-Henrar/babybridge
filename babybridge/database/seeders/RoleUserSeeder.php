@@ -99,16 +99,6 @@ class RoleUserSeeder extends Seeder
                 'role' => 'tutor',
             ],
 
-            [
-                'user_login' => 'sylvain12',
-                'role' => 'worker',
-            ],
-
-            [
-                'user_login' => 'pauline90',
-                'role' => 'worker',
-            ]
-
         ];
 
         // Insert the data in the table
