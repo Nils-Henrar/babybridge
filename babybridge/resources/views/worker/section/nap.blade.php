@@ -67,6 +67,22 @@
         text-align: center;
     }
 
+    .date-picker-container button {
+        margin: 0 5px;
+        padding: 5px 10px;
+        font-size: 20px;
+        border: none;
+        color: #176FA1;
+        background-color: #f4f6f9;
+    }
+
+    .date-picker-container input {
+        text-align: center;
+        font-size: 20px;
+        border-radius: 15px;
+        margin-bottom: 20px;
+    }
+
     .btn-primary {
         background-color: #176FA1;
         border: none;
@@ -147,7 +163,7 @@
     .small-box .form-check-input {
         margin: 0;
     }
-    
+
     .nap-entry .delete-icon {
         position: absolute;
         top: 10px;

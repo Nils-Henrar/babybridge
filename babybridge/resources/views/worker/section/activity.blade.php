@@ -8,156 +8,172 @@
 
 @section('extra-css')
 <style>
-.small-box {
-position: relative;
-background-color: #f0f0f0;
-padding: 20px;
-margin-bottom: 20px;
-border-radius: 10px;
-box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-display: flex;
-align-items: center;
-padding-right: 50px;
-}
+    .small-box {
+    position: relative;
+    background-color: #f0f0f0;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    display: flex;
+    align-items: center;
+    padding-right: 50px;
+    }
 
-.child-photo {
-flex-shrink: 0;
-margin-right: 15px;
-}
+    .child-photo {
+    flex-shrink: 0;
+    margin-right: 15px;
+    }
 
-.child-photo img {
-width: 100px;
-height: 100px;
-object-fit: cover;
-border-radius: 50%;
-}
-
-.child-info {
-flex: 1;
-display: flex;
-flex-direction: column;
-justify-content: center;
-color: #176FA1;
-margin-right: 20px;
-}
-
-.activity-details {
-display: flex;
-flex-wrap: wrap;
-align-items: center;
-gap: 10px;
-}
-
-.activity-entry {
-position: relative;
-min-width: 150px;
-padding: 10px;
-background-color: #f9f9f9;
-border-radius: 10px;
-text-align: center;
-}
-
-.title-section {
-font-size: 2rem;
-font-weight: bold;
-color: #176FA1;
-margin-bottom: 30px;
-text-align: center;
-}
-
-.date-picker-container {
-margin-top: 20px;
-text-align: center;
-}
-
-.btn-secondary {
-
-background-color: #666;
-border: none;
-padding: 10px 20px;
-font-size: 1.2rem;
-color: white;
-cursor: pointer;
-
-}
-
-.btn-primary {
-background-color: #176FA1;
-border: none;
-padding: 10px 20px;
-font-size: 1.2rem;
-color: white;
-cursor: pointer;
-}
-
-.btn-primary:hover {
-background-color: #105078;
-}
-
-.activity-icon {
-font-size: 2rem;
-color: #176FA1;
-margin-bottom: 5px;
-}
-
-.activity-time, .activity-description {
-font-size: 1rem;
-color: #333;
-}
-
-.select-checkbox {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    width: 20px;
-    height: 20px;
+    .child-photo img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
     border-radius: 50%;
-    cursor: pointer;
-    transform: scale(1.5);
-    accent-color: #176FA1;
-}
+    }
 
-.select-all-btn {
-    color: white;
+    .child-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    color: #176FA1;
+    margin-right: 20px;
+    }
+
+    .activity-details {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    }
+
+    .activity-entry {
+    position: relative;
+    min-width: 150px;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    text-align: center;
+    }
+
+    .title-section {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #176FA1;
+    margin-bottom: 30px;
+    text-align: center;
+    }
+
+    .date-picker-container {
+    margin-top: 20px;
+    text-align: center;
+    }
+
+    .date-picker-container button {
+        margin: 0 5px;
+        padding: 5px 10px;
+        font-size: 20px;
+        border: none;
+        color: #176FA1;
+        background-color: #f4f6f9;
+    }
+
+    .date-picker-container input {
+        text-align: center;
+        font-size: 20px;
+        border-radius: 15px;
+        margin-bottom: 20px;
+    }
+
+    .btn-secondary {
+
+    background-color: #666;
     border: none;
     padding: 10px 20px;
+    font-size: 1.2rem;
+    color: white;
     cursor: pointer;
-    margin-left: 20px;
-    
-}
 
-.select-all-btn:hover {
-    /* gris sombre */
-    background-color: #666;
-}
+    }
 
-.select-all-container {
-    display: flex;
-    justify-content: flex-start;
-    margin-bottom: 15px;
-    margin-right: 20px;
-
-}
-
-/* Assurez-vous que .form-check dans la small-box est positionné correctement */
-.small-box .form-check {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-}
-
-/* Assurez-vous que les éléments dans .small-box n'ont pas de marges excessives */
-.small-box .form-check-input {
-    margin: 0;
-}
-
-.activity-entry .delete-icon {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    color: red;
+    .btn-primary {
+    background-color: #176FA1;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1.2rem;
+    color: white;
     cursor: pointer;
-}
+    }
+
+    .btn-primary:hover {
+    background-color: #105078;
+    }
+
+    .activity-icon {
+    font-size: 2rem;
+    color: #176FA1;
+    margin-bottom: 5px;
+    }
+
+    .activity-time, .activity-description {
+    font-size: 1rem;
+    color: #333;
+    }
+
+    .select-checkbox {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        cursor: pointer;
+        transform: scale(1.5);
+        accent-color: #176FA1;
+    }
+
+    .select-all-btn {
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        cursor: pointer;
+        margin-left: 20px;
+        
+    }
+
+    .select-all-btn:hover {
+        /* gris sombre */
+        background-color: #666;
+    }
+
+    .select-all-container {
+        display: flex;
+        justify-content: flex-start;
+        margin-bottom: 15px;
+        margin-right: 20px;
+
+    }
+
+    /* Assurez-vous que .form-check dans la small-box est positionné correctement */
+    .small-box .form-check {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+    }
+
+    /* Assurez-vous que les éléments dans .small-box n'ont pas de marges excessives */
+    .small-box .form-check-input {
+        margin: 0;
+    }
+
+    .activity-entry .delete-icon {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        color: red;
+        cursor: pointer;
+    }
 </style>
 @endsection
 

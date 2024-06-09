@@ -30,6 +30,7 @@
                     </div>
                 </div>
                 <div class="form-group">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
                     <button type="button" class="btn btn-primary" onclick="submitPhotoForm()">Enregistrer</button>
                 </div>
             </form>

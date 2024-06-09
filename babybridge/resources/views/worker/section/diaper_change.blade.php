@@ -17,79 +17,95 @@
     display: flex;
     align-items: center;
     position: relative;
-}
-.child-photo {
-    flex-shrink: 0;
-    margin-right: 15px;
-}
-.child-photo img {
-    width: 100px;
-    height: 100px;
-    object-fit: cover;
-    border-radius: 50%;
-}
-.child-info {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    color: #176FA1;
-    margin-right: 20px;
-}
-.change-details {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    align-items: center;
-    gap: 10px;
-}
-.change-entry {
-    position: relative; /* nécessaire pour positionner la croix */
-    min-width: 150px;
-    padding: 10px;
-    background-color: #f9f9f9;
-    border-radius: 10px;
-    margin-right: 10px;
-    text-align: center;
-}
-.title-section {
-    font-size: 2rem;
-    font-weight: bold;
-    color: #176FA1;
-    margin-bottom: 30px;
-    text-align: center;
-}
-.date-picker-container {
-    margin-top: 20px;
-    text-align: center;
-}
-.btn-primary {
-    background-color: #176FA1;
-    border: none;
-    padding: 10px 20px;
-    font-size: 1.2rem;
-    color: white;
-    cursor: pointer;
-}
-.btn-primary:hover {
-    background-color: #105078;
-}
-.large-icon {
-    font-size: 2rem; /* Ajustez cette valeur pour obtenir la taille désirée */
-    color: #176FA1; /* Ajustez la couleur selon vos besoins */
-}
-.change-time, .change-description {
-    font-size: 1rem;
-    color: #333;
-}
+    }
+    .child-photo {
+        flex-shrink: 0;
+        margin-right: 15px;
+    }
+    .child-photo img {
+        width: 100px;
+        height: 100px;
+        object-fit: cover;
+        border-radius: 50%;
+    }
+    .child-info {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        color: #176FA1;
+        margin-right: 20px;
+    }
+    .change-details {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 10px;
+    }
+    .change-entry {
+        position: relative; /* nécessaire pour positionner la croix */
+        min-width: 150px;
+        padding: 10px;
+        background-color: #f9f9f9;
+        border-radius: 10px;
+        margin-right: 10px;
+        text-align: center;
+    }
+    .title-section {
+        font-size: 2rem;
+        font-weight: bold;
+        color: #176FA1;
+        margin-bottom: 30px;
+        text-align: center;
+    }
+    .date-picker-container {
+        margin-top: 20px;
+        text-align: center;
+    }
 
-.change-entry .delete-icon {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    color: red;
-    cursor: pointer;
-}
+    .date-picker-container button {
+        margin: 0 5px;
+        padding: 5px 10px;
+        font-size: 20px;
+        border: none;
+        color: #176FA1;
+        background-color: #f4f6f9;
+    }
+
+    .date-picker-container input {
+        text-align: center;
+        font-size: 20px;
+        border-radius: 15px;
+        margin-bottom: 20px;
+    }
+    .btn-primary {
+        background-color: #176FA1;
+        border: none;
+        padding: 10px 20px;
+        font-size: 1.2rem;
+        color: white;
+        cursor: pointer;
+    }
+    .btn-primary:hover {
+        background-color: #105078;
+    }
+    .large-icon {
+        font-size: 2rem; /* Ajustez cette valeur pour obtenir la taille désirée */
+        color: #176FA1; /* Ajustez la couleur selon vos besoins */
+    }
+    .change-time, .change-description {
+        font-size: 1rem;
+        color: #333;
+    }
+
+    .change-entry .delete-icon {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        color: red;
+        cursor: pointer;
+    }
 
 
 

@@ -74,6 +74,7 @@
         font-size: 20px;
         border: none;
         color: #176FA1;
+        background-color: #f4f6f9;
     }
 
     .date-picker-container input {

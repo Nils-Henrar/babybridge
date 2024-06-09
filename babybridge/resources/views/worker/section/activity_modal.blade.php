@@ -20,6 +20,7 @@
                         <label for="activity_time">Heure de l'activité</label>
                         <input type="time" class="form-control" id="activity_time" required>
                     </div>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
                     <button type="button" class="btn btn-primary" onclick="submitActivityForm()">Enregistrer</button>
                 </form>
             </div>
