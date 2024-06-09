@@ -64,7 +64,7 @@ class PhotoSeeder extends Seeder
             [
                 'child_firstname' => 'Hugo',
                 'child_lastname' => 'Lemoine',
-                'description' => 'Hugo et son doudou',
+                'description' => 'Hugo est fatigué',
                 'taken_at' => '2024-03-22 10:30:00',
                 'path' => 'photos/Hugo Lemoine/hugo_fatigue.jpeg',
             ],
