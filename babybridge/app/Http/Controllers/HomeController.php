@@ -23,13 +23,6 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
-
-
-        if ($request->is('api/*')) {
-            return response()->json([
-                'message' => 'You are authenticated'
-            ]);
-        }
         $user = auth()->user();
 
 
