@@ -4,6 +4,10 @@
 
 @section('content_header_title', 'Profil de l\'Enfant')
 
+@section('extra-css')
+<style>
+</style>
+@endsection
 @section('content_body')
 <div class="container">
     <h3>Profil de {{ $child->firstname }} {{ $child->lastname }}</h3>
@@ -46,7 +50,7 @@
                 @foreach ($child->photos as $photo)
                     <div class="col-md-3 mb-3">
                         <!-- taille identique pour toutes les images -->
-                        <img src="{{ asset('storage/photos/'.$child->fullName.'/'.$photo->path) }}" class="img-fluid photo-thumbnail" data-photo="{{ asset('storage/photos/'.$child->fullName.'/'.$photo->path) }}" data-taken-at="{{ $photo->taken_at }}" alt="Photo" style="height: 200px; width: 100%; object-fit: cover;">
+                        <img src="{{ asset('storage/'.$photo->path) }}" class="img-fluid photo-thumbnail" data-photo="{{ asset('storage/'.$photo->path) }}" data-taken-at="{{ $photo->taken_at }}" alt="Photo" style="height: 200px; width: 100%; object-fit: cover;">
                     </div>
                 @endforeach
             </div>
@@ -62,7 +66,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="CrossClose"><i class="fas fa-times"></i></button>
             </div>
             <div class="modal-body text-center">
-                <img src="" id="photoModalImage" class="img-fluid">
+                <img src="" id="photoModalImage" class="img-fluid" style="max-height: 80vh;">
                 <p id="photoModalDate" class="mt-3"></p>
             </div>
             <div class="modal-footer">

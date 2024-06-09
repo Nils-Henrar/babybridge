@@ -4,7 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Carbon\Carbon;  
+use Carbon\Carbon; 
+use Illuminate\Support\Facades\Storage;
 
 class Photo extends Model
 {
@@ -30,11 +31,13 @@ class Photo extends Model
     public function formatForJournal()
     {
         return [
+            [
             'type' => 'photo',
             'time' => Carbon::parse($this->taken_at)->format('H:i'),
-            'description' => "Photo de {$this->child->getFullNameAttribute()} prise.",
+            'description' => "Photo de {$this->child->firstname} : {$this->description}",
             'child_name' => $this->child->getFullNameAttribute(),
-            'image_url' => $this->path // Assurez-vous que le chemin est accessible pour le frontend
+            'image_url' => Storage::url($this->path),
+            ],
         ];
     }
 }

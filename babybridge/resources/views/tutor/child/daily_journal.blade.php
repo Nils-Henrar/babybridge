@@ -12,7 +12,7 @@
         margin-bottom: 10px;
         padding: 10px;
         border-radius: 10px;
-    } 
+    }
 
     .entry-time {
         font-size: 0.9em;
@@ -25,11 +25,70 @@
         color: #333;
     }
 
+    .entry-photo {
+        margin-top: 10px;
+    }
+
+    .entry-photo img {
+        width: 200px; /* Largeur fixe */
+        height: 200px; /* Hauteur fixe */
+        object-fit: cover; /* Conserve les proportions de l'image */
+        border-radius: 10px;
+        cursor: pointer;
+    }
+
     .separator {
         height: 10px;
         background-color: #176FA1;
         margin: 10px 0;
         border-radius: 5px;
+    }
+
+    /* Styles pour le modal de prévisualisation des photos */
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.8);
+    }
+
+    .modal-content {
+        margin: 15% auto;
+        padding: 20px;
+        width: 80%;
+        max-width: 700px;
+        text-align: center;
+        position: relative;
+    }
+
+    .modal-content img {
+        width: 100%;
+        height: auto;
+    }
+
+    .close {
+        position: absolute;
+        top: 10px;
+        right: 20px;
+        color: white;
+        font-size: 30px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    .download-btn {
+        margin-top: 20px;
+        background-color: #176FA1;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
     }
 </style>
 @endsection
@@ -53,6 +112,17 @@
     </div>
     <div id="daily-journal">
         <!-- Les informations journalières seront chargées ici -->
+    </div>
+</div>
+
+<!-- Modal de prévisualisation des photos -->
+<div id="photoModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <img id="modalImage" src="" alt="Photo">
+        <a id="downloadLink" href="" download>
+            <button class="download-btn">Télécharger</button>
+        </a>
     </div>
 </div>
 @endsection
@@ -103,7 +173,7 @@
 
     function displayJournal(data) {
         const container = document.getElementById('daily-journal');
-        container.innerHTML = ''; // Effacer les entrées précédentes
+        container.innerHTML = ''; // Efface les entrées précédentes
 
         data.forEach((entry, index) => {
             const box = document.createElement('div');
@@ -113,16 +183,41 @@
                 <div class="entry-content">
                     <strong>${entry.child_name}</strong> - ${entry.description}
                 </div>
+                ${entry.type === 'photo' ? `<div class="entry-photo"><img src="${entry.image_url}" alt="Photo de ${entry.child_name}" onclick="openModal('${entry.image_url}')"></div>` : ''}
             `;
             container.appendChild(box);
 
-            // Ajouter un séparateur entre les entrées
+            // Ajoute un séparateur entre les entrées
             if (index < data.length - 1) {
                 const separator = document.createElement('div');
                 separator.className = 'separator';
                 container.appendChild(separator);
             }
         });
+    }
+
+    function openModal(imageUrl) {
+        const modal = document.getElementById('photoModal');
+        const modalImage = document.getElementById('modalImage');
+        const downloadLink = document.getElementById('downloadLink');
+
+        modalImage.src = imageUrl;
+        downloadLink.href = imageUrl;
+
+        modal.style.display = "block";
+    }
+
+    function closeModal() {
+        const modal = document.getElementById('photoModal');
+        modal.style.display = "none";
+    }
+
+    // Fermer le modal en cliquant en dehors de l'image
+    window.onclick = function(event) {
+        const modal = document.getElementById('photoModal');
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
     }
 </script>
 
