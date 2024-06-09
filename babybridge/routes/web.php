@@ -112,7 +112,7 @@ Route::middleware([\App\Http\Middleware\IsWorkerMiddleware::class])->group(funct
     //Child routes
 
     Route::get('worker/child', [ChildController::class, 'index'])->name('worker.child.index');
-    Route::get('worker/child/{id}', [ChildController::class, 'profile'])->name('worker.child.profile');
+    Route::get('worker/section/child/{id}', [ChildController::class, 'profileForWorker'])->name('worker.child.profile');
 });
 
 //Tutor Route

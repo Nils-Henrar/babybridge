@@ -68,7 +68,7 @@
                     <p>{{ $child->lastname }}</p>
                 </div>
                 <div class="ml-auto">
-                    <a href="" class="small-box-footer">Profil <i class="fas fa-arrow-circle-right"></i></a>
+                    <a href="{{ route('worker.child.profile', $child->id) }}" class="small-box-footer">Profil <i class="fas fa-arrow-circle-right"></i></a>
                 </div>
             </div>
         </div>

@@ -36,8 +36,6 @@
                 @endforeach
             </p>
 
-            <!-- ajouter la photo du profile de l'enfant a droite de la box -->
-
         </div>
     </div>
 

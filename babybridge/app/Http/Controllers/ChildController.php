@@ -276,4 +276,11 @@ class ChildController extends Controller
         $child = Child::findOrFail($childId);
         return view('tutor.child.profile', compact('child'));
     }
+
+
+    public function profileForWorker($childId)
+    {
+        $child = Child::with('currentSection.section')->findOrFail($childId);
+        return view('worker.section.child.profile', compact('child'));
+    }
 }
