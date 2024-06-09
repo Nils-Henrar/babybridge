@@ -2,7 +2,7 @@
 
 @section('subtitle', 'Enfants')
 
-@section('content_header_title', ''Menu'')
+@section('content_header_title', 'Menu')
 
 @section('content_header_subtitle', 'Enfants')
 

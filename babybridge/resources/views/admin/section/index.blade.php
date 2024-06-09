@@ -2,7 +2,7 @@
 
 @section('subtitle', 'Sections')
 
-@section('content_header_title', ''Menu'')
+@section('content_header_title', 'Menu')
 
 @section('content_header_subtitle', 'Sections')
 
