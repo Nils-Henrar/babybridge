@@ -67,7 +67,7 @@
                                     $paymentStatus = $payments->isNotEmpty() ? $payments->pluck('status')->unique()->join(', ') : 'Aucun paiement trouvé';
                                 @endphp
                                 <td>
-                                    {{ $paymentStatus }}
+                                    {{ $paymentStatus == 'pending' ? 'En attente' : 'Payé' }}
                                 </td>
                             </tr>
 

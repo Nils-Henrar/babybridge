@@ -69,7 +69,7 @@
                     <td>{{ $user->postal_code }}</td>
                     <td>{{ $user->city }}</td>
                     <td>
-                        <a href="{{ route('admin.user.show', $user->id) }}" class="btn btn-primary">Voir</a>
+                        <a href="{{ route('admin.user.show', $user->id) }}" class="btn btn-info">Voir</a>
                         <a href="{{ route('admin.user.edit', $user->id) }}" class="btn btn-warning">Modifier</a>
                         <form method="POST" action="{{ route('admin.user.destroy', $user->id) }}" style="display:inline;" class="delete-form">
                             @csrf

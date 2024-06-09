@@ -1,10 +1,10 @@
 @extends ('layouts.app')
 
-@section('subtitle', 'Events')
+@section('subtitle', 'Événements')
 
-@section('content_header_title', 'Events')
+@section('content_header_title', 'Menu')
 
-@section('content_header_subtitle', 'Events')
+@section('content_header_subtitle', 'Événements')
 
 @section('content_body')
 

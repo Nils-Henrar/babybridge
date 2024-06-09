@@ -1,10 +1,10 @@
 @extends ('layouts.app')
 
-@section('subtitle', 'Admin')
+@section('subtitle', 'Puéricultrices')
 
-@section('content_header_title', 'Admin')
+@section('content_header_title', 'Menu')
 
-@section('content_header_subtitle', 'Admin')
+@section('content_header_subtitle', 'Puéricultrices')
 
 @section('content_body')
 
