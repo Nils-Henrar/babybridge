@@ -71,6 +71,7 @@ class MealController extends Controller
     
         $meal = ChildMeal::findOrFail($mealId);
         $meal->update([
+            'meal_id' => $request->meal_id,
             'meal_time' => $request->meal_time,
             'quantity' => $request->quantity,
             'notes' => $request->notes
