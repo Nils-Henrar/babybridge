@@ -40,13 +40,14 @@ class Nap extends Model
 
     public function formatForJournal()
     {
-
+        $description = $this->ended_at 
+        ? $this->child->firstname . ' a dormi pendant ' . $this->duration() 
+        : $this->child->firstname . ' est en train de dormir';
         return [
             [
             'type' => 'nap',
             'time' => Carbon::parse($this->started_at)->format('H:i'),
-            'description' => $this->quality . ' nap from ' . Carbon::parse($this->started_at)->format('H:i') . ' to ' . ($this->ended_at ? Carbon::parse($this->ended_at)->format('H:i') : 'ongoing'),
-            'description' => $this->child->firstname . ' a ' . ' dormi pendant ' . $this->duration(),
+            'description' => $description,
             'child_name' => $this->child->getFullNameAttribute(),
             ],
         ];
