@@ -100,6 +100,17 @@
         cursor: pointer;
     }
 
+    .btn-secondary {
+
+    background-color: #888;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1.2rem;
+    color: white;
+    cursor: pointer;
+
+    }
+
     .btn-primary:hover {
         background-color: #105078;
     }
@@ -137,6 +148,8 @@
         margin-right: 20px;
 
     }
+
+    
 
     /* Assurez-vous que .form-check dans la small-box est positionné correctement */
     .small-box .form-check {
@@ -439,12 +452,15 @@ function adjustQuantityInput() {
     }
 }
 
-function selectAllChildren() {
-    const isChecked = document.querySelector('.select-all-btn').innerText === 'Sélectionner tout';
-    document.querySelectorAll('.child-checkbox').forEach(checkbox => {
-        checkbox.checked = isChecked;
+async function selectAllChildren() {
+    const checkboxes = document.querySelectorAll('.child-checkbox');
+    const allChecked = Array.from(checkboxes).every(checkbox => checkbox.checked);
+
+    checkboxes.forEach(checkbox => {
+        checkbox.checked = !allChecked;
     });
-    document.querySelector('.select-all-btn').innerText = isChecked ? 'Désélectionner tout' : 'Sélectionner tout';
+
+    console.log('Nombre d\'enfants sélectionnés:', document.querySelectorAll('.child-checkbox:checked').length);
 }
 
 function updateNotesBasedOnQuantity() {

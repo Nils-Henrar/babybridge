@@ -88,7 +88,7 @@
 
     .btn-secondary {
 
-    background-color: #666;
+    background-color: #888;
     border: none;
     padding: 10px 20px;
     font-size: 1.2rem;
