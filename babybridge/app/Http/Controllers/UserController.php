@@ -191,7 +191,7 @@ class UserController extends Controller
         $user = User::find($id);
 
         if ($user->roles->contains('role', 'worker')) {
-            $user->worker->sectionWorkers()->delete();
+            $user->worker->sectionWorkers() ? $user->worker->sectionWorkers()->delete() : null;
             $user->worker()->delete();
         }
 

@@ -10,6 +10,7 @@ use App\Models\User;
 use App\Http\Requests\Worker\StoreWorkerRequest;
 use App\Http\Requests\Worker\UpdateWorkerRequest;
 use App\Models\Attendance;
+use Illuminate\Support\Facades\DB;
 
 class WorkerController extends Controller
 {
@@ -164,6 +165,17 @@ class WorkerController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        
+        DB::statement('SET FOREIGN_KEY_CHECKS=0');
+        $user = Worker::find($id)->user;
+        $user->worker->sectionWorkers() ? $user->worker->sectionWorkers()->delete() : null;
+        $user->worker->delete();
+
+        $user->roles()->detach();
+
+
+        DB::statement('SET FOREIGN_KEY_CHECKS=1');
+
+        return redirect()->route('admin.worker.index')->with('success', 'Le travailleur a été supprimé avec succès');
     }
 }
