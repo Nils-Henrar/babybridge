@@ -11,6 +11,10 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
+use App\Models\Section;
+use App\Models\Child;
+use App\Models\Worker;
+use App\Models\SectionWorker;
 
 class UserController extends Controller
 {
@@ -36,9 +40,13 @@ class UserController extends Controller
         //
 
         $roles = Role::all();
+        $sections = Section::all();
+        $children = Child::all();
 
         return view('admin.user.create', [
             'roles' => $roles,
+            'sections' => $sections,
+            'children' => $children,
         ]);
     }
 
@@ -48,6 +56,9 @@ class UserController extends Controller
     public function invite(StoreUserRequest $request)
     {
         $data = $request->validated();
+
+        // Vérifiez les données envoyées
+        // dd($data);
         $token = Str::random(60);
 
         DB::table('invitation_tokens')->insert([
@@ -61,6 +72,8 @@ class UserController extends Controller
             'postal_code' => $data['postal_code'],
             'city' => $data['city'],
             'roles' => json_encode($data['roles']),
+            'child_ids' => isset($data['children']) ? json_encode($data['children']) : null,
+            'section_id' => isset($data['section']) ? $data['section'] : null,
             'expires_at' => Carbon::now()->addHours(24), // Token expire in 24 hours
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
@@ -74,16 +87,25 @@ class UserController extends Controller
         return redirect()->route('admin.user.index')->with('success', 'L\'invitation a été envoyée avec succès');
     }
 
+
     public function showRegistrationForm($token)
     {
         $invitation = DB::table('invitation_tokens')->where('token', $token)->first();
-
+    
         if (!$invitation || Carbon::parse($invitation->expires_at)->isPast()) {
             return redirect()->route('login')->with('error', 'Lien d\'invitation invalide ou expiré.');
         }
-
-        return view('auth.register', ['token' => $token, 'email' => $invitation->email, 'firstname' => $invitation->firstname, 'lastname' => $invitation->lastname]);
+    
+        return view('auth.register', [
+            'token' => $token,
+            'email' => $invitation->email,
+            'firstname' => $invitation->firstname,
+            'lastname' => $invitation->lastname,
+            'section_id' => $invitation->section_id,
+            'child_ids' => json_decode($invitation->child_ids),
+        ]);
     }
+    
 
     public function completeRegistration(Request $request)
     {
@@ -92,13 +114,13 @@ class UserController extends Controller
             'login' => 'required|unique:users,login',
             'password' => 'required|confirmed|min:8',
         ]);
-
+    
         $invitation = DB::table('invitation_tokens')->where('token', $request->token)->first();
-
+    
         if (!$invitation || Carbon::parse($invitation->expires_at)->isPast()) {
             return redirect()->route('login')->with('error', 'Lien d\'invitation invalide ou expiré.');
         }
-
+    
         $user = new User();
         $user->firstname = $invitation->firstname;
         $user->lastname = $invitation->lastname;
@@ -111,15 +133,41 @@ class UserController extends Controller
         $user->city = $invitation->city;
         $user->langue = $invitation->language;
         $user->save();
-
+    
         // Assign roles to the user
         $roles = json_decode($invitation->roles, true);
         $user->roles()->attach($roles);
 
-        DB::table('invitation_tokens')->where('token', $request->token)->delete();
+        $tutorRoleId = Role::where('role', 'tutor')->first()->id;
+        $workerRoleId = Role::where('role', 'worker')->first()->id;
+    
+        // Assign additional information based on role
+        if (in_array($tutorRoleId, $roles)) {
+            $childIds = json_decode($invitation->child_ids, true);
+            foreach ($childIds as $childId) {
+                $child = Child::find($childId);
+                $child->users()->attach($user->id);
+            }
+        }
+    
+        if (in_array($workerRoleId, $roles)) {
+            $worker = new Worker();
 
+            $worker->user_id = $user->id;
+
+            $worker->save();
+
+            $sectionWorker = new SectionWorker();
+            $sectionWorker->section_id = $invitation->section_id;
+            $sectionWorker->worker_id = $worker->id;
+            $sectionWorker->save();
+        }
+    
+        DB::table('invitation_tokens')->where('token', $request->token)->delete();
+    
         return redirect()->route('login')->with('success', 'Inscription complétée avec succès.');
     }
+    
 
 
     /**

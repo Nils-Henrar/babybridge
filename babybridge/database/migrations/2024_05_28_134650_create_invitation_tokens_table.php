@@ -24,6 +24,12 @@ return new class extends Migration
             $table->string('city')->nullable();
             // roles
             $table->string('roles')->nullable();
+            //sections
+            $table->unsignedBigInteger('section_id')->nullable();
+            //child_ids
+            $table->json('child_ids')->nullable();
+
+
             $table->timestamp('expires_at');
             $table->timestamps();
         });

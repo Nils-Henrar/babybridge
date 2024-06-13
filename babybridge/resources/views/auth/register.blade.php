@@ -14,6 +14,15 @@
     <input type="hidden" name="email" value="{{ $email }}">
     <input type="hidden" name="firstname" value="{{ $firstname }}">
     <input type="hidden" name="lastname" value="{{ $lastname }}">
+    @if ($section_id)
+        <input type="hidden" name="section_id" value="{{ $section_id }}">
+    @endif
+
+    @if ($child_ids)
+        @foreach ($child_ids as $child_id)
+            <input type="hidden" name="child_ids[]" value="{{ $child_id }}">
+        @endforeach
+    @endif
 
     {{-- Login field --}}
     <div class="input-group mb-3">
@@ -27,45 +36,47 @@
             @enderror
         </div>
 
-        {{-- Password field --}}
-        <div class="input-group mb-3">
-            <input type="password" name="password" class="form-control @error('password') is-invalid @enderror" placeholder="{{ __('adminlte::adminlte.password') }}">
+    </div>
 
-            <div class="input-group-append">
-                <div class="input-group-text">
-                    <span class="fas fa-lock {{ config('adminlte.classes_auth_icon', '') }}"></span>
-                </div>
+    {{-- Password field --}}
+    <div class="input-group mb-3">
+        <input type="password" name="password" class="form-control @error('password') is-invalid @enderror" placeholder="{{ __('adminlte::adminlte.password') }}">
+
+        <div class="input-group-append">
+            <div class="input-group-text">
+                <span class="fas fa-lock {{ config('adminlte.classes_auth_icon', '') }}"></span>
             </div>
-
-            @error('password')
-            <span class="invalid-feedback" role="alert">
-                <strong>{{ $message }}</strong>
-            </span>
-            @enderror
         </div>
 
-        {{-- Confirm password field --}}
-        <div class="input-group mb-3">
-            <input type="password" name="password_confirmation" class="form-control @error('password_confirmation') is-invalid @enderror" placeholder="{{ __('adminlte::adminlte.retype_password') }}">
+        @error('password')
+        <span class="invalid-feedback" role="alert">
+            <strong>{{ $message }}</strong>
+        </span>
+        @enderror
+    </div>
 
-            <div class="input-group-append">
-                <div class="input-group-text">
-                    <span class="fas fa-lock {{ config('adminlte.classes_auth_icon', '') }}"></span>
-                </div>
+    {{-- Confirm password field --}}
+    <div class="input-group mb-3">
+        <input type="password" name="password_confirmation" class="form-control @error('password_confirmation') is-invalid @enderror" placeholder="{{ __('adminlte::adminlte.retype_password') }}">
+
+        <div class="input-group-append">
+            <div class="input-group-text">
+                <span class="fas fa-lock {{ config('adminlte.classes_auth_icon', '') }}"></span>
             </div>
-
-            @error('password_confirmation')
-            <span class="invalid-feedback" role="alert">
-                <strong>{{ $message }}</strong>
-            </span>
-            @enderror
         </div>
 
-        {{-- Register button --}}
-        <button type="submit" class="btn btn-block {{ config('adminlte.classes_auth_btn', 'btn-flat btn-primary') }}">
-            <span class="fas fa-user-plus"></span>
-            {{ __('adminlte::adminlte.register') }}
-        </button>
+        @error('password_confirmation')
+        <span class="invalid-feedback" role="alert">
+            <strong>{{ $message }}</strong>
+        </span>
+        @enderror
+    </div>
+
+    {{-- Register button --}}
+    <button type="submit" class="btn btn-block {{ config('adminlte.classes_auth_btn', 'btn-flat btn-primary') }}">
+        <span class="fas fa-user-plus"></span>
+        {{ __('adminlte::adminlte.register') }}
+    </button>
 
 </form>
 @stop

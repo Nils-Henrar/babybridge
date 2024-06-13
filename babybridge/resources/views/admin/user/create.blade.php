@@ -9,6 +9,7 @@
 @section('content_body')
 
 
+
 <!-- formulaire d'ajout d'un utilisateur -->
 
 <div class="card">
@@ -109,23 +110,47 @@
                 <span class="help-block">{{ $message }}</span>
                 @enderror
             </div>
-            <div class="form-group @error('roles') has-error @enderror">
-                <label for="roles">Rôles</label>
-                @foreach($roles as $role)
-                <div class="form-check @error('roles') has-error @enderror">
-                    <input class="form-check-input" type="checkbox" name="roles[]" value="{{ $role->id }}" id="role_{{ $role->id }}" @if(is_array(old('roles')) && in_array($role->id, old('roles'))) checked @endif>
-                    <label class="form-check-label" for="role_{{ $role->id }}">{{ $role->role }}</label>
+            <div>
+            <!-- Select role -->
+            <div class="form-group">
+                <label for="roles">Roles</label>
+                <div>
+                    @foreach($roles as $role)
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="roles[]" value="{{ $role->id }}" id="role{{ $role->id }}">
+                            <label class="form-check-label" for="role{{ $role->id }}">
+                                {{ $role->role }}
+                            </label>
+                        </div>
+                    @endforeach
                 </div>
-                @endforeach
-                @error('roles')
-                <span class="help-block">{{ $message }}</span>
-                @enderror
             </div>
-        </div>
-        <!-- /.card-body -->
 
-        <div class="card-footer">
-            <button type="submit" class="btn btn-primary">Ajouter</button> <a href="{{ route('admin.user.index') }}" class="btn btn-secondary">Annuler</a>
+            <!-- Multi-select for children -->
+            <div class="form-group" id="childrenSelect" style="display: none;">
+                <label for="children">Selectionnez les enfants</label>  
+                <select id="children" name="children[]" class="form-control" multiple>
+                    @foreach($children as $child)
+                        <option value="{{ $child->id }}">{{ $child->firstname }} {{ $child->lastname }}</option>
+                    @endforeach
+                </select>
+            </div>
+
+            <!-- Select section for workers -->
+            <div class="form-group" id="sectionSelect" style="display: none;">
+                <label for="section">Select Section</label>
+                <select id="section" name="section" class="form-control">
+                    @foreach($sections as $section)
+                        <option value="{{ $section->id }}">{{ $section->name }}</option>
+                    @endforeach
+                </select>
+            </div>
+                <!-- /.card-body -->
+
+            <div class="card-footer">
+                <button type="submit" class="btn btn-primary">Ajouter</button> <a href="{{ route('admin.user.index') }}" class="btn btn-secondary">Annuler</a>
+            </div>
+
         </div>
     </form>
 
@@ -144,4 +169,47 @@
 
 <!-- /.card -->
 
+@section('js')
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const childrenSelect = new Choices('#children', {
+            removeItemButton: true,
+            searchResultLimit: 10,
+            renderChoiceLimit: -1,
+        });
+
+        toggleFields();
+
+        document.querySelectorAll('input[name="roles[]"]').forEach(function(checkbox) {
+            checkbox.addEventListener('change', function() {
+                toggleFields();
+            });
+        });
+    });
+
+    function toggleFields() {
+        const roles = Array.from(document.querySelectorAll('input[name="roles[]"]:checked')).map(input => input.value);
+        const childrenSelect = document.getElementById('childrenSelect');
+        const sectionSelect = document.getElementById('sectionSelect');
+
+        const tutorRoleId = `{{ $roles->firstWhere('role', 'tutor')->id }}`;
+        const workerRoleId = `{{ $roles->firstWhere('role', 'worker')->id }}`;
+
+        if (roles.includes(tutorRoleId)) {
+            childrenSelect.style.display = 'block';
+        } else {
+            childrenSelect.style.display = 'none';
+        }
+
+        if (roles.includes(workerRoleId)) {
+            sectionSelect.style.display = 'block';
+        } else {
+            sectionSelect.style.display = 'none';
+        }
+    }
+</script>
 @endsection
+
+@endsection
+

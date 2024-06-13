@@ -32,6 +32,9 @@ class StoreUserRequest extends FormRequest
             'city' => 'nullable|string|max:50',
             'roles' => 'required|array',
             'roles.*' => 'exists:roles,id',
+            'section' => 'nullable|exists:sections,id',
+            'children' => 'nullable|array',
+            'children.*' => 'exists:children,id',
         ];
     }
 }

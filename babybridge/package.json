@@ -14,6 +14,7 @@
         "vite": "^5.0"
     },
     "dependencies": {
+        "choices.js": "^10.2.0",
         "fullcalendar": "^6.1.11",
         "icheck-bootstrap": "^3.0.1"
     }
