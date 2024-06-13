@@ -111,29 +111,4 @@ class User extends Authenticatable
 
         $this->roles()->attach($roleId);
     }
-
-    public function sendIdentifiersByEmail($firstname, $lastname)
-    {
-        // Générez le login
-        do {
-
-            $login = mb_substr($firstname, 0, 2, 'UTF-8') . mb_substr($lastname, 0, 2, 'UTF-8') . rand(10, 999);
-
-            $login = preg_replace("/[^A-Za-z0-9]/", '', $login);
-        } while (User::where('login', $login)->exists());
-
-        // Générez le mot de passe
-        $password = substr($firstname, 0, 2) . substr($lastname, 0, 2) . rand(10, 999);
-
-        // Envoyez les identifiants par e-mail
-        Mail::raw("Votre login est : $login \nVotre mot de passe est : $password", function ($message) {
-            $message->to($this->email)->subject('Vos identifiants');
-        });
-
-        // Retournez les identifiants pour référence
-        return [
-            'login' => $login,
-            'password' => $password
-        ];
-    }
 }

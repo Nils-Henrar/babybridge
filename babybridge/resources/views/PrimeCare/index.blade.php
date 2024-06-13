@@ -19,6 +19,8 @@
   <!--owl slider stylesheet -->
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
 
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
   <!-- bootstrap core css -->
   <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
   <!-- fonts awesome style -->
@@ -42,13 +44,13 @@
             <a href="">
               <i class="fa fa-map-marker" aria-hidden="true"></i>
               <span>
-                Address : wisigaton lpusm loram
+                Addresse : Av. de l'Astronomie 19, 1210 Saint-Josse-ten-Noode
               </span>
             </a>
             <a href="">
               <i class="fa fa-envelope" aria-hidden="true"></i>
               <span>
-                Email : demo@gmail.com
+                Email : admin@admin.com
               </span>
             </a>
             <a href="">
@@ -83,7 +85,7 @@
               <a class="" href="why.html"> Why Us </a>
               <a class="" href="team.html"> Our Team</a>
               <a class="" href="testimonial.html"> Testimonial</a>
-              <a class="" href="contact.html"> Contact Us</a>
+              <a class="" href="contact.html"> Nous contacter</a>
             </div>
           </div>
           <a class="navbar-brand" href="/">
@@ -112,14 +114,14 @@
               <span>
                 Login
               </span>
-              <i class="fa fa-user" aria-hidden="true"></i>
+              <i class="fa-solid fa-right-to-bracket" aria-hidden="true" style="font-size: 25px;"></i>
             </a>
             @endif
-            <form class="form-inline">
+            <!-- <form class="form-inline">
               <button class="btn  nav_search-btn" type="submit">
                 <i class="fa fa-search" aria-hidden="true"></i>
               </button>
-            </form>
+            </form> -->
           </div>
         </nav>
       </div>
@@ -145,12 +147,12 @@
                   </h2>
                 </div>
                 <a href="">
-                  Read More
+                  Lire plus
                 </a>
               </div>
               <div class="care_detail">
                 <a href="">
-                  Contact Us
+                  Nous contacter
                 </a>
                 <div class="care_text">
                   <h2>
@@ -173,18 +175,19 @@
                   </h2>
                 </div>
                 <a href="">
-                  Read More
+                  Lire plus
                 </a>
               </div>
               <div class="care_detail">
                 <a href="">
-                  Contact Us
+                  Nous contacter
                 </a>
                 <div class="care_text">
                   <h2>
-                    We will take <br />
-                    Care of <br />
-                    your Baby
+
+                    On prendra <br />
+                    soin de <br />
+                    votre bébé
                   </h2>
                 </div>
               </div>
@@ -200,18 +203,19 @@
                   </h2>
                 </div>
                 <a href="">
-                  Read More
+                  Lire plus
                 </a>
               </div>
               <div class="care_detail">
                 <a href="">
-                  Contact Us
+                  Nous contacter
                 </a>
                 <div class="care_text">
                   <h2>
-                    We will take <br />
-                    Care of <br />
-                    your Baby
+
+                    On prendra <br />
+                    soin de <br />
+                    votre bébé
                   </h2>
                 </div>
               </div>
@@ -227,18 +231,19 @@
                   </h2>
                 </div>
                 <a href="">
-                  Read More
+                  Lire plus
                 </a>
               </div>
               <div class="care_detail">
                 <a href="">
-                  Contact Us
+                  Nous contacter
                 </a>
                 <div class="care_text">
                   <h2>
-                    We will take <br />
-                    Care of <br />
-                    your Baby
+
+                    On prendra <br />
+                    soin de <br />
+                    votre bébé
                   </h2>
                 </div>
               </div>
@@ -338,7 +343,7 @@
           </p>
           <a href="">
             <span>
-              Read More
+              Lire plus
             </span>
             <hr />
           </a>
@@ -364,7 +369,7 @@
           </p>
           <a href="">
             <span>
-              Read More
+              Lire plus
             </span>
             <hr />
           </a>
@@ -401,7 +406,7 @@
             </h5>
             <a href="">
               <span>
-                Read More
+                Lire plus
               </span>
               <hr />
             </a>
@@ -417,7 +422,7 @@
             </h5>
             <a href="">
               <span>
-                Read More
+                Lire plus
               </span>
               <hr />
             </a>
@@ -433,7 +438,7 @@
             </h5>
             <a href="">
               <span>
-                Read More
+                Lire plus
               </span>
               <hr />
             </a>
@@ -449,7 +454,7 @@
             </h5>
             <a href="">
               <span>
-                Read More
+                Lire plus
               </span>
               <hr />
             </a>
@@ -820,7 +825,7 @@
               <a class="" href="why.html"> <i class="fa fa-angle-right" aria-hidden="true"></i> Why Us </a>
               <a class="" href="team.html"> <i class="fa fa-angle-right" aria-hidden="true"></i> Our Team</a>
               <a class="" href="testimonial.html"> <i class="fa fa-angle-right" aria-hidden="true"></i> Testimonial</a>
-              <a class="" href="contact.html"> <i class="fa fa-angle-right" aria-hidden="true"></i> Contact Us</a>
+              <a class="" href="contact.html"> <i class="fa fa-angle-right" aria-hidden="true"></i> Nous contacter</a>
             </div>
           </div>
         </div>
