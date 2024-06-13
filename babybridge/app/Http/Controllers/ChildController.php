@@ -14,6 +14,9 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Mail;
+use App\Models\Role;
 
 class ChildController extends Controller
 {
@@ -52,83 +55,64 @@ class ChildController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(StoreChildRequest $request)
-    {
+{
+    $data = $request->validated();
 
-        $data = $request->validated();
+    // Traitement pour la création de l'enfant
+    $child = new Child;
+    $child->lastname = $data['lastname'];
+    $child->firstname = $data['firstname'];
+    $child->birthdate = $data['birthdate'];
+    $child->special_infos = $data['special_infos'];
 
-        // dd($data);
-        // Traitement pour la création de l'enfant
-        $child = new Child;
-        $child->lastname = $data['lastname'];
-        $child->firstname = $data['firstname'];
-        $child->birthdate = $data['birthdate'];
-        $child->special_infos = $data['special_infos'];
-
-        if ($request->hasFile('photo') && $request->file('photo')->isValid()) {
-            $file = $request->file('photo');
-            
-            // slugify the name
-            $originalName = Str::slug($child->fullname);
-            // Changer le nom du fichier
-            $newOriginalName = $originalName . '.' . $file->getClientOriginalExtension();
-    
-            $targetPath = "profile/{$child->fullname}";
-            
-            // Assurez-vous que le répertoire cible existe
-            Storage::disk('public')->makeDirectory($targetPath);
-    
-            // Stocker le fichier dans le dossier spécifié
-            $photoPath = $file->storeAs($targetPath, $newOriginalName, 'public'); 
-    
-            $child->photo_path = $photoPath;
-        }
-        
-        $child->save();
-
-        if ($data['section']) {
-            $childSection = new ChildSection;
-            $childSection->child_id = $child->id;
-            $childSection->section_id = $data['section'];
-            $childSection->save();
-        }
-
-        // Traitement pour la création des tuteurs
-
-        foreach ($data['tutor_lastname'] as $key => $value) {
-            $tutor = new User;
-            $tutor->lastname = $data['tutor_lastname'][$key];
-            $tutor->firstname = $data['tutor_firstname'][$key];
-            $tutor->email = $data['tutor_email'][$key];
-            $tutor->phone = $data['tutor_phone'][$key];
-            $tutor->langue = $data['tutor_language'][$key];
-            $tutor->address = $data['tutor_address'][$key];
-            $tutor->postal_code = $data['tutor_postal_code'][$key];
-            $tutor->city = $data['tutor_city'][$key];
-
-            $identifiers = $tutor->sendIdentifiersByEmail($tutor->firstname, $tutor->lastname);
-
-            $tutor->login = $identifiers['login'];
-
-            $tutor->password = bcrypt($identifiers['password']);
-
-            try {
-                $tutor->save();
-            } catch (\Exception $e) {
-                Log::error("Erreur lors de l'enregistrement du tuteur: " . $e->getMessage());
-                return back()->withErrors('Erreur lors de l\'enregistrement du tuteur.');
-            }
-
-            //ajouter un enregistrement dans la table role_user
-
-            $tutor->assignRole('tutor');
-
-            $childTutor = new ChildTutor;
-            $childTutor->child_id = $child->id;
-            $childTutor->user_id = $tutor->id;
-            $childTutor->save();
-        }
-        return redirect()->route('admin.child.index')->with('success', 'L\'enfant a été créé avec succès');
+    if ($request->hasFile('photo') && $request->file('photo')->isValid()) {
+        $file = $request->file('photo');
+        $originalName = Str::slug($child->fullname);
+        $newOriginalName = $originalName . '.' . $file->getClientOriginalExtension();
+        $targetPath = "profile/{$child->fullname}";
+        Storage::disk('public')->makeDirectory($targetPath);
+        $photoPath = $file->storeAs($targetPath, $newOriginalName, 'public'); 
+        $child->photo_path = $photoPath;
     }
+
+    $child->save();
+
+    if ($data['section']) {
+        $childSection = new ChildSection;
+        $childSection->child_id = $child->id;
+        $childSection->section_id = $data['section'];
+        $childSection->save();
+    }
+    $tutorRoleId = Role::where('role', 'tutor')->first()->id;
+    // Traitement pour la création des tuteurs
+    foreach ($data['tutor_lastname'] as $key => $value) {
+        $token = Str::random(60);
+
+        DB::table('invitation_tokens')->insert([
+            'email' => $data['tutor_email'][$key],
+            'token' => $token,
+            'firstname' => $data['tutor_firstname'][$key],
+            'lastname' => $data['tutor_lastname'][$key],
+            'language' => $data['tutor_language'][$key],
+            'phone' => $data['tutor_phone'][$key],
+            'address' => $data['tutor_address'][$key],
+            'postal_code' => $data['tutor_postal_code'][$key],
+            'city' => $data['tutor_city'][$key],
+            'roles' => json_encode([$tutorRoleId]),
+            'child_ids' => json_encode([$child->id]),
+            'expires_at' => Carbon::now()->addHours(24),
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
+        ]);
+
+        $link = route('register.form', ['token' => $token]);
+        Mail::raw("Veuillez compléter votre inscription en suivant ce lien : $link", function ($message) use ($data, $key) {
+            $message->to($data['tutor_email'][$key])->subject('Complétez votre inscription');
+        });
+    }
+
+    return redirect()->route('admin.child.index')->with('success', 'L\'enfant a été créé avec succès et les invitations aux tuteurs ont été envoyées.');
+}
 
     /**
      * Display the specified resource.

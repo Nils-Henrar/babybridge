@@ -62,10 +62,9 @@
                 <label for="special_infos">Informations particulières</label>
                 <textarea class="form-control @error('special_infos') is-invalid @enderror" id="special_infos" name="special_infos" placeholder="Informations particulières">@if(old('special_infos')){{ old('special_infos') }}@endif</textarea>
             </div>
-            <!-- il faut ajouter un champ pour chaque tuteur de l'enfant afin de créer un nouveau utilisateur pour chaque tuteur -->
-            <!-- il faut ajouter également un script javascript pour ajouter dynamiquement des champs pour les tuteurs en fonction de combien de tuteurs on veut ajouter -->
 
             <div id="tutor-template">
+
                 <div class="card">
 
                     <div class="card-header">
