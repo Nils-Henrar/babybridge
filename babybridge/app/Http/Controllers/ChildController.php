@@ -100,7 +100,7 @@ class ChildController extends Controller
             'city' => $data['tutor_city'][$key],
             'roles' => json_encode([$tutorRoleId]),
             'child_ids' => json_encode([$child->id]),
-            'expires_at' => Carbon::now()->addHours(24),
+            'expires_at' => Carbon::now()->addHours(48),
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);
@@ -168,8 +168,10 @@ class ChildController extends Controller
         if ($request->hasFile('photo') && $request->file('photo')->isValid()) {
             $file = $request->file('photo');
 
-            // détruire l'ancienne photo
-            Storage::disk('public')->delete($child->photo_path);
+            if ($child->photo_path) {
+                // détruire l'ancienne photo
+                Storage::disk('public')->delete($child->photo_path);
+            }
             
             // slugify the name
             $originalName = Str::slug($child->fullname);
@@ -205,26 +207,7 @@ class ChildController extends Controller
                 $newChildSection->save();
             }
         }
-
-        // Traitement pour la modification des champs des tuteurs
-
-        foreach ($data['tutor_id'] as $key => $value) {
-            $tutor = User::find($data['tutor_id'][$key]);
-            $tutor->lastname = $data['tutor_lastname'][$key];
-            $tutor->firstname = $data['tutor_firstname'][$key];
-            $tutor->email = $data['tutor_email'][$key];
-            $tutor->phone = $data['tutor_phone'][$key];
-            $tutor->langue = $data['tutor_language'][$key];
-            $tutor->address = $data['tutor_address'][$key];
-            $tutor->postal_code = $data['tutor_postal_code'][$key];
-            $tutor->city = $data['tutor_city'][$key];
-
-            $tutor->save();
-        }
-
-
         return redirect()->route('admin.child.index')->with('success', 'L\'enfant a été modifié avec succès');
-        //
     }
 
     /**

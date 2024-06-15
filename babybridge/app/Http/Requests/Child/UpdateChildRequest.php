@@ -29,18 +29,8 @@ class UpdateChildRequest extends FormRequest
             'birthdate' => 'required|date',
             'special_infos' => 'nullable|string',
             'photo' => 'nullable|file|mimes:jpeg,jpg,png|max:2048',
-
             'section' => 'required|exists:sections,id',
             'special_infos' => 'nullable|string',
-            'tutor_id.*' => 'required|exists:users,id',
-            'tutor_lastname.*' => 'required|string|max:60',
-            'tutor_firstname.*' => 'required|string|max:60',
-            'tutor_email.*' => 'required|email',
-            'tutor_phone.*' => 'sometimes|string|max:20',
-            'tutor_language.*' => 'sometimes|string|max:2',
-            'tutor_address.*' => 'sometimes|string|max:255',
-            'tutor_postal_code.*' => 'sometimes|string|max:6',
-            'tutor_city.*' => 'sometimes|string|max:50',
         ];
     }
 }

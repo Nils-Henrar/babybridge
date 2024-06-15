@@ -11,6 +11,10 @@ use App\Http\Requests\Worker\StoreWorkerRequest;
 use App\Http\Requests\Worker\UpdateWorkerRequest;
 use App\Models\Attendance;
 use Illuminate\Support\Facades\DB;
+use App\Models\Role;
+use Illuminate\Support\Str;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Mail;
 
 class WorkerController extends Controller
 {
@@ -48,48 +52,36 @@ class WorkerController extends Controller
      */
     public function store(StoreWorkerRequest $request)
     {
-        // Store un nouveau worker implique de créer un nouvel utilisateur et de lui assigner un rôle de worker et de lui assigner une section(si il en a une)
-        //la table worker est liée à la table user par un user_id
 
         $data = $request->validated();
 
-        $user = new User();
+        $workerRoleId = Role::where('role', 'worker')->first()->id;
+        
+        $token = Str::random(60);
 
-        $user->firstname = $data['firstname'];
-        $user->lastname = $data['lastname'];
-        $user->email = $data['email'];
-        $user->langue = $data['language'];
-        $user->phone = $data['phone'];
-        $user->address = $data['address'];
-        $user->postal_code = $data['postal_code'];
-        $user->city = $data['city'];
+        DB::table('invitation_tokens')->insert([
+            'token' => $token,
+            'email' => $data['email'],
+            'roles' => json_encode([$workerRoleId]),
+            'firstname' => $data['firstname'],
+            'lastname' => $data['lastname'],
+            'language' => $data['language'],
+            'phone' => $data['phone'],
+            'address' => $data['address'],
+            'postal_code' => $data['postal_code'],
+            'city' => $data['city'],
+            'section_id' => $data['section_id'],
+            'expires_at' => Carbon::now()->addHours(48),
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
+        ]);
 
+        $link = route('register.form', ['token' => $token]);
+        Mail::raw("Veuillez compléter votre inscription en suivant ce lien : $link", function ($message) use ($data) {
+            $message->to($data['email'])->subject('Complétez votre inscription');
+        });
 
-
-
-        $identifiers = $user->sendIdentifiersByEmail($user->firstname, $user->lastname);
-
-        $user->login = $identifiers['login'];
-        $user->password = bcrypt($identifiers['password']);
-
-        $user->save();
-
-        $user->assignRole('worker');
-
-        $worker = new Worker();
-
-        $worker->user_id = $user->id;
-
-        $worker->save();
-
-        if ($data['section_id']) {
-            $sectionWorker = new SectionWorker();
-            $sectionWorker->section_id = $data['section_id'];
-            $sectionWorker->worker_id = $worker->id;
-            $sectionWorker->save();
-        }
-
-        return redirect()->route('admin.worker.index')->with('success', 'Le travailleur a été créé avec succès');
+        return redirect()->route('admin.worker.index')->with('success', 'Le travailleur a été créé avec succès et l\'invitation a été envoyée');
     }
 
     /**
@@ -170,6 +162,7 @@ class WorkerController extends Controller
         $user = Worker::find($id)->user;
         $user->worker->sectionWorkers() ? $user->worker->sectionWorkers()->delete() : null;
         $user->worker->delete();
+        $user->delete();
 
         $user->roles()->detach();
 

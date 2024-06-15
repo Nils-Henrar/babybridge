@@ -79,59 +79,6 @@
                 <label for="special_infos">Informations particulières</label>
                 <textarea class="form-control @error('special_infos') is-invalid @enderror" id="special_infos" name="special_infos" placeholder="Informations particulières">{{ $child->special_infos }}</textarea>
             </div>
-            <!-- Afficher les tuteurs existants -->
-            @foreach($child->childTutors as $tutor)
-            <div class="card">
-                <div class="card-header">
-                    <h3 class="card-title text-bold">Tuteur de {{$child->fullname}}</h3>
-                </div>
-                <div class="card-body">
-
-                    <input type="hidden" name="tutor_id[]" value="{{ $tutor->user->id }}">
-                    <div class="form-group">
-                        <label for="tutor_lastname">Nom du Tuteur:</label>
-                        <input type="text" class="form-control @error('tutor_lastname') is-invalid @enderror" value="{{ $tutor->user->lastname }}" name="tutor_lastname[]" placeholder="Nom du tuteur">
-                    </div>
-                    <div class="form-group">
-                        <label for="tutor_firstname">Prénom du Tuteur:</label>
-                        <input type="text" class="form-control @error('tutor_firstname') is-invalid @enderror" value="{{ $tutor->user->firstname }}" name="tutor_firstname[]" placeholder="Prénom du tuteur">
-                    </div>
-                    <div class="form-group">
-                        <label for="tutor_email">Email du Tuteur:</label>
-                        <input type="email" class="form-control @error('tutor_email') is-invalid @enderror" value="{{ $tutor->user->email }}" name="tutor_email[]" placeholder="Email du tuteur">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="tutor_phone">Téléphone du Tuteur:</label>
-                        <input type="text" class="form-control @error('tutor_phone') is-invalid @enderror" value="{{ $tutor->user->phone }}" name="tutor_phone[]" placeholder="Téléphone du tuteur">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="tutor_language">Langue du Tuteur:</label>
-                        <select class="form-control @error('tutor_language') is-invalid @enderror" id="tutor_language" name="tutor_language[]">
-                            <option value="fr" @if($tutor->user->langue == 'fr') selected @endif>Français</option>
-                            <option value="en" @if($tutor->user->langue == 'en') selected @endif>Anglais</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="tutor_address">Adresse du Tuteur:</label>
-                        <input type="text" class="form-control @error('tutor_address') is-invalid @enderror" value="{{ $tutor->user->address }}" name="tutor_address[]" placeholder="Adresse du tuteur">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="tutor_postal_code">Code postal du Tuteur:</label>
-                        <input type="text" class="form-control @error('tutor_postal_code') is-invalid @enderror" value="{{ $tutor->user->postal_code }}" name="tutor_postal_code[]" placeholder="Code postal du tuteur">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="tutor_city">Ville du Tuteur:</label>
-                        <input type="text" class="form-control @error('tutor_city') is-invalid @enderror" value="{{ $tutor->user->city }}" name="tutor_city[]" placeholder="Ville du tuteur">
-                    </div>
-                </div>
-            </div>
-            @endforeach
-
             <div class="card-footer">
                 <a href="{{ route('admin.child.index') }}" class="btn btn-secondary mt-3">Annuler</a>
                 <button type="submit" class="btn btn-primary mt-3">Modifier</button>

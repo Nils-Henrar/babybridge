@@ -44,6 +44,17 @@
                 </span>
                 @enderror
             </div>
+
+            <!-- upload de photo de profil -->
+            <div class="form-group">
+                <label for="photo">Photo de profil</label>
+                <input type="file" class="form-control-file @error('photo') is-invalid @enderror" id="photo" name="photo" accept="image/*" @if(old('photo')) value="{{ old('photo') }}" @endif>
+                @error('photo')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+                @enderror
+            </div>
             <div class="form-group">
                 <label for="section">Section</label>
                 <select class="form-control @error('section') is-invalid @enderror" id="section" name="section">

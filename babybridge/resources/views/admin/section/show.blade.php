@@ -17,7 +17,7 @@
     <div class="card-header">
         <h3 class="card-title ">Puéricultrices de la section</h3>
         <div class="card-tools">
-            <a href="{{ route('admin.worker.create') }}" class="btn btn-primary">Ajouter une puéricultrice</a>
+            <a href="{{ route('admin.user.create') }}" class="btn btn-primary">Ajouter une puéricultrice</a>
         </div>
     </div>
     <!-- /.card-header -->
