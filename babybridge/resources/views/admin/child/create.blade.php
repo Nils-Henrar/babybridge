@@ -8,14 +8,12 @@
 
 @section('content_body')
 
-<!-- Formulaire de création d'un enfant -->
-
 <div class="card card-primary">
     <div class="card-header">
         <h3 class="card-title">Ajouter un enfant</h3>
     </div>
     <div class="card-body">
-        <form method="POST" action="{{ route('admin.child.store') }}">
+        <form method="POST" action="{{ route('admin.child.store') }}" enctype="multipart/form-data">
             @csrf
             <div class="form-group">
                 <label for="lastname">Nom</label>
@@ -45,7 +43,6 @@
                 @enderror
             </div>
 
-            <!-- upload de photo de profil -->
             <div class="form-group">
                 <label for="photo">Photo de profil</label>
                 <input type="file" class="form-control-file @error('photo') is-invalid @enderror" id="photo" name="photo" accept="image/*" @if(old('photo')) value="{{ old('photo') }}" @endif>
@@ -75,88 +72,16 @@
             </div>
 
             <div id="tutor-template">
-
                 <div class="card">
-
                     <div class="card-header">
                         <h3 class="card-title">Tuteur</h3>
                         <button type="button" class="btn btn-danger float-right remove-tutor" style="display: none;">Retirer</button>
                     </div>
                     <div class="card-body">
-                        <div class="form-group">         
-                            <label for="tutor_lastname[]">Nom du Tuteur:</label>
-                            <input type="text" class="form-control @error('tutor_lastname.*') is-invalid @enderror" name="tutor_lastname[]" placeholder="Nom du tuteur">
-                            @error('tutor_lastname.*')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                            @enderror
-                        </div>
-
-                        <div class="form-group">
-                            <label for="tutor_firstname[]">Prénom du Tuteur:</label>
-                            <input type="text" class="form-control @error('tutor_firstname.*') is-invalid @enderror" name="tutor_firstname[]" placeholder="Prénom du tuteur">
-                            @error('tutor_firstname.*')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                            @enderror
-                        </div>
                         <div class="form-group">
                             <label for="tutor_email[]">Email du Tuteur:</label>
-                            <input type="email" class="form-control @error('tutor_email.*') is-invalid @enderror" name="tutor_email[]" placeholder="Email du tuteur">
+                            <input type="email" class="form-control @error('tutor_email.*') is-invalid @enderror" name="tutor_email[]" placeholder="Email du tuteur" required>
                             @error('tutor_email.*')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                            @enderror
-                        </div>
-                        <div class="form-group">
-                            <label for="tutor_phone[]">Téléphone du Tuteur:</label>
-                            <input type="text" class="form-control @error('tutor_phone.*') is-invalid @enderror" name="tutor_phone[]" placeholder="Téléphone du tuteur">
-                            @error('tutor_phone.*')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                            @enderror
-                        </div>
-
-                        <!-- langue -->
-                        <div class="form-group">
-                            <label for="tutor_language[]">Langue</label>
-                            <select class="form-control @error('tutor_language.*') is-invalid @enderror" name="tutor_language[]">
-                                <option value="">-- Choisir une langue --</option>
-                                <option value="fr">Français</option>
-                                <option value="en">Anglais</option>
-                            </select>
-                            @error('tutor_language.*')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                            @enderror
-                        </div>
-                        <div class="form-group">
-                            <label for="tutor_address[]">Adresse du Tuteur:</label>
-                            <input type="text" class="form-control @error('tutor_address.*') is-invalid @enderror" name="tutor_address[]" placeholder="Adresse du tuteur">
-                            @error('tutor_address.*')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                            @enderror
-                        </div>
-                        <div class="form-group">
-                            <label for="tutor_postal_code[]">Code postal du Tuteur:</label>
-                            <input type="text" class="form-control @error('tutor_postal_code.*') is-invalid @enderror" name="tutor_postal_code[]" placeholder="Code postal du tuteur">
-                            @error('tutor_postal_code.*')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                            @enderror
-                        </div>
-                        <div class="form-group">
-                            <label for="tutor_city[]">Ville du Tuteur:</label>
-                            <input type="text" class="form-control @error('tutor_city.*') is-invalid @enderror" name="tutor_city[]" placeholder="Ville du tuteur">
-                            @error('tutor_city.*')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
@@ -190,7 +115,6 @@
 <script>
     $(document).ready(function() {
         var tutorCount = 0; // Initialise le compteur de tuteurs à 0
-        var idTutor = 1; // Initialise l'ID du tuteur à 1
         $('#add-tutor').click(function() {
             tutorCount++; // Incrémente le compteur à chaque clic
             var newTutor = $('#tutor-template').clone().removeAttr('id').show(); 
@@ -217,8 +141,5 @@
         });
     });
 </script>
-
-
-
 
 @endsection

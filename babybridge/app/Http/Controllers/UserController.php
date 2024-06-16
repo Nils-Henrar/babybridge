@@ -64,13 +64,6 @@ class UserController extends Controller
         DB::table('invitation_tokens')->insert([
             'email' => $data['email'],
             'token' => $token,
-            'firstname' => $data['firstname'],
-            'lastname' => $data['lastname'],
-            'language' => $data['language'],
-            'phone' => $data['phone'],
-            'address' => $data['address'],
-            'postal_code' => $data['postal_code'],
-            'city' => $data['city'],
             'roles' => json_encode($data['roles']),
             'child_ids' => isset($data['children']) ? json_encode($data['children']) : null,
             'section_id' => isset($data['section']) ? $data['section'] : null,
@@ -99,8 +92,6 @@ class UserController extends Controller
         return view('auth.register', [
             'token' => $token,
             'email' => $invitation->email,
-            'firstname' => $invitation->firstname,
-            'lastname' => $invitation->lastname,
             'section_id' => $invitation->section_id,
             'child_ids' => json_decode($invitation->child_ids),
         ]);
@@ -113,25 +104,31 @@ class UserController extends Controller
             'token' => 'required',
             'login' => 'required|unique:users,login',
             'password' => 'required|confirmed|min:8',
+            'firstname' => 'required|string|max:60',
+            'lastname' => 'required|string|max:60',
+            'phone' => 'required|string|max:20',
+            'address' => 'required|string|max:255',
+            'postal_code' => 'required|string|max:10',
+            'city' => 'required|string|max:60',
         ]);
     
         $invitation = DB::table('invitation_tokens')->where('token', $request->token)->first();
-    
         if (!$invitation || Carbon::parse($invitation->expires_at)->isPast()) {
+            DB::table('invitation_tokens')->where('token', $request->token)->delete();
             return redirect()->route('login')->with('error', 'Lien d\'invitation invalide ou expiré.');
         }
     
         $user = new User();
-        $user->firstname = $invitation->firstname;
-        $user->lastname = $invitation->lastname;
+        $user->firstname = $request->firstname;
+        $user->lastname = $request->lastname;
         $user->email = $invitation->email;
         $user->login = $request->login;
         $user->password = bcrypt($request->password);
-        $user->phone = $invitation->phone;
-        $user->address = $invitation->address;
-        $user->postal_code = $invitation->postal_code;
-        $user->city = $invitation->city;
-        $user->langue = $invitation->language;
+        $user->phone = $request->phone;
+        $user->address = $request->address;
+        $user->postal_code = $request->postal_code;
+        $user->city = $request->city;
+        $user->langue = $request->language;
         $user->save();
     
         // Assign roles to the user

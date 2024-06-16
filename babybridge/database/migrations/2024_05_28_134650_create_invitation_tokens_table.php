@@ -15,15 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('email')->unique();
             $table->string('token')->unique();
-            $table->string('firstname');
-            $table->string('lastname');
-            $table->string('language')->nullable();
-            $table->string('phone')->nullable();
-            $table->string('address')->nullable();
-            $table->string('postal_code')->nullable();
-            $table->string('city')->nullable();
             // roles
-            $table->string('roles')->nullable();
+            $table->json('roles')->nullable();
             //sections
             $table->unsignedBigInteger('section_id')->nullable();
             //child_ids

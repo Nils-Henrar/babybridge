@@ -81,23 +81,17 @@ class ChildController extends Controller
         $childSection = new ChildSection;
         $childSection->child_id = $child->id;
         $childSection->section_id = $data['section'];
-        $childSection->save();
+        $childSection->save(); 
     }
+
     $tutorRoleId = Role::where('role', 'tutor')->first()->id;
-    // Traitement pour la création des tuteurs
-    foreach ($data['tutor_lastname'] as $key => $value) {
+
+    foreach ($data['tutor_email'] as $key => $email) {
         $token = Str::random(60);
 
         DB::table('invitation_tokens')->insert([
-            'email' => $data['tutor_email'][$key],
+            'email' => $email,
             'token' => $token,
-            'firstname' => $data['tutor_firstname'][$key],
-            'lastname' => $data['tutor_lastname'][$key],
-            'language' => $data['tutor_language'][$key],
-            'phone' => $data['tutor_phone'][$key],
-            'address' => $data['tutor_address'][$key],
-            'postal_code' => $data['tutor_postal_code'][$key],
-            'city' => $data['tutor_city'][$key],
             'roles' => json_encode([$tutorRoleId]),
             'child_ids' => json_encode([$child->id]),
             'expires_at' => Carbon::now()->addHours(48),
@@ -106,13 +100,14 @@ class ChildController extends Controller
         ]);
 
         $link = route('register.form', ['token' => $token]);
-        Mail::raw("Veuillez compléter votre inscription en suivant ce lien : $link", function ($message) use ($data, $key) {
-            $message->to($data['tutor_email'][$key])->subject('Complétez votre inscription');
+        Mail::raw("Veuillez compléter votre inscription en suivant ce lien : $link", function ($message) use ($email) {
+            $message->to($email)->subject('Complétez votre inscription');
         });
     }
 
     return redirect()->route('admin.child.index')->with('success', 'L\'enfant a été créé avec succès et les invitations aux tuteurs ont été envoyées.');
 }
+
 
     /**
      * Display the specified resource.
@@ -221,6 +216,9 @@ class ChildController extends Controller
 
         $child = Child::find($id);
 
+        $child->childSections() ? $child->childSections()->delete() : null;
+
+        $child->childTutors() ? $child->childTutors()->delete() : null;
 
         $child->delete();
 

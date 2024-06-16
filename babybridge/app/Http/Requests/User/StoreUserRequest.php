@@ -22,14 +22,7 @@ class StoreUserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'firstname' => 'required|string|max:60',
-            'lastname' => 'required|string|max:60',
             'email' => 'required|email|max:255',
-            'language' => 'nullable|string|max:2',
-            'phone' => 'nullable|string|max:20',
-            'address' => 'nullable|string|max:255',
-            'postal_code' => 'nullable|string|max:6',
-            'city' => 'nullable|string|max:50',
             'roles' => 'required|array',
             'roles.*' => 'exists:roles,id',
             'section' => 'nullable|exists:sections,id',
