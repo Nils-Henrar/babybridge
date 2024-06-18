@@ -15,6 +15,9 @@ use App\Models\Section;
 use App\Models\Child;
 use App\Models\Worker;
 use App\Models\SectionWorker;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
@@ -266,4 +269,69 @@ class UserController extends Controller
         $user = auth()->user();
         return view('tutor.user.profile', compact('user'));
     }
+
+    public function editProfile()
+    {
+        $user = auth()->user();
+        return view('tutor.user.edit', compact('user'));
+    }
+    
+
+    public function updateProfile(Request $request)
+    {
+        $userId = auth()->id(); 
+        $user = User::find($userId);
+
+        $data = $request->validate([
+            'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
+            'address' => 'nullable|string|max:255',
+            'postal_code' => 'nullable|string|max:10',
+            'language' => 'nullable|string|max:2',
+            'city' => 'nullable|string|max:50',
+            'phone' => 'nullable|string|max:20',
+        ]);
+
+        // Log the user data before update
+        Log::info('User before update: ', $user->toArray());
+
+        // Attempt to update the user
+        try {
+            $user->update($data);
+            // Log the user data after update
+            Log::info('User after update: ', $user->toArray());
+        } catch (\Exception $e) {
+            Log::error('Error updating user: ' . $e->getMessage());
+            return redirect()->back()->withErrors(['error' => 'An error occurred while updating the profile.']);
+        }
+
+        return redirect()->route('tutor.profile')->with('success', 'Profil mis à jour avec succès.');
+    }
+
+    public function updateChildPhoto(Request $request, $childId)
+    {
+        $request->validate([
+            'photo' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+        $child = Child::findOrFail($childId);
+
+        if ($request->hasFile('photo')) {
+            $file = $request->file('photo');
+            $filename = time() . '.' . $file->getClientOriginalExtension();
+            $filePath = 'profile_photos/' . $filename;
+            Storage::disk('public')->put($filePath, file_get_contents($file));
+
+            // Supprimer l'ancienne photo si elle existe
+            if ($child->photo_path) {
+                Storage::disk('public')->delete($child->photo_path);
+            }
+
+            // Mettre à jour le chemin de la photo dans la base de données
+            $child->photo_path = $filePath;
+            $child->save();
+        }
+
+        return redirect()->route('tutor.child.profile', $child->id)->with('success', 'Photo de profil mise à jour avec succès.');
+    }
+
 }

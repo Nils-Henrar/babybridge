@@ -138,7 +138,14 @@ Route::middleware([\App\Http\Middleware\IsTutorMiddleware::class])->group(functi
 
     Route::get('/tutor/profile', [UserController::class, 'tutorProfile'])->name('tutor.profile');
 
+    Route::get('/tutor/profile/edit', [UserController::class, 'editProfile'])->name('tutor.profile.edit');
+
+    Route::put('/tutor/profile', [UserController::class, 'updateProfile'])->name('tutor.profile.update');
+
     Route::get('/tutor/child/{childId}', [ChildController::class, 'profileForTutor'])->name('tutor.child.profile');
+
+    Route::put('/tutor/child/{child}/update_photo', [UserController::class, 'updateChildPhoto'])->name('tutor.child.update_photo');
+
 });
 
 
