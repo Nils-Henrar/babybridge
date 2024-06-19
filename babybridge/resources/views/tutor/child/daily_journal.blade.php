@@ -2,9 +2,9 @@
 
 @section('subtitle', 'Daily Journal')
 
-@section('content_header_title', 'Children')
+@section('content_header_title', 'Enfants')
 
-@section('content_header_subtitle', 'Daily Journal')
+@section('content_header_subtitle', 'Journal')
 
 @section('extra-css')
 <style>
@@ -159,6 +159,22 @@
 
         // Charger le journal pour la date du jour au lancement de la page
         loadJournalForDate(datePicker.input.value);
+
+        // Gestion des boutons next-day et prev-day
+        document.getElementById('prev-day').addEventListener('click', function() {
+            changeDate(-1);
+        });
+
+        document.getElementById('next-day').addEventListener('click', function() {
+            changeDate(1);
+        });
+
+        function changeDate(offset) {
+            const currentDate = datePicker.selectedDates[0];
+            const newDate = new Date(currentDate.setDate(currentDate.getDate() + offset));
+            datePicker.setDate(newDate);
+            loadJournalForDate(datePicker.input.value);
+        }
     });
 
     async function getCsrfToken() {
@@ -195,9 +211,9 @@
             const box = document.createElement('div');
             box.className = 'journal-entry';
             box.innerHTML = `
-                <div class="entry-time">${entry.time}</div>
+                <div class="entry-time">${entry.time} - <strong>${entry.child_name}</strong> </div>
                 <div class="entry-content">
-                    <strong>${entry.child_name}</strong> - ${entry.description}
+                    ${entry.description}
                 </div>
                 ${entry.type === 'photo' ? `<div class="entry-photo"><img src="${entry.image_url}" alt="Photo de ${entry.child_name}" onclick="openModal('${entry.image_url}')"></div>` : ''}
             `;

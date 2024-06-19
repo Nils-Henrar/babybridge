@@ -6,7 +6,7 @@
 
 @section('content')
 <div class="container">
-    <h3>Profil de {{ $user->firstname }} {{ $user->lastname }}</h3>
+    <h3>{{ $user->firstname }} {{ $user->lastname }}</h3>
 
     <div class="card mb-3">
         <div class="card-header d-flex justify-content-between">
@@ -32,10 +32,13 @@
             <div class="card-header">
                 <strong>{{ $child->fullname }}</strong> ({{ $child->age }})
             </div>
-            <div class="card-body">
-                <p><strong>Date de naissance :</strong> {{ $child->birthdateForm }}</p>
-                <p><strong>Informations spéciales :</strong> {{ $child->special_infos ?? 'N/A' }}</p>
-                <a href="{{ route('tutor.child.profile', $child->id) }}" class="btn btn-info">Voir le profil</a>
+            <div class="card-body d-flex justify-content-between">
+                <div>
+                    <p><strong>Date de naissance :</strong> {{ $child->birthdateForm }}</p>
+                    <p><strong>Informations spéciales :</strong> {{ $child->special_infos ?? 'N/A' }}</p>
+                    <a href="{{ route('tutor.child.profile', $child->id) }}" class="btn btn-info">Voir le profil</a>
+                </div>
+                <img src="{{ asset('storage/'.$child->photo_path) }}" class="img-fluid rounded-circle ml-auto" alt="Photo de profil de {{ $child->firstname }}" style="width: 100px; height: 100px; object-fit: cover;">
             </div>
         </div>
     @endforeach
