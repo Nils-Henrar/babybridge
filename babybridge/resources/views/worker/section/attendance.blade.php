@@ -1,4 +1,4 @@
-@extends ('layouts.app')
+@extends('layouts.app')
 
 @section('subtitle', 'Présences')
 
@@ -64,10 +64,6 @@
         border: 2px solid #176FA1;
     }
 
-    .save-btn {
-        white-space: nowrap;
-    }
-
     .date-picker-container button {
         margin: 0 5px;
         padding: 5px 10px;
@@ -125,23 +121,6 @@
 </div>
 @endsection
 
-@section('content_body')
-<div class="container">
-    <div class="title-section">Section: {{ Auth::user()->worker->currentSection->section->name }}</div>
-    <div class="date-picker-container" style="text-align: center; margin-top: 20px;">
-        <button id="prev-day"><i class="fas fa-arrow-left"></i></button>
-        <input type="text" id="date-picker" class="form-control" style="display: inline-block; width: auto;">
-        <button id="next-day"><i class="fas fa-arrow-right"></i></button>
-    </div>
-    <div id="attendance-container" class="row">
-        <!-- Les boîtes seront ajoutées ici par JavaScript -->
-    </div>
-    <div id="loading" style="display: none; justify-content: center; align-items: center; height: 100vh;">
-        <div>Chargement en cours...</div>
-    </div>
-</div>
-@endsection
-
 @push('scripts')
 <script>
     async function getCsrfToken() {
@@ -159,7 +138,6 @@
                 credentials: 'include', // Include cookies with the request
                 headers: {
                     'Content-Type': 'application/json',
-                    
                     'Accept': 'application/json'
                 }
             });
@@ -218,6 +196,7 @@
         children.forEach(child => {
             const attendance = attendances.find(a => a.child_id === child.id) || {};
             const isPresent = !!attendance.arrival_time;
+            const hasDeparture = !!attendance.departure_time;
 
             let boxHtml = `
                 <div class="col-lg-12 col-6">
@@ -241,8 +220,8 @@
                                 <div class="time-input-group">
                                     <label for="departure-${child.id}" class="time-label">Départ</label>
                                     <input type="text" value="${attendance.departure_time || ''}" id="departure-${child.id}" class="timepicker departure-time" data-child-id="${child.id}" ${isPresent ? '' : 'disabled'}>
+                                    ${isPresent ? `<button onclick="recordDeparture(${child.id})" class="btn btn-warning departure-btn" data-child-id="${child.id}">${hasDeparture ? 'Annuler' : 'Départ'}</button>` : ''}
                                 </div>
-                                <button onclick="updateAttendance(${child.id})" class="btn btn-primary save-btn">Save</button>
                             </div>
                         </div>
                     </div>
@@ -256,7 +235,13 @@
             enableTime: true,
             noCalendar: true,
             dateFormat: "H:i",
-            time_24hr: true
+            time_24hr: true,
+            onChange: function(selectedDates, dateStr, instance) {
+                const inputElement = instance.element;
+                const childId = inputElement.dataset.childId;
+                const timeType = inputElement.classList.contains('arrival-time') ? 'arrival' : 'departure';
+                updateAttendance(childId, dateStr, timeType);
+            }
         });
     }
 
@@ -264,10 +249,9 @@
         const presenceBtn = document.querySelector(`.presence-btn[data-child-id="${childId}"]`);
         const arrivalInput = document.getElementById(`arrival-${childId}`);
         const departureInput = document.getElementById(`departure-${childId}`);
-        const isPresent = presenceBtn.classList.contains('btn-danger');
         const date = document.getElementById('date-picker').value;
 
-        if (isPresent) {
+        if (presenceBtn.classList.contains('btn-danger')) {
             // Suppression de la présence
             try {
                 const response = await fetch(`/api/attendances/${childId}/${date}`, {
@@ -290,6 +274,11 @@
                 presenceBtn.classList.remove('btn-danger');
                 presenceBtn.classList.add('btn-success');
                 presenceBtn.innerText = 'Présent';
+                // Remove the "Départ" button
+                const departureBtn = document.querySelector(`.departure-btn[data-child-id="${childId}"]`);
+                if (departureBtn) {
+                    departureBtn.remove();
+                }
             } catch (error) {
                 console.error('Error:', error);
                 alert('Error deleting attendance');
@@ -329,6 +318,10 @@
                 presenceBtn.classList.remove('btn-success');
                 presenceBtn.classList.add('btn-danger');
                 presenceBtn.innerText = 'Absent';
+
+                // Add the "Départ" button next to the departure input
+                const departureBtnHtml = `<button onclick="recordDeparture(${childId})" class="btn btn-warning departure-btn" data-child-id="${childId}">Départ</button>`;
+                departureInput.insertAdjacentHTML('afterend', departureBtnHtml);
             } catch (error) {
                 console.error('Error:', error);
                 alert('Error adding attendance');
@@ -348,11 +341,6 @@
             arrivalTime = document.getElementById(`arrival-${childId}`).value;
             departureTime = time || document.getElementById(`departure-${childId}`).value;
         }
-
-        console.log(`Updating attendance for child ${childId}`);
-        console.log(`Arrival time: ${arrivalTime}`);
-        console.log(`Departure time: ${departureTime}`);
-        console.log(`Attendance date: ${attendanceDate}`);
 
         if (!arrivalTime) {
             alert('Arrival time must be set.');
@@ -383,6 +371,26 @@
         } catch (error) {
             console.error('Error:', error);
             alert('Error updating attendance');
+        }
+    }
+
+    async function recordDeparture(childId) {
+        const departureBtn = document.querySelector(`.departure-btn[data-child-id="${childId}"]`);
+        const departureInput = document.getElementById(`departure-${childId}`);
+
+        if (departureBtn.innerText === 'Départ') {
+            const now = new Date();
+            const hours = now.getHours().toString().padStart(2, '0');
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            const time = `${hours}:${minutes}`;
+
+            departureInput.value = time;
+            updateAttendance(childId, time, 'departure');
+            departureBtn.innerText = 'Annuler';
+        } else {
+            departureInput.value = '';
+            updateAttendance(childId, '', 'departure');
+            departureBtn.innerText = 'Départ';
         }
     }
 </script>
