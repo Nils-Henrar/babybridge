@@ -15,41 +15,40 @@
     @endif
 
     <div class="row">
-        @foreach ($payments as $payment)
-        @if ($payment)
         <div class="table-responsive">
-            <table class="table table-striped">
+            <table class="table table-hover table-bordered">
                 <thead>
-                    <tr>
-                        <th>Événement</th>
-                        <th>Enfant</th>
-                        <th>Montant</th>
-                        <th>Devise</th>
-                        <th>Status</th>
-                    </tr>
+                <tr>
+                    <th>Événement</th>
+                    <th>Enfant</th>
+                    <th>Montant</th>
+                    <th>Devise</th>
+                    <th>Status</th>
+                </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                        <td>{{ $payment->event->title }}</td>
-                        <td>{{ $payment->childTutor->child->firstname }}</td>
-                        <td>{{ $payment->amount }}</td>
-                        <td>{{ $payment->currency }}</td>
-                        <td>{{ $payment->status  ? 'En attente' : 'Payé' }}</td>
-                        <td>
-                            <form action="{{ route('tutor.payment.pay', $payment->id) }}" method="POST">
-                                @csrf
-                                <button type="submit" class="btn btn-primary">Aller vers le payement</button>
-                            </form>
-                        </td>
-                    </tr>
-                </tbody>
+                @foreach ($payments as $payment)
+                    @if ($payment)
+                        <tbody>
+                            <tr>
+                                <td>{{ $payment->event->title }}</td>
+                                <td>{{ $payment->childTutor->child->firstname }}</td>
+                                <td>{{ $payment->amount }}</td>
+                                <td>{{ $payment->currency }}</td>
+                                <td>{{ $payment->status  ? 'En attente' : 'Payé' }}</td>
+                                <td style="text-align: center;">
+                                    <form action="{{ route('tutor.payment.pay', $payment->id) }}" method="POST">
+                                        @csrf
+                                        <button type="submit" class="btn btn-info">Aller vers le payement</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        </tbody>
+                    @else
+                        <div class="alert alert-info">No pending payments</div>
+                    @endif
+                @endforeach
             </table>
-
         </div>
-        @else
-        <div class="alert alert-info">No pending payments</div>
-        @endif
-        @endforeach
     </div>
 </div>
 @endsection

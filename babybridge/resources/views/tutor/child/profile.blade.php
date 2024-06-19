@@ -11,6 +11,7 @@
         display: inline-block;
         text-align: center;
         float: right;
+        /* faire en sorte le background soit #176FA1 et qu'il fasse la taille du cercle de la photo */
         background-color: #176FA1;
         border-radius: 50%;
 
@@ -144,7 +145,7 @@
                 @foreach ($child->photos as $photo)
                     <div class="col-md-3 mb-3">
                         <div class="photo-thumbnail-container">
-                            <img src="{{ asset('storage/'.$photo->path) }}" class="img-fluid photo-thumbnail" data-photo="{{ asset('storage/'.$photo->path) }}" data-taken-at="{{ $photo->taken_at }}" alt="Photo" style="height: 200px; width: 100%; object-fit: cover;">
+                            <img src="{{ asset('storage/'.$photo->path) }}" class="img-fluid photo-thumbnail" data-photo="{{ asset('storage/'.$photo->path) }}" data-taken-at="{{ $photo->taken_at }}" alt="Photo" style="height: 200px; width: 200%; object-fit: cover;">
                             <div class="overlay-text">Aperçu</div>
                         </div>
                     </div>
