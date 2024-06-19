@@ -40,7 +40,7 @@ class Attendance extends Model
         $entries[] = [
             'type' => 'arrival',
             'time' => $arrivalTime,
-            'description' => "{$this->child->firstname} est bien arrivé à {$arrivalTime}",
+            'description' => "<i class='fas fa-fw fa-clock' style='color : red'></i> {$this->child->firstname} est bien arrivé à {$arrivalTime}",
             'child_name' => $this->child->getFullNameAttribute(),
         ];
 
@@ -49,7 +49,7 @@ class Attendance extends Model
             $entries[] = [
                 'type' => 'departure',
                 'time' => $departureTime,
-                'description' => "{$this->child->firstname} est parti à {$departureTime}",
+                'description' => "<i class='fas fa-fw fa-clock' style='color : red'></i> {$this->child->firstname} est parti à {$departureTime}",
                 'child_name' => $this->child->getFullNameAttribute(),
             ];
         }

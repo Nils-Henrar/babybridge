@@ -47,7 +47,7 @@ class Nap extends Model
             [
             'type' => 'nap',
             'time' => Carbon::parse($this->started_at)->format('H:i'),
-            'description' => $description,
+            'description' => "<i class='fas fa-fw fa-bed' style='color : purple'></i>" . $description,
             'child_name' => $this->child->getFullNameAttribute(),
             ],
         ];

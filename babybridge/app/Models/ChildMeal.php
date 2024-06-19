@@ -75,7 +75,7 @@ class ChildMeal extends Model
             [
             'type' => 'meal',
             'time' => Carbon::parse($this->meal_time)->format('H:i'),
-            'description' => $description,
+            'description' => "<i class='fas fa-fw fa-utensils' style='color : green'></i>" . $description,
             'child_name' => $this->child->getFullNameAttribute(),
             ],
         ];

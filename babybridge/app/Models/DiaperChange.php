@@ -30,11 +30,11 @@ class DiaperChange extends Model
     {
         switch ($consistency) {
             case 'watery':
-                return 'liquides';
+                return 'liquides <i class="fas fa-tint" style="color: blue;"></i>';
             case 'soft':
-                return 'molles';
+                return 'molles <i class="fas fa-poop" style="color: brown;"></i>';
             case 'normal':
-                return 'normales';
+                return 'normales <i class="fas fa-poo" style="color: brown;"></i>';
             default:
                 return $consistency; // Return the original value if no translation is found
         }
@@ -48,7 +48,7 @@ class DiaperChange extends Model
             [
             'type' => 'diaper_change',
             'time' => Carbon::parse($this->happened_at)->format('H:i'),
-            'description' => "Changement de couche pour {$this->child->firstname} (les selles sont <strong>{$translatedConsistency}</strong>).",
+            'description' => "<i class='fas fa-fw fa-baby' style='color : blue'></i>Changement de couche pour {$this->child->firstname} (les selles sont <strong>{$translatedConsistency}</strong>).",
             'child_name' => $this->child->getFullNameAttribute(),
             ],
         ];

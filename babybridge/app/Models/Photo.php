@@ -34,7 +34,7 @@ class Photo extends Model
             [
             'type' => 'photo',
             'time' => Carbon::parse($this->taken_at)->format('H:i'),
-            'description' => "Photo de {$this->child->firstname} : {$this->description}",
+            'description' => "<i class='fas fa-fw fa-camera' style='color : magenta'></i>Photo de {$this->child->firstname} : {$this->description}",
             'child_name' => $this->child->getFullNameAttribute(),
             'image_url' => Storage::url($this->path),
             ],

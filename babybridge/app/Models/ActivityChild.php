@@ -36,7 +36,7 @@ class ActivityChild extends Model
             [
             'type' => 'activity',
             'time' => Carbon::parse($this->performed_at)->format('H:i'),
-            'description' => "{$this->child->firstname} a participé à l'activité <strong>{$this->activity->description}</strong>.",
+            'description' => "<i class='fas fa-fw fa-puzzle-piece' style='color : orange'></i> {$this->child->firstname} a participé à l'activité <strong>{$this->activity->description}</strong>.",
             'child_name' => $this->child->getFullNameAttribute(),
             ],
         ];
