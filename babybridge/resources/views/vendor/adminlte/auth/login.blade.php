@@ -18,7 +18,7 @@
     @php( $password_reset_url = $password_reset_url ? url($password_reset_url) : '' )
 @endif
 
-@section('auth_header', __('adminlte::adminlte.login_message'))
+@section('auth_header', __('S\'identifier pour commencer votre session'))
 
 @section('auth_body')
     <form action="{{ $login_url }}" method="post">
@@ -67,7 +67,7 @@
                     <input type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
 
                     <label for="remember">
-                        {{ __('adminlte::adminlte.remember_me') }}
+                        {{ __('Se souvenir de moi') }}
                     </label>
                 </div>
             </div>
@@ -75,7 +75,7 @@
             <div class="col-5">
                 <button type=submit class="btn btn-block {{ config('adminlte.classes_auth_btn', 'btn-flat btn-primary') }}">
                     <span class="fas fa-sign-in-alt"></span>
-                    {{ __('adminlte::adminlte.sign_in') }}
+                    {{ __('S\'identifier') }}
                 </button>
             </div>
         </div>
@@ -88,7 +88,7 @@
     @if($password_reset_url)
         <p class="my-0">
             <a href="{{ $password_reset_url }}">
-                {{ __('adminlte::adminlte.i_forgot_my_password') }}
+                {{ __('j\'ai oublié mon mot de passe') }}
             </a>
         </p>
     @endif

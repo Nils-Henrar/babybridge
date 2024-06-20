@@ -28,7 +28,6 @@
         height: 100px;
         object-fit: cover;
         border-radius: 50%;
-        border: 2px solid #176FA1;
     }
 
     .child-info {

@@ -11,7 +11,6 @@
         display: inline-block;
         text-align: center;
         float: right;
-        /* faire en sorte le background soit #176FA1 et qu'il fasse la taille du cercle de la photo */
         background-color: #176FA1;
         border-radius: 50%;
 
